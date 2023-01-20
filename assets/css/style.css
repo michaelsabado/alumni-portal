@@ -90,11 +90,16 @@ body {
 
 #log-btn {
     background-color: #fff;
-    color: #86cff3;
-    border-radius: 5px;
-    padding: 5px 20px;
+    color: #2b9cd4;
+    border-radius: 100px;
+    padding: 10px 20px;
     font-size: 15px;
     border: 1px solid #ddd;
+}
+
+#log-btn:hover {
+    background-color: #2b9cd4;
+    color: #fff;
 }
 
 #acct-btn {
@@ -145,6 +150,10 @@ body {
     position: absolute;
     bottom: -1px;
     width: 100%;
+}
+
+.cursor{
+    cursor: pointer;
 }
 
 #foot {

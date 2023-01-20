@@ -61,6 +61,8 @@ $archived = Jobs::getAllArchived();
 
                             <?php
                                 }
+                            } else {
+                                echo '<div class="text-center text-muted fst-italic">No job postings at this moment.</div>';
                             }
 
                             ?>
@@ -94,6 +96,8 @@ $archived = Jobs::getAllArchived();
 
                             <?php
                                 }
+                            } else {
+                                echo '<div class="text-center text-muted fst-italic">No archived job posts at this moment.</div>';
                             }
 
                             ?>

@@ -4,7 +4,7 @@ require_once '../classes/news.php';
 require_once '../classes/events.php';
 require_once '../classes/jobs.php';
 
-
+$readType = '';
 $newsResult = News::getAllNews(3);
 $eventsResult = Events::getAllEvents(3);
 $jobsResult = Jobs::getAllJobs(3);
@@ -69,9 +69,12 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                                 <hr>
                         <?php
                             }
+                        } else {
+                            echo '<div class="h6 text-muted fst-italic text-center">No news at this moment.</div>';
                         }
 
                         ?>
+
                         <?php
 
                         if ($newsResult->num_rows == 3) :
@@ -85,8 +88,8 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                         <div class="h6 fw-bold"><i class="far fa-calendar-check me-2"></i> Events</div>
                         <div id="events" class="p-3">
                             <?php
-                            if ($eventsResult->num_rows > 0) :
-                                while ($row = $eventsResult->fetch_assoc()) :
+                            if ($eventsResult->num_rows > 0) {
+                                while ($row = $eventsResult->fetch_assoc()) {
                             ?>
                                     <div class="card events-card mb-3 border">
                                         <div class="card-header p-0">
@@ -104,8 +107,11 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                                         </div>
                                     </div>
                             <?php
-                                endwhile;
-                            endif;
+                                }
+                            } else {
+                                echo '<div class="h6 text-muted fst-italic text-center">No events at this moment.</div>';
+                            }
+
                             ?>
 
                             <?php
@@ -119,8 +125,8 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                         <div class="h6 fw-bold"><i class="fas fa-briefcase me-2"></i> Job Posts</div>
                         <div id="jobs" class="p-3">
                             <?php
-                            if ($jobsResult->num_rows > 0) :
-                                while ($row = $jobsResult->fetch_assoc()) :
+                            if ($jobsResult->num_rows > 0) {
+                                while ($row = $jobsResult->fetch_assoc()) {
                             ?>
                                     <div class="card jobs-card mb-3">
                                         <div class="card-body">
@@ -135,8 +141,11 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                                         </div>
                                     </div>
                             <?php
-                                endwhile;
-                            endif;
+                                }
+                            } else {
+                                echo '<div class="h6 text-muted fst-italic text-center">No job posts at this moment.</div>';
+                            }
+
                             ?>
                             <?php
                             if ($jobsResult->num_rows == 3) :

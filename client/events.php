@@ -69,6 +69,8 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                         <hr>
                 <?php
                     }
+                } else {
+                    echo '<div class="text-center text-muted fst-italic">No events at this moment.</div>';
                 }
 
                 ?>

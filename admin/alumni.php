@@ -67,7 +67,7 @@ $coursesResult = Course::getAllCourses();
     <div id="a-main">
       <?php include_once '../templates/admin_nav.php' ?>
       <div id="content">
-        <div class="h5 fw-bold">Alumni</div>
+        <div class="h5 fw-bold"><i class="fas fa-user-graduate me-2"></i>Alumni</div>
         <hr>
         <div class="row">
           <div class="col-md-3">

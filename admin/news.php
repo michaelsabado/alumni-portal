@@ -86,7 +86,7 @@ $newsResult = News::getAllNews();
       <?php include_once '../templates/admin_nav.php' ?>
       <div id="content">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="h5 fw-bold mb-0">News</div>
+          <div class="h5 fw-bold mb-0"><i class="far fa-newspaper me-2"></i>News</div>
           <div>
             <button class="btn btn-danger d-none me-1" id="bulk-btn" onclick="deleteBulk()">Delete Bulk <i class="far fa-trash-alt ms-2"></i></button>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add News <i class="fas fa-plus ms-2"></i></button>

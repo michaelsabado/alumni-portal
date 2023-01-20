@@ -121,7 +121,7 @@ if (isset($_GET['type'])) {
         <a href="index" class="side-links  <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'index') ? 'side-active' : '' ?>">Home</a>
         <a href="news" class="side-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'news' || $readType == 'news') ? 'side-active' : '' ?>">News</a>
         <a href="events" class="side-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'events'  || $readType == 'events') ? 'side-active' : '' ?>">Events</a>
-        <a href="jobs" class="side-links" <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'jobs'  || $readType == 'jobs') ? 'side-active' : '' ?>>Job Posts</a>
-        <a href="forum" class="side-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'forum'  || $readType == 'forum') ? 'side-active' : '' ?>">Forum</a>
+        <a href="jobs" class="side-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'jobs'  || $readType == 'jobs') ? 'side-active' : '' ?>">Job Posts</a>
+        <a href=" forum" class="side-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'forum'  || $readType == 'forum') ? 'side-active' : '' ?>">Forum</a>
     </div>
 </div>

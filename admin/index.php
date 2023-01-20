@@ -24,7 +24,7 @@ if ($type = Auth::checkLogin()) {
         <div id="a-main">
             <?php include_once '../templates/admin_nav.php' ?>
             <div id="content">
-                <div class="h5 fw-bold">Dashboard</div>
+                <div class="h5 fw-bold"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</div>
 
             </div>
         </div>

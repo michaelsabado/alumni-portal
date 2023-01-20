@@ -62,7 +62,11 @@ $postsResult = Posts::getAllPosts();
                         <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Discussion <i class="fas fa-plus-circle ms-2"></i></button>
 
                         <div class="smalltxt fw-bold mb-2"><i class="fas fa-search me-1"></i> Search Alumni</div>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control mb-2" onkeyup="search($(this).val())" placeholder="Enter name">
+                        <div class="mb-2">
+                            <ul class="list-group" id="search-res">
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-md-9">
                         <div class="text-end">
@@ -74,13 +78,23 @@ $postsResult = Posts::getAllPosts();
 
                         if ($postsResult->num_rows > 0) {
                             while ($row = $postsResult->fetch_assoc()) {
+
+                                switch ($row['status']) {
+                                    case 1:
+                                        $str = '<span class="badge bg-success">Active</span>';
+                                        break;
+                                    case 2:
+                                        $str = '<span class="badge bg-danger">Closed</span>';
+                                        break;
+                                }
                         ?>
+
                                 <div class="card mb-2 posts-res" data-title="<?= $row['title'] ?>" data-author="<?= $row['first_name'] . ' ' . $row['last_name'] ?>">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <a href="view-post?id=<?= $row['post_id'] ?>" class="h6 fw-bold"><?= $row['title'] ?></a>
-                                                <div class="smalltxt">by <?= $row['first_name'] . ' ' . $row['last_name'] ?></div>
+                                                <a href="view-post?id=<?= $row['post_id'] ?>" class="h6 fw-bold text-decoration-none"><?= $row['title'] ?></a>
+                                                <div class="smalltxt">by <?= $row['first_name'] . ' ' . $row['last_name'] ?> | <?= $str ?></div>
                                             </div>
 
                                             <div class="smalltxt"><?= date('M d, Y', strtotime($row['date_posted'])) ?></div>
@@ -90,7 +104,10 @@ $postsResult = Posts::getAllPosts();
                                 </div>
                         <?php
                             }
+                        } else {
+                            echo '<div class="h6 text-muted fst-italic text-center">No discussions at this moment.</div>';
                         }
+
 
                         ?>
 
@@ -164,8 +181,33 @@ $postsResult = Posts::getAllPosts();
                     e.classList.add('d-none');
                 }
             });
+        }
 
+        function search(keyword) {
+            $("#search-res").html('');
 
+            if (keyword != '') {
+                $.ajax({
+                    url: '../router/web.php',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        type: 'searchAlumni',
+                        key: keyword
+                    },
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+                        $("#search-res").append(`<div class="py-2 text-muted" style="font-size: 11px">${response.length} result/s for '${keyword}'</div>`);
+                        response.forEach(function(user) {
+                            let list = `<a class="list-group-item list-group-item-action cursor">${user[1] + ' ' + user[3]}</a>`;
+                            $("#search-res").append(list);
+                        });
+
+                    }
+                })
+            }
         }
     </script>
 </body>

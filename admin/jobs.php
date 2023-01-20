@@ -86,7 +86,7 @@ $newsResult = Jobs::getAllJobs();
             <?php include_once '../templates/admin_nav.php' ?>
             <div id="content">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="h5 fw-bold mb-0">Job</div>
+                    <div class="h5 fw-bold mb-0"><i class="fas fa-briefcase me-2"></i>Job</div>
                     <div>
                         <button class="btn btn-danger d-none me-1" id="bulk-btn" onclick="deleteBulk()">Delete Bulk <i class="far fa-trash-alt ms-2"></i></button>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Job <i class="fas fa-plus ms-2"></i></button>
@@ -149,7 +149,7 @@ $newsResult = Jobs::getAllJobs();
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" target="_blank" href="../client/read?type=news&id=<?= $row['id'] ?>"><i class="fas fa-eye me-2"></i> View live</a></li>
+                                                        <li><a class="dropdown-item" target="_blank" href="../client/view-job?id=<?= $row['id'] ?>"><i class="fas fa-eye me-2"></i> View live</a></li>
                                                         <li><a class="dropdown-item" onclick="loadEdit(<?= $row['id'] ?>)"><i class="fas fa-edit me-2"></i> Edit</a></li>
                                                         <li><a class="dropdown-item" onclick="deleteJob(<?= $row['id'] ?>)"><i class="fas fa-trash-alt me-2"></i> Delete</a></li>
                                                         <li><a class="dropdown-item" data-val="<?= $row['status'] ?>" onclick="toggleStatus(<?= $row['id'] ?>, $(this))"><i class="fas fa-times-circle me-2"></i> Close Job</a></li>

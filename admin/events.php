@@ -84,7 +84,7 @@ $eventsResult = Events::getAllEvents();
       <?php include_once '../templates/admin_nav.php' ?>
       <div id="content">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="h5 fw-bold mb-0">Events</div>
+          <div class="h5 fw-bold mb-0"><i class="far fa-calendar-check me-2"></i>Events</div>
           <div>
             <button class="btn btn-danger d-none me-1" id="bulk-btn" onclick="deleteBulk()">Delete Bulk <i class="far fa-trash-alt ms-2"></i></button>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Event <i class="fas fa-plus ms-2"></i></button>
