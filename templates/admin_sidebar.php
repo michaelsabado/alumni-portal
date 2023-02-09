@@ -5,11 +5,11 @@
         <!-- <div class="h6 badge bg-white text-dark  fw-normal">Alumni Information System</div> -->
         <hr>
         <div class="px-3">
-            <div class="card border-0 bg-dark">
+            <div class="card border-0 bg-dark cursor" onclick="window.location.href='account.php'">
                 <div class="card-body d-flex p-2 align-items-center">
                     <img src="../uploads/profile/default.webp" alt="" id="admin-profile" class="me-md-2">
                     <div class="text-start text-white">
-                        <div class="h6 mb-0 fw-bold">Michael Sabado</div>
+                        <div class="h6 mb-0 fw-bold"><?= $_SESSION['user_info']['full_name'] ?></div>
                         <div class="smalltxt">Administrator</div>
                     </div>
                 </div>

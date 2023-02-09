@@ -3,7 +3,18 @@ require_once '../db/db_config.php';
 
 class Jobs
 {
+    public static function getAllJobsAdmin($limit = 0)
+    {
+        global $conn;
+        if ($limit != 0) {
+            $sql = "SELECT * FROM jobs  ORDER BY date_posted DESC LIMIT $limit";
+        } else {
+            $sql = "SELECT * FROM jobs  ORDER BY date_posted DESC";
+        }
 
+        $results = $conn->query($sql);
+        return $results;
+    }
     public static function getAllJobs($limit = 0)
     {
         global $conn;

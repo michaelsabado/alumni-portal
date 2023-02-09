@@ -4,7 +4,6 @@ require_once '../classes/auth.php';
 
 $message = '';
 $email = "";
-
 if (Auth::checkLogin()) {
     if ($_SESSION['admin'] == false) {
         header("Location: ../client/index");
@@ -15,12 +14,26 @@ if (isset($_POST['submit'])) {
     $message = '<i class="fas fa-exclamation-circle"></i> ';
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $pswd = $_POST['password'];
+    $secret = "6LecUlMkAAAAAGl_cCLhyyLbKdhIVS3yF7l82nNh";
+    $response = $_POST['g-recaptcha-response'];
+    $remoteip = $_SERVER['REMOTE_ADDR'];
 
-    $res = Auth::authenticate($email, $pswd, 2);
-    if ($res['is_authenticated']) {
-        header("Location: ../client/index");
-    } else
-        $message .= $res['message'];
+    $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response&remoteip=$remoteip";
+    $response = file_get_contents($url);
+    $response = json_decode($response, true);
+
+    if ($response["success"] == true) {
+
+
+        $res = Auth::authenticate($email, $pswd, 2);
+        if ($res['is_authenticated']) {
+            header("Location: ../client/index");
+        } else
+            $message .= $res['message'];
+    } else {
+        // handle verification failure
+        $message .= "reCAPTCHA verification failed";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -30,6 +43,7 @@ if (isset($_POST['submit'])) {
     <?php include_once '../templates/header.php' ?>
     <title>Login</title>
     <link rel="stylesheet" href="auth.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -63,8 +77,11 @@ if (isset($_POST['submit'])) {
                         <input type="password" class="form-control  mb-5 border" id="passFloat" placeholder="Password" name="password" required>
                         <label for="passFloat">Password</label>
                     </div>
-
+                    <div class="g-recaptcha mb-3" data-sitekey="6LecUlMkAAAAAGZe8uSpiMjbWXsk0oENDiiHIhpX"></div>
                     <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn shadow">Log In <i class="fas fa-arrow-right float-end mt-1"></i></button>
+                    <div class="text-center mt-3">
+                        <a href="forgot-password" class="text-decoration-none">Forgot password?</a>
+                    </div>
                 </form>
             </div>
         </div>

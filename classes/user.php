@@ -8,14 +8,14 @@ class User
     {
 
         global $conn;
-        $sql = "SELECT *, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id";
+        $sql = "SELECT a.*, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id WHERE a.email_verified_at IS NOT NULL";
         $results = $conn->query($sql);
         return $results;
     }
     public static function getUser($id)
     {
         global $conn;
-        $sql = "SELECT *, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id WHERE a.id = $id";
+        $sql = "SELECT a.*, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id WHERE a.id = $id";
         $results = $conn->query($sql);
         return $results;
     }

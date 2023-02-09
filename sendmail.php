@@ -30,13 +30,13 @@ function setData($a, $b, $c, $d)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->Username = 'Letranmanaoaglms@gmail.com'; // YOUR gmail email
-        $mail->Password = 'uhrbtgbkaxdznjbi'; // YOUR gmail password
+        $mail->Username = 'michaelsabado.ms04@gmail.com'; // YOUR gmail email
+        $mail->Password = 'vkpethxkauctgjgr'; // YOUR gmail password
 
         // Sender and recipient settings
-        $mail->setFrom('Letranmanaoaglms@gmail.com', 'LMS');
+        $mail->setFrom('michaelsabado.ms04@gmail.com', 'PCLU Alumni Portal');
         $mail->addAddress($toEmail, $toName);
-        $mail->addReplyTo('Letranmanaoaglms@gmail.com', 'LMS'); // to set the reply to
+        $mail->addReplyTo('michaelsabado.ms04@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
 
         // Setting the email content
         $mail->IsHTML(true);
