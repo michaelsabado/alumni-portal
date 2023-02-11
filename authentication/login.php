@@ -24,7 +24,6 @@ if (isset($_POST['submit'])) {
 
     if ($response["success"] == true) {
 
-
         $res = Auth::authenticate($email, $pswd, 2);
         if ($res['is_authenticated']) {
             header("Location: ../client/index");
@@ -64,6 +63,7 @@ if (isset($_POST['submit'])) {
                 <div id="login-title">
                     <div class="h2 fw-bold">Alumni<br>Login</div>
                 </div>
+                <a href="register" class="text-decoration-none smalltxt">New here? Click here to register.</a>
                 <hr>
                 <div class="h6 text-danger ">
                     <?= $message; ?>

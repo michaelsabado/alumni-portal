@@ -177,8 +177,10 @@ $usersResult = User::getAllUsers();
                   </div>
                   <select name="employment" id="" class="form-select mb-3">
                     <option value="">All</option>
-                    <option value="1">Employed</option>
+
                     <option value="2">Unemployed</option>
+                    <option value="1">Employed</option>
+                    <option value="3">Self Employed</option>
                   </select>
                   <button type="submit" class="btn w-100 btn-success">Export</button>
                 </form>
@@ -213,6 +215,9 @@ $usersResult = User::getAllUsers();
                         break;
                       case '2':
                         $status = '<span class="badge rounded-pill text-bg-secondary fw-normal">Unemployed</span>';
+                        break;
+                      case '3':
+                        $status = '<span class="badge rounded-pill text-bg-info fw-normal">Self Employed</span>';
                         break;
                     }
 

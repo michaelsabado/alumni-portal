@@ -28,6 +28,10 @@ class Auth
             }
             if ($row['password'] == md5($password)) {
                 // Success
+
+                if ($type == 2 && $row['is_verified'] == 0) {
+                    return ['is_authenticated' => false, 'message' => 'Your account is not yet verified by the admin.'];
+                }
                 $_SESSION['admin'] = $val;
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['user_login'] = true;

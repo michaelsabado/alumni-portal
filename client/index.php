@@ -1,8 +1,19 @@
 <?php
 session_start();
+require_once '../classes/user.php';
 require_once '../classes/news.php';
 require_once '../classes/events.php';
 require_once '../classes/jobs.php';
+
+if (isset($_SESSION['id'])) {
+    $usersResult = User::getUser($_SESSION['id']);
+    if ($usersResult->num_rows > 0) {
+        $user = $usersResult->fetch_assoc();
+        if ($user['birth_date'] == null) {
+            header('Location: ../authentication/aboutme?id=' . $_SESSION['id']);
+        }
+    }
+}
 
 $readType = '';
 $newsResult = News::getAllNews(3);

@@ -2,6 +2,10 @@
 session_start();
 require_once '../db/db_config.php';
 
+if (!isset($_POST['course'])) {
+    exit();
+}
+
 $course = $_POST['course'];
 $batch = $_POST['batch'];
 $employment = $_POST['employment'];
@@ -33,7 +37,7 @@ $rows = mysqli_num_rows($result);
 $columns = mysqli_fetch_fields($result);
 
 // File name
-$filename = "alumni.csv";
+$filename = "Alma-Tech_Alumni_List.csv";
 
 // Open the file for writing
 $fp = fopen($filename, 'w');

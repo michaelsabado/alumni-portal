@@ -82,7 +82,19 @@ $postsResult = Posts::getAllUserPosts($id);
                                 </div>
                                 <div class="smalltxt fw-bold">Employment Status</div>
                                 <div class="h6 mb-0">
-                                    <?= ($user['employment_status'] == 1) ? 'Employed' : 'Unemployed' ?>
+                                    <?php
+                                    switch ($user['employment_status']) {
+                                        case '1':
+                                            echo 'Employed';
+                                            break;
+                                        case '2':
+                                            echo 'Unemployed';
+                                            break;
+                                        case '3':
+                                            echo 'Self Employed';
+                                            break;
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>

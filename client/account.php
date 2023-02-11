@@ -301,8 +301,9 @@ if ($usersResult->num_rows > 0) {
                                         </div>
                                         <div class="col-md-6">
                                             <select name="employment_status" id="employment_status" value="" class="form-select mb-3">
-                                                <option value="1" <?= ($user['employment_status'] == 1) ? 'selected' : '' ?>>Employed</option>
                                                 <option value="2" <?= ($user['employment_status'] == 2) ? 'selected' : '' ?>>Unmployed</option>
+                                                <option value="1" <?= ($user['employment_status'] == 1) ? 'selected' : '' ?>>Employed</option>
+                                                <option value="3" <?= ($user['employment_status'] == 1) ? 'selected' : '' ?>>Self Employed</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -351,7 +352,7 @@ if ($usersResult->num_rows > 0) {
                                     <div class="h6">Old password</div>
                                     <input name="old_password" type="password" class="form-control mb-3" required>
                                     <div class="h6">New password</div>
-                                    <input name="new_password" type="password" class="form-control mb-3" required>
+                                    <input name="new_password" type="password" class="form-control mb-3" pattern=".{8,}" required>
                                     <div class=" text-end">
                                         <button class="btn btn-info text-white px-4" type="submit" name="password-submit">Save</button>
                                     </div>

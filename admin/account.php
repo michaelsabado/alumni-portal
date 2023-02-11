@@ -171,7 +171,7 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">New Password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="new_pass" class="form-control mb-3" required>
+                                    <input type="password" name="new_pass" class="form-control mb-3" pattern=".{8,}" required>
                                 </div>
                                 <div class="col-md-6"></div>
 
