@@ -15,7 +15,7 @@ if (isset($_GET['type'])) {
             <div>
                 <div class="h3 mb-0 fw-bold" id="uni-text">POLYTECHNIC COLLEGE <span style="white-space:nowrap !important">OF LA UNION</span>
                 </div>
-                <div class="h6 badge bg-white text-dark mb-0 fw-normal border"><i class="fas fa-info-circle"></i> Alumni Portal</div>
+                <div class="h6 badge bg-white text-dark mb-0 fw-normal border"><i class="fas fa-info-circle"></i> Alma-Tech | Alumni Portal</div>
             </div>
             <?php
 

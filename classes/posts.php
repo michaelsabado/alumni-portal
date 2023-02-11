@@ -16,6 +16,17 @@ class Posts
         $results = $conn->query($sql);
         return $results;
     }
+
+    public static function getAllUserPosts($id)
+    {
+        global $conn;
+
+        $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.user_id = $id ORDER BY p.id DESC ";
+
+
+        $results = $conn->query($sql);
+        return $results;
+    }
     public static function getPost($id)
     {
         global $conn;

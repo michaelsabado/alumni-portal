@@ -199,9 +199,10 @@ $postsResult = Posts::getAllPosts();
 
                     },
                     success: function(response) {
+                        console.log(response);
                         $("#search-res").append(`<div class="py-2 text-muted" style="font-size: 11px">${response.length} result/s for '${keyword}'</div>`);
                         response.forEach(function(user) {
-                            let list = `<a class="list-group-item list-group-item-action cursor">${user[1] + ' ' + user[3]}</a>`;
+                            let list = `<a href="view-alumni?id=${user[0]}"class="list-group-item list-group-item-action cursor">${user[1] + ' ' + user[3]}<br><span class="smalltxt">${user[27]}</span></a>`;
                             $("#search-res").append(list);
                         });
 

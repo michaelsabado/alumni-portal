@@ -1,7 +1,8 @@
 <div id="a-sidebar">
     <div id="side-head" class="text-center">
         <img src="../assets/images/logo.png" id="logo">
-        <div class="h6 text-white mt-3 fw-bolder mb-0">POLYTECHNIC COLLEGE<br>OF LA UNION</div>
+        <div class="h3 text-white fw-bolder mt-3 mb-0">Alma-Tech</div>
+        <div class="h6 text-white  mb-0">POLYTECHNIC COLLEGE<br>OF LA UNION</div>
         <!-- <div class="h6 badge bg-white text-dark  fw-normal">Alumni Information System</div> -->
         <hr>
         <div class="px-3">

@@ -12,6 +12,14 @@ class User
         $results = $conn->query($sql);
         return $results;
     }
+
+    public static function getBatches()
+    {
+        global $conn;
+        $sql = "SELECT DISTINCT(batch) FROM users WHERE email_verified_at IS NOT NULL";
+        $results = $conn->query($sql);
+        return $results;
+    }
     public static function getUser($id)
     {
         global $conn;

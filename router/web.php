@@ -34,7 +34,7 @@ if ($type == 'toggleStatus') {
 
 if ($type == 'searchAlumni') {
     $key = mysqli_real_escape_string($conn, $_POST['key']);
-    $sql = "SELECT * FROM users WHERE first_name LIKE '%$key%' OR last_name LIKE '%$key%' OR (CONCAT(first_name, ' ', last_name) LIKE '%$key%') LIMIT 5";
+    $sql = "SELECT * FROM users inner join courses on users.course = courses.id WHERE first_name LIKE '%$key%' OR last_name LIKE '%$key%' OR (CONCAT(first_name, ' ', last_name) LIKE '%$key%') LIMIT 5";
     $res = mysqli_query($conn, $sql);
     echo json_encode($res->fetch_all());
 }

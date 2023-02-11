@@ -50,7 +50,7 @@ if (isset($_POST['deleteRecord'])) {
 }
 $usersResult = User::getAllUsers();
 
-$coursesResult = Course::getAllCourses();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,6 +122,7 @@ $coursesResult = Course::getAllCourses();
                       <div class="accordion-body px-0">
                         <ul class="list-group list-group-flush">
                           <?php
+                          $coursesResult = Course::getAllCourses();
                           if ($coursesResult->num_rows > 0) {
                             while ($row = $coursesResult->fetch_assoc()) {
                               echo '<li class="list-group-item smalltxt">' . $row['description']  . ' (' . $row['count'] . ')<i class="far fa-trash-alt float-end" onclick="deleteRecord(\'course\',' . $row['id'] . ')"></i></li>';
@@ -133,6 +134,54 @@ $coursesResult = Course::getAllCourses();
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="h6 fw-bold">Export CSV</div>
+                <form action="export-csv" method="post">
+                  <div class="smalltxt mb-1">
+                    Course
+                  </div>
+                  <select name="course" id="" class="form-select mb-3">
+                    <option value="">All</option>
+                    <?php
+                    $coursesResult = Course::getAllCourses();
+                    if ($coursesResult->num_rows > 0) {
+                      while ($row = $coursesResult->fetch_assoc()) {
+                    ?>
+                        <option value="<?= $row['id'] ?>"><?= $row['description'] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                  <div class="smalltxt mb-1">
+                    Batch
+                  </div>
+                  <select name="batch" id="" class="form-select mb-3">
+                    <option value="">All</option>
+                    <?php
+                    $batchesResult = User::getBatches();
+                    if ($batchesResult->num_rows > 0) {
+                      while ($row = $batchesResult->fetch_assoc()) {
+                    ?>
+                        <option value="<?= $row['batch'] ?>"><?= $row['batch'] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                  <div class="smalltxt mb-1">
+                    Employment Status
+                  </div>
+                  <select name="employment" id="" class="form-select mb-3">
+                    <option value="">All</option>
+                    <option value="1">Employed</option>
+                    <option value="2">Unemployed</option>
+                  </select>
+                  <button type="submit" class="btn w-100 btn-success">Export</button>
+                </form>
               </div>
             </div>
           </div>
@@ -193,8 +242,6 @@ $coursesResult = Course::getAllCourses();
                           </button>
                           <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="alumni-view?id=<?= $row['id'] ?>">View</a></li>
-                            <li><a class="dropdown-item" href="#">Edit</a></li>
-                            <li><a class="dropdown-item" href="#">Delete</a></li>
                           </ul>
                         </div>
                       </td>

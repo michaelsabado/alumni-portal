@@ -52,8 +52,8 @@ if (isset($_POST['submit'])) {
             <div class="text-center">
                 <img src="../assets/images/logo.png" height="200" alt="" id="logo" class="mb-md-4 md-sm-2 md-2">
                 <div style="text-shadow: 2px 3px 9px rgba(0,0,0,0.45)">
-                    <div class="display-2 fw-bolder text-white">ALUMNI</div>
-                    <div class="display-2 text-white">PORTAL</div>
+                    <div class="display-2 fw-bolder text-white">ALMA-TECH</div>
+                    <div class="display-6 text-white">Alumni Portal</div>
                 </div>
 
             </div>
