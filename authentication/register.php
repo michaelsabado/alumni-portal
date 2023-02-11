@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
             $message .= "Email already in used.";
         } else {
             if ($password == $confirm_password) {
-                if ($code == $_SESSION['email_code']) {
+                if (isset($_SESSION['email_code']) && $code == $_SESSION['email_code']) {
                     // insert to DB
                     $password = md5($password);
                     $sql = "INSERT INTO `users`( `first_name`, `last_name`, `email`, `password`, `picture`, `email_verified_at`, `is_verified`) VALUES ('$first_name','$last_name','$email','$password', 'default.webp', '" . date('Y-m-d') . "','0')";

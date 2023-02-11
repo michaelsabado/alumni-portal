@@ -6,6 +6,8 @@ if ($type = Auth::checkLogin()) {
     if ($type != 1) {
         header('Location: ../authentication/login');
     }
+} else {
+    header('Location: ../authentication/login');
 }
 $message = '';
 $message1 = '';

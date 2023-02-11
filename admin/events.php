@@ -7,6 +7,8 @@ if ($type = Auth::checkLogin()) {
   if ($type != 1) {
     header('Location: ../authentication/login');
   }
+} else {
+  header('Location: ../authentication/login');
 }
 
 $message = "";
@@ -75,6 +77,12 @@ $eventsResult = Events::getAllEvents();
   <?php include_once '../templates/header.php' ?>
   <title>PCLU - Admin | Events</title>
   <link rel="stylesheet" href="admin.css?">
+  <style>
+    .img-list {
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
 </head>
 
 <body>
