@@ -54,6 +54,8 @@ if (isset($_POST['submit'])) {
         // handle verification failure
         $message .= "reCAPTCHA verification failed";
     }
+} else {
+    $_SESSION['email_code'] = null;
 }
 ?>
 <!DOCTYPE html>
@@ -82,6 +84,7 @@ if (isset($_POST['submit'])) {
             <div class="p-3 login-form">
                 <div id="login-title">
                     <div class="h2 fw-bold">Alumni<br>Registration</div>
+                    <?= $_SESSION['email_code'] ?>
                 </div>
                 <hr>
                 <div class="h6 text-danger ">
