@@ -144,7 +144,7 @@ if (isset($_GET['type'])) {
                           $departmentsResult = Department::getAllDepartments();
                           if ($departmentsResult->num_rows > 0) {
                             while ($row = $departmentsResult->fetch_assoc()) {
-                              echo '<li class="list-group-item smalltxt">' . $row['description'] . '<i class="far fa-trash-alt float-end" onclick="deleteRecord(\'department\',' . $row['id'] . ')"></i></li>';
+                              echo '<li class="list-group-item smalltxt">' . $row['description'] . '<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'department\',' . $row['id'] . ')"></i></li>';
                             }
                           }
                           ?>
@@ -166,7 +166,7 @@ if (isset($_GET['type'])) {
                           $coursesResult = Course::getAllCourses();
                           if ($coursesResult->num_rows > 0) {
                             while ($row = $coursesResult->fetch_assoc()) {
-                              echo '<li class="list-group-item smalltxt">' . $row['description']  . ' (' . $row['count'] . ')<i class="far fa-trash-alt float-end" onclick="deleteRecord(\'course\',' . $row['id'] . ')"></i></li>';
+                              echo '<li class="list-group-item smalltxt">' . $row['description']  . ' (' . $row['count'] . ')<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'course\',' . $row['id'] . ')"></i></li>';
                             }
                           }
                           ?>

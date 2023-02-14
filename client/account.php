@@ -352,7 +352,8 @@ if ($usersResult->num_rows > 0) {
                                     <div class="h6">Old password</div>
                                     <input name="old_password" type="password" class="form-control mb-3" required>
                                     <div class="h6">New password</div>
-                                    <input name="new_password" type="password" class="form-control mb-3" pattern=".{8,}" required>
+                                    <input name="new_password" type="password" class="form-control" pattern=".{8,}" required>
+                                    <div class="smalltxt mb-3 text-muted">8 characters above</div>
                                     <div class=" text-end">
                                         <button class="btn btn-info text-white px-4" type="submit" name="password-submit">Save</button>
                                     </div>
