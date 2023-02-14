@@ -12,6 +12,24 @@ class User
         $results = $conn->query($sql);
         return $results;
     }
+    public static function getCustomUsers($type)
+    {
+
+        global $conn;
+
+        $where = 'WHERE a.email_verified_at IS NOT NULL ';
+
+        if ($type == 'registered') {
+            $where .= 'AND is_verified = 1';
+        } elseif ($type == 'unverified') {
+            $where .= 'AND is_verified = 0';
+        } elseif ($type == 'employed') {
+            $where .= 'AND employment_status != 2';
+        }
+        $sql = "SELECT a.*, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id $where ";
+        $results = $conn->query($sql);
+        return $results;
+    }
 
     public static function getBatches()
     {

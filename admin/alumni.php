@@ -13,7 +13,6 @@ if ($type = Auth::checkLogin()) {
   header('Location: ../authentication/login');
 }
 
-
 $message2 = '';
 if (isset($_POST['submit-department'])) {
   $department = $conn->real_escape_string($_POST['department']);
@@ -50,7 +49,31 @@ if (isset($_POST['deleteRecord'])) {
       </div>';
   }
 }
-$usersResult = User::getAllUsers();
+
+
+
+if (isset($_GET['type'])) {
+  $type = $_GET['type'];
+  switch ($type) {
+    case 'registered':
+      $usersResult = User::getCustomUsers($type);
+      break;
+    case 'unverified':
+      $usersResult = User::getCustomUsers($type);
+      break;
+    case 'employed':
+      $usersResult = User::getCustomUsers($type);
+      break;
+    default:
+      $type = 'all';
+      $usersResult = User::getAllUsers();
+      break;
+  }
+} else {
+  $type = 'all';
+  $usersResult = User::getAllUsers();
+}
+
 
 
 ?>
@@ -69,7 +92,19 @@ $usersResult = User::getAllUsers();
     <div id="a-main">
       <?php include_once '../templates/admin_nav.php' ?>
       <div id="content">
-        <div class="h5 fw-bold"><i class="fas fa-user-graduate me-2"></i>Alumni</div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="h5 fw-bold mb-0"><i class="fas fa-user-graduate me-2"></i>Alumni</div>
+          <div class="text-end">
+            <select name="" id="" class="form-select float-end" onchange="window.location.href='alumni?type=' + $(this).val()">
+              <option value="all" <?= ($type == 'all') ? 'selected' : '' ?>>All</option>
+              <option value="registered" <?= ($type == 'registered') ? 'selected' : '' ?>>Registered</option>
+              <option value="unverified" <?= ($type == 'unverified') ? 'selected' : '' ?>>Unverified</option>
+              <option value="employed" <?= ($type == 'employed') ? 'selected' : '' ?>>Employed</option>
+            </select>
+          </div>
+
+        </div>
+
         <hr>
         <div class="row">
           <div class="col-md-3">
@@ -243,14 +278,17 @@ $usersResult = User::getAllUsers();
                       <td><?= $status ?></td>
                       <td><?= $acct ?></td>
                       <td>
-                        <div class="dropdown">
+                        <a href="alumni-view?id=<?= $row['id'] ?>" class="btn text-primary smalltxt fw-bolder">
+                          View <i class="fas fa-arrow-right ms-3"></i>
+                        </a>
+                        <!-- <div class="dropdown">
                           <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
                           </button>
                           <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="alumni-view?id=<?= $row['id'] ?>">View</a></li>
                           </ul>
-                        </div>
+                        </div> -->
                       </td>
                     </tr>
                 <?php

@@ -24,6 +24,11 @@ if ($type = Auth::checkLogin()) {
         .dash-card {
             border-left: 7px solid #1a86bc !important;
         }
+
+        .dash-card:hover {
+            cursor: pointer;
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+        }
     </style>
 </head>
 
@@ -37,7 +42,7 @@ if ($type = Auth::checkLogin()) {
 
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3 bg-light">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni?type=registered'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Registered Alumni</div>
                                 <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM users WHERE is_verified = 1")->num_rows ?></div>
@@ -45,7 +50,7 @@ if ($type = Auth::checkLogin()) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni?type=unverified'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Verification Request</div>
                                 <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM users WHERE is_verified = 0")->num_rows ?></div>
@@ -53,7 +58,7 @@ if ($type = Auth::checkLogin()) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni?type=employed'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Employed</div>
                                 <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM users WHERE employment_status != 2")->num_rows ?></div>
@@ -61,7 +66,7 @@ if ($type = Auth::checkLogin()) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Batches</div>
                                 <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(batch) FROM users WHERE is_verified = 1")->num_rows ?></div>
