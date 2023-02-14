@@ -64,6 +64,9 @@ if (isset($_GET['type'])) {
     case 'employed':
       $usersResult = User::getCustomUsers($type);
       break;
+    case 'unemployed':
+      $usersResult = User::getCustomUsers($type);
+      break;
     default:
       $type = 'all';
       $usersResult = User::getAllUsers();
@@ -100,6 +103,7 @@ if (isset($_GET['type'])) {
               <option value="registered" <?= ($type == 'registered') ? 'selected' : '' ?>>Registered</option>
               <option value="unverified" <?= ($type == 'unverified') ? 'selected' : '' ?>>Unverified</option>
               <option value="employed" <?= ($type == 'employed') ? 'selected' : '' ?>>Employed</option>
+              <option value="unemployed" <?= ($type == 'unemployed') ? 'selected' : '' ?>>Unemployed</option>
             </select>
           </div>
 

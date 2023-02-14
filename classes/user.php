@@ -25,6 +25,8 @@ class User
             $where .= 'AND is_verified = 0';
         } elseif ($type == 'employed') {
             $where .= 'AND employment_status != 2';
+        } elseif ($type == 'unemployed') {
+            $where .= 'AND employment_status = 2';
         }
         $sql = "SELECT a.*, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id $where ";
         $results = $conn->query($sql);
