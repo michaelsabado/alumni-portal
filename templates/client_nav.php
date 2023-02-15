@@ -29,11 +29,11 @@ if (isset($_GET['type'])) {
             ?>
                 <div class="ms-auto d-md-block d-sm-none d-none">
                     <div class="dropdown">
-                        <button class="btn d-flex align-items-center dropdown-toggle shadow-sm" id="acct-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn border-0 d-flex align-items-center dropdown-toggle shadow-sm" id="acct-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="../uploads/profile/<?= $_SESSION['user_info']['picture'] ?>" class="me-2" width="40" height="40" alt="">
                             <div class="text-start me-2">
                                 <div class="h6 mb-0"><?= $_SESSION['user_info']['full_name'] ?></div>
-                                <div class="smalltxt text-muted">Batch 2022</div>
+                                <div class="smalltxt text-muted">Batch <?= $_SESSION['auth_user']['batch'] ?></div>
                             </div>
                         </button>
                         <ul class="dropdown-menu border-0 shadow-lg">
@@ -93,11 +93,11 @@ if (isset($_GET['type'])) {
         ?>
             <div class="ms-auto ">
                 <div class="dropdown">
-                    <button class="btn d-flex align-items-center shadow-sm w-100" id="acct-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn border-0 d-flex align-items-center shadow-sm w-100" id="acct-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../uploads/profile/<?= $_SESSION['user_info']['picture'] ?>" class="me-2" width="40" height="40" alt="">
                         <div class="text-start me-2">
                             <div class="h6 mb-0"><?= $_SESSION['user_info']['full_name'] ?></div>
-                            <div class="smalltxt text-muted">Batch 2022</div>
+                            <div class="smalltxt text-muted">Batch <?= $_SESSION['auth_user']['batch'] ?></div>
                         </div>
                         <div class="ms-auto"><i class="fas fa-caret-down"></i></div>
                     </button>

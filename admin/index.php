@@ -30,11 +30,12 @@ if (isset($_GET['department'])) {
     <style>
         .dash-card {
             border-left: 7px solid #1a86bc !important;
+            transition: all 0.15s ease;
         }
 
         .dash-card:hover {
             cursor: pointer;
-            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+            box-shadow: 0 0.5rem 5rem rgba(0, 0, 0, .15) !important;
         }
     </style>
 </head>

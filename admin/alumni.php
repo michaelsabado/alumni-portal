@@ -68,6 +68,16 @@ if (isset($_GET['type'])) {
   <?php include_once '../templates/header.php' ?>
   <title>PCLU - Admin | Alumni</title>
   <link rel="stylesheet" href="admin.css?">
+  <style>
+    .dash-card {
+      transition: all 0.15s ease;
+    }
+
+    .dash-card:hover {
+      border-color: #fff;
+      box-shadow: 0 0rem 2rem rgba(0, 0, 0, .15) !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -79,7 +89,7 @@ if (isset($_GET['type'])) {
         <div class="d-flex align-items-center justify-content-between">
           <div class="h5 fw-bold mb-0"><i class="fas fa-user-graduate me-2"></i>Alumni</div>
           <div class="text-end">
-            <select form="filter-form" name="type" id="typeOpt" class="form-select float-end" onchange="fetchAlumni()">
+            <select form="filter-form" name="type" id="typeOpt" class="form-select float-end dash-card" onchange="fetchAlumni()">
               <option value="all" <?= ($type == 'all') ? 'selected' : '' ?>>All</option>
               <option value="registered" <?= ($type == 'registered') ? 'selected' : '' ?>>Registered</option>
               <option value="unverified" <?= ($type == 'unverified') ? 'selected' : '' ?>>Unverified</option>
@@ -91,7 +101,7 @@ if (isset($_GET['type'])) {
         <hr>
         <div class="row">
           <div class="col-md-3">
-            <div class="card mb-3">
+            <div class="card mb-3 dash-card">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="h6 fw-bold">Manage</div>
@@ -156,7 +166,7 @@ if (isset($_GET['type'])) {
                 </div>
               </div>
             </div>
-            <div class="card mb-3">
+            <div class="card mb-3 dash-card">
               <div class="card-body">
                 <div class="h6 fw-bold">Filter Result</div>
                 <form action="export-csv" method="post" id="filter-form">
