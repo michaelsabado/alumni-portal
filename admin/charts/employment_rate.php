@@ -2,9 +2,17 @@
 
 require_once '../../db/db_config.php';
 
+$dep = $_GET['dep'];
 
 $sql = "SELECT c.description,SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) as employed_users,
 (SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) / COUNT(*)) * 100 as employment_rate from users u RIGHT JOIN courses c ON u.course = c.id GROUP BY c.description";
+
+if ($dep != 0) {
+    $sql = "SELECT c.description,SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) as employed_users,
+    (SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) / COUNT(*)) * 100 as employment_rate from users u RIGHT JOIN courses c ON u.course = c.id WHERE c.department_id LIKE '$dep'  GROUP BY c.description";
+}
+// 
+
 
 $result = $conn->query($sql);
 

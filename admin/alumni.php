@@ -54,27 +54,8 @@ if (isset($_POST['deleteRecord'])) {
 
 if (isset($_GET['type'])) {
   $type = $_GET['type'];
-  switch ($type) {
-    case 'registered':
-      $usersResult = User::getCustomUsers($type);
-      break;
-    case 'unverified':
-      $usersResult = User::getCustomUsers($type);
-      break;
-    case 'employed':
-      $usersResult = User::getCustomUsers($type);
-      break;
-    case 'unemployed':
-      $usersResult = User::getCustomUsers($type);
-      break;
-    default:
-      $type = 'all';
-      $usersResult = User::getAllUsers();
-      break;
-  }
 } else {
   $type = 'all';
-  $usersResult = User::getAllUsers();
 }
 
 
@@ -98,12 +79,10 @@ if (isset($_GET['type'])) {
         <div class="d-flex align-items-center justify-content-between">
           <div class="h5 fw-bold mb-0"><i class="fas fa-user-graduate me-2"></i>Alumni</div>
           <div class="text-end">
-            <select name="" id="" class="form-select float-end" onchange="window.location.href='alumni?type=' + $(this).val()">
+            <select form="filter-form" name="type" id="typeOpt" class="form-select float-end" onchange="fetchAlumni()">
               <option value="all" <?= ($type == 'all') ? 'selected' : '' ?>>All</option>
               <option value="registered" <?= ($type == 'registered') ? 'selected' : '' ?>>Registered</option>
               <option value="unverified" <?= ($type == 'unverified') ? 'selected' : '' ?>>Unverified</option>
-              <option value="employed" <?= ($type == 'employed') ? 'selected' : '' ?>>Employed</option>
-              <option value="unemployed" <?= ($type == 'unemployed') ? 'selected' : '' ?>>Unemployed</option>
             </select>
           </div>
 
@@ -144,7 +123,7 @@ if (isset($_GET['type'])) {
                           $departmentsResult = Department::getAllDepartments();
                           if ($departmentsResult->num_rows > 0) {
                             while ($row = $departmentsResult->fetch_assoc()) {
-                              echo '<li class="list-group-item smalltxt">' . $row['description'] . '<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'department\',' . $row['id'] . ')"></i></li>';
+                              echo '<li class="list-group-item smalltxt ">' . $row['description'] . '<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'department\',' . $row['id'] . ')"></i></li>';
                             }
                           }
                           ?>
@@ -166,7 +145,7 @@ if (isset($_GET['type'])) {
                           $coursesResult = Course::getAllCourses();
                           if ($coursesResult->num_rows > 0) {
                             while ($row = $coursesResult->fetch_assoc()) {
-                              echo '<li class="list-group-item smalltxt">' . $row['description']  . ' (' . $row['count'] . ')<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'course\',' . $row['id'] . ')"></i></li>';
+                              echo '<li class="list-group-item smalltxt" >' . $row['description']  . ' (' . $row['count'] . ')<i class="far fa-trash-alt float-end cursor text-danger" onclick="deleteRecord(\'course\',' . $row['id'] . ')"></i></li>';
                             }
                           }
                           ?>
@@ -179,19 +158,34 @@ if (isset($_GET['type'])) {
             </div>
             <div class="card mb-3">
               <div class="card-body">
-                <div class="h6 fw-bold">Export CSV</div>
-                <form action="export-csv" method="post">
+                <div class="h6 fw-bold">Filter Result</div>
+                <form action="export-csv" method="post" id="filter-form">
+                  <div class="smalltxt mb-1">
+                    Department
+                  </div>
+                  <select name="department" id="depOpt" class="form-select mb-3" onchange="changeDept($(this).val())">
+                    <option value="">All</option>
+                    <?php
+                    $departmentsResult = Department::getAllDepartments();
+                    if ($departmentsResult->num_rows > 0) {
+                      while ($row = $departmentsResult->fetch_assoc()) {
+                    ?>
+                        <option value="<?= $row['id'] ?>"><?= $row['description'] ?></option>
+                    <?php                      }
+                    }
+                    ?>
+                  </select>
                   <div class="smalltxt mb-1">
                     Course
                   </div>
-                  <select name="course" id="" class="form-select mb-3">
+                  <select name="course" id="crsOpt" class="form-select mb-3" onchange="fetchAlumni()">
                     <option value="">All</option>
                     <?php
                     $coursesResult = Course::getAllCourses();
                     if ($coursesResult->num_rows > 0) {
                       while ($row = $coursesResult->fetch_assoc()) {
                     ?>
-                        <option value="<?= $row['id'] ?>"><?= $row['description'] ?></option>
+                        <option value="<?= $row['id'] ?>" class="crs crs-dep-<?= $row['department_id'] ?>"><?= $row['description'] ?></option>
                     <?php
                       }
                     }
@@ -200,7 +194,7 @@ if (isset($_GET['type'])) {
                   <div class="smalltxt mb-1">
                     Batch
                   </div>
-                  <select name="batch" id="" class="form-select mb-3">
+                  <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
                     <option value="">All</option>
                     <?php
                     $batchesResult = User::getBatches();
@@ -216,95 +210,20 @@ if (isset($_GET['type'])) {
                   <div class="smalltxt mb-1">
                     Employment Status
                   </div>
-                  <select name="employment" id="" class="form-select mb-3">
+                  <select name="employment" id="empOpt" class="form-select mb-3" onchange="fetchAlumni()">
                     <option value="">All</option>
 
                     <option value="2">Unemployed</option>
-                    <option value="1">Employed</option>
-                    <option value="3">Self Employed</option>
+                    <option value="1" <?= ($type == "employed") ? 'selected' : '' ?>>Employed</option>
+                    <!-- <option value="3">Self Employed</option> -->
                   </select>
-                  <button type="submit" class="btn w-100 btn-success">Export</button>
+                  <button type="submit" class="btn w-100 btn-success">Export to CSV</button>
                 </form>
               </div>
             </div>
           </div>
           <div class="col-md-9">
-            <table id="example" class="table table-sm table-striped" style="width:100%">
-              <thead>
-                <tr valign="top">
-                  <th>ID</th>
-                  <th>Student ID</th>
-                  <th>Full Name</th>
-                  <th>Batch</th>
-                  <th>Course</th>
-                  <th>Employment Status</th>
-                  <th>Account Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <?php
-
-                if ($usersResult->num_rows > 0) {
-                  $count = 1;
-                  while ($row = $usersResult->fetch_assoc()) {
-
-                    switch ($row['employment_status']) {
-                      case '1':
-                        $status = '<span class="badge rounded-pill text-bg-success fw-normal">Employed</span>';
-                        break;
-                      case '2':
-                        $status = '<span class="badge rounded-pill text-bg-secondary fw-normal">Unemployed</span>';
-                        break;
-                      case '3':
-                        $status = '<span class="badge rounded-pill text-bg-info fw-normal">Self Employed</span>';
-                        break;
-                    }
-
-                    switch ($row['is_verified']) {
-                      case '1':
-                        $acct = '<span class="badge rounded-pill text-bg-primary fw-normal">Verified</span>';
-                        break;
-                      case '0':
-                        $acct = '<span class="badge rounded-pill text-bg-danger fw-normal">Not Verified</span>';
-                        break;
-                    }
-                ?>
-                    <tr valign="middle">
-                      <td>
-                        <?= $count++; ?>
-                      </td>
-                      <td><?= $row['student_id'] ?></td>
-                      <td><?= $row['first_name'] . ' ' . $row['last_name'] ?></td>
-                      <td><?= $row['batch'] ?></td>
-                      <td><?= $row['course'] ?></td>
-                      <td><?= $status ?></td>
-                      <td><?= $acct ?></td>
-                      <td>
-                        <a href="alumni-view?id=<?= $row['id'] ?>" class="btn text-primary smalltxt fw-bolder">
-                          View <i class="fas fa-arrow-right ms-3"></i>
-                        </a>
-                        <!-- <div class="dropdown">
-                          <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="alumni-view?id=<?= $row['id'] ?>">View</a></li>
-                          </ul>
-                        </div> -->
-                      </td>
-                    </tr>
-                <?php
-                  }
-                }
-
-                ?>
-
-
-              </tbody>
-
-            </table>
+            <div class="" id="tbl-res"></div>
           </div>
         </div>
       </div>
@@ -367,9 +286,17 @@ if (isset($_GET['type'])) {
 
   <?php include_once '../templates/footer.php' ?>
   <script>
-    $(document).ready(function() {
-      $('#example').DataTable();
-    });
+    fetchAlumni();
+
+    function fetchAlumni() {
+      $("#tbl-res").load('component/alumni-table', {
+        type: $("#typeOpt").val(),
+        department: $("#depOpt").val(),
+        course: $("#crsOpt").val(),
+        batch: $("#batchOpt").val(),
+        employment: $("#empOpt").val(),
+      });
+    }
 
     function deleteRecord(type, id) {
       // alert($type);
@@ -391,6 +318,20 @@ if (isset($_GET['type'])) {
         }
       })
 
+    }
+
+    function changeDept(val) {
+      console.log(val);
+
+      if (val != '') {
+        $(".crs").addClass('d-none');
+        $(".crs-dep-" + val).removeClass('d-none');
+      } else {
+        $(".crs-dep-" + val).removeClass('d-none');
+      }
+
+      $("#crsOpt").val('');
+      fetchAlumni();
     }
   </script>
 </body>

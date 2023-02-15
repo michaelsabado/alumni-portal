@@ -2,8 +2,15 @@
 
 require_once '../../db/db_config.php';
 
+$dep = $_GET['dep'];
 
-$sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id GROUP BY c.description";
+$sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id  GROUP BY c.description";
+
+if ($dep != 0) {
+
+    $sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id WHERE c.department_id LIKE '$dep' GROUP BY c.description";
+}
+// echo $sql;
 
 $result = $conn->query($sql);
 

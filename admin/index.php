@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../classes/auth.php';
+require_once '../classes/department.php';
 if ($type = Auth::checkLogin()) {
     if ($type != 1) {
         header('Location: ../authentication/login');
@@ -9,6 +10,12 @@ if ($type = Auth::checkLogin()) {
     header('Location: ../authentication/login');
 }
 
+
+if (isset($_GET['department'])) {
+    $department = $_GET['department'];
+} else {
+    $department = 0;
+}
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +80,28 @@ if ($type = Auth::checkLogin()) {
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="px-2">
+                            <hr>
+                            <div class="float-start">
+                                <div class="h6 fw-bold">Select Department</div>
+                                <select name="department" id="depOpt" class="form-select mb-3" onchange="window.location.href='index?department='+$(this).val()">
+                                    <option value="0">All</option>
+                                    <?php
+                                    $departmentsResult = Department::getAllDepartments();
+                                    if ($departmentsResult->num_rows > 0) {
+                                        while ($row = $departmentsResult->fetch_assoc()) {
+                                    ?>
+                                            <option value="<?= $row['id'] ?>" <?= ($department == $row['id']) ? 'selected' : '' ?>><?= $row['description'] ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
+                    </div>
                     <div class="col-md-6">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
@@ -142,7 +170,10 @@ if ($type = Auth::checkLogin()) {
         // }
 
         console.log(colors);
-        $.get('charts/demographics', {}, function(response) {
+        $.get('charts/demographics', {
+            dep: '<?= $department ?>'
+        }, function(response) {
+            console.log(response);
             var data = JSON.parse(response);
             var pie = document.getElementById("myPieChart").getContext('2d');
             var myPieChart = new Chart(pie, {
@@ -168,7 +199,9 @@ if ($type = Auth::checkLogin()) {
             });
 
         });
-        $.get('charts/employment_rate', {}, function(response) {
+        $.get('charts/employment_rate', {
+            dep: '<?= $department ?>'
+        }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
             var bar = document.getElementById("myBarChart").getContext('2d');
@@ -196,7 +229,10 @@ if ($type = Auth::checkLogin()) {
                 }
             });
         });
-        $.get('charts/batch_graduates', {}, function(response) {
+        $.get('charts/batch_graduates', {
+            dep: '<?= $department ?>'
+        }, function(response) {
+            console.log(response);
             var data = JSON.parse(response);
             const hbar = document.getElementById("myHorizontalBarChart").getContext("2d");
             const myHorizontalBarChart = new Chart(hbar, {

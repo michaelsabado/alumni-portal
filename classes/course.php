@@ -6,7 +6,7 @@ class Course
     public static function getAllCourses()
     {
         global $conn;
-        $sql = "SELECT a.id,a.description, COUNT(b.id) as count FROM courses a LEFT JOIN users b ON a.id = b.course GROUP BY a.id";
+        $sql = "SELECT a.id,a.description,a.department_id, COUNT(b.id) as count FROM courses a LEFT JOIN users b ON a.id = b.course GROUP BY a.id";
         $results = $conn->query($sql);
         return $results;
     }
