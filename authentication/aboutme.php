@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 <head>
     <?php include_once '../templates/header.php' ?>
-    <title>Teell us more about you</title>
+    <title>Tell us more about you</title>
     <link rel="stylesheet" href="auth.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
@@ -183,12 +183,45 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    <div class="d-flex">
+
+                        <input class="form-check-input mt-0 me-2" type="checkbox" value="" aria-label="Checkbox for following text input" required>
+                        <div class="smalltxt mb-1">By submitting this form, you have read and agree to our <span type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Terms & Conditions</span>.</div>
+                    </div>
 
                     <div class="text-end mt-2">
                         <button type="submit" name="submit" class="btn btn-lg text-white btn shadow">Submit <i class="fas fa-arrow-right ms-3 mt-1"></i></button>
                     </div>
 
                 </form>
+            </div>
+        </div>
+    </div><!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & Conditions</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                        <li>Acceptance of Terms: By accessing and using this alumni portal, you agree to be bound by these terms and conditions, as well as the provisions of Republic Act No. 10173 or the Data Privacy Act of 2012, and any other applicable laws and regulations.</li>
+                        <li>Personal Information: To access certain features of the alumni portal, you may be required to provide personal information such as your name, contact details, educational background, and other relevant data. Your personal information will be collected, processed, and stored in accordance with the provisions of the Data Privacy Act.</li>
+                        <li>Use of Personal Information: By providing your personal information on the alumni portal, you consent to its use for the purposes of maintaining your alumni records, providing you with updates and information about alumni events and activities, and for other related purposes.</li>
+                        <li>Third-Party Sharing: We may share your personal information with other third-party service providers, such as payment processors and event organizers, for the purpose of facilitating alumni activities and events. We will not share your personal information with any other third parties without your prior consent, except as required by law.</li>
+                        <li>Prohibited Conduct: You agree not to engage in any conduct that violates any applicable laws or regulations, infringes on the rights of any third party, or disrupts or harms the alumni portal or its users.</li>
+                        <li>Termination: We may terminate your access to the alumni portal at any time for any reason, with or without notice.</li>
+                        <li>Disclaimer of Warranties: We provide this alumni portal on an "as is" and "as available" basis, without any warranties or representations of any kind, whether express or implied.</li>
+                        <li>Limitation of Liability: In no event shall we be liable for any damages, including without limitation, direct or indirect, special, incidental, or consequential damages, arising out of or in connection with your use of the alumni portal.</li>
+                        <li>Indemnification: You agree to indemnify and hold us harmless from any claims, damages, or expenses arising out of your use of the alumni portal or any content you upload or submit to the portal.</li>
+                        <li>Governing Law: These terms and conditions shall be governed by and construed in accordance with the laws of the Republic of the Philippines, without giving effect to any principles of conflicts of law.</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
