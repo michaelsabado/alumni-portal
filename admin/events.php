@@ -25,7 +25,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
 
 if (isset($_POST['submit-event'])) {
   $title = $conn->real_escape_string($_POST['title']);
-  $description = $_POST['description'];
+  $description = $conn->real_escape_string($_POST['description']);
   $image = $_FILES['image'];
 
   if (Events::create($title, $description, $image)) {
@@ -39,7 +39,7 @@ if (isset($_POST['submit-event'])) {
 if (isset($_POST['submit-edit-event'])) {
   $id = $_POST['id'];
   $title = $conn->real_escape_string($_POST['title']);
-  $description = $_POST['description'];
+  $description = $conn->real_escape_string($_POST['description']);
   $image = $_FILES['image'];
 
   if (Events::update($id, $title, $description, $image)) {

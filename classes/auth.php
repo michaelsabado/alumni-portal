@@ -65,6 +65,9 @@ class Auth
     public static function updateAdminInformation($data)
     {
         global $conn;
+        $data = array_map(function ($value) use ($conn) {
+            return $conn->real_escape_string($value);
+        }, $data);
         extract($data);
 
         if ($_SESSION['user_info']['email'] != $email && ($conn->query("SELECT * FROM admins where email = '$email'")->num_rows > 0)) {

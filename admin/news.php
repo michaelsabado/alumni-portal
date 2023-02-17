@@ -26,7 +26,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
 if (isset($_POST['submit-news'])) {
   $title = $conn->real_escape_string($_POST['title']);
   $author = $conn->real_escape_string($_POST['author']);
-  $description = $_POST['description'];
+  $description = $conn->real_escape_string($_POST['description']);
   $image = $_FILES['image'];
 
   if (News::create($title, $author, $description, $image)) {
@@ -41,7 +41,7 @@ if (isset($_POST['submit-edit-news'])) {
   $id = $_POST['id'];
   $title = $conn->real_escape_string($_POST['title']);
   $author = $conn->real_escape_string($_POST['author']);
-  $description = $_POST['description'];
+  $description = $conn->real_escape_string($_POST['description']);
   $image = $_FILES['image'];
 
   if (News::update($id, $title, $author, $description, $image)) {

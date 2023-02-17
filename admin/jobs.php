@@ -26,7 +26,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
 if (isset($_POST['submit-job'])) {
     $title = $conn->real_escape_string($_POST['title']);
     $company = $conn->real_escape_string($_POST['company']);
-    $description = $_POST['description'];
+    $description = $conn->real_escape_string($_POST['description']);
     $type = $_POST['type'];
 
     if (Jobs::create($title, $description, $company, $type)) {
@@ -41,7 +41,7 @@ if (isset($_POST['submit-edit-job'])) {
     $id = $_POST['id'];
     $title = $conn->real_escape_string($_POST['title']);
     $company = $conn->real_escape_string($_POST['company']);
-    $description = $_POST['description'];
+    $description = $conn->real_escape_string($_POST['description']);
     $type = $_POST['type'];
 
     if (Jobs::update($id, $title, $description, $company, $type)) {
