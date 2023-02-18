@@ -5,6 +5,27 @@ $message = '';
 $id = $_GET['id'];
 $readType = 'forum';
 $postRes = Posts::getPost($id);
+
+if (isset($_POST['submit-comment'])) {
+    $comment = $conn->real_escape_string($_POST['description']);
+    if (Posts::createComment($row['post_id'], $comment)) {
+        $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Message added.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>';
+    }
+}
+
+if (isset($_POST['id'])) {
+    $postid = $_POST['id'];
+    $conn->query("UPDATE posts SET status = 2 WHERE id = $postid");
+    $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Forum closed.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>';
+}
+
+$postRes = Posts::getPost($id);
 if ($postRes->num_rows > 0) {
     $row = $postRes->fetch_assoc();
 
@@ -20,17 +41,6 @@ if ($postRes->num_rows > 0) {
     header('Location: ' . $type);
 }
 
-if (isset($_POST['submit-comment'])) {
-    $comment = $conn->real_escape_string($_POST['description']);
-    if (Posts::createComment($row['post_id'], $comment)) {
-        $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> Message added.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>';
-    }
-}
-
-$postRes = Posts::getPost($id);
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +60,30 @@ $postRes = Posts::getPost($id);
         <div id="content" style="z-index:9; position: relative" class="mb-5">
             <div class="h4 fw-light text-center bg-white shadow-sm mb-0 text-dark" id="page-head"><i class="fas fa-comments me-2"></i> Forum</div>
             <div class="container pt-5" style="max-width: 800px">
-                <a href="forum" class="btn text-primary"><i class="fas fa-arrow-circle-left"></i> Back</a>
+                <div class="d-flex justify-content-between">
+                    <a href="forum" class="btn text-primary"><i class="fas fa-arrow-circle-left"></i> Back</a>
+                    <?php
+
+                    if ($row['user_id'] == $_SESSION['id'] && $row['status'] == 1) {
+                    ?>
+                        <div class="dropdown">
+                            <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button type="submit" form="delete-form" class="dropdown-item"><i class="fas fa-times-circle me-2"></i> Close Forum</button></li>
+                            </ul>
+                            <form action="" id="delete-form" method="post">
+                                <input type="text" name="id" value="<?= $id ?>" hidden>
+
+                            </form>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
+
                 <?= $message ?>
                 <div id="news" class="p-3 mb-3">
                     <div class="h2 fw-bold "><?= $row['title'] ?></div>
@@ -83,8 +116,10 @@ $postRes = Posts::getPost($id);
                             </div>
                     <?php
                         }
-                    } else {
+                    } else  if ($row['status'] == 1) {
                         echo '<div class="smalltxt fst-italic text-muted">No messages, create one.</div>';
+                    } else {
+                        echo '<div class="smalltxt fst-italic text-muted">Forum closed.</div>';
                     }
 
                     ?>
