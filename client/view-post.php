@@ -21,7 +21,7 @@ if ($postRes->num_rows > 0) {
 }
 
 if (isset($_POST['submit-comment'])) {
-    $comment = $_POST['description'];
+    $comment = $conn->real_escape_string($_POST['description']);
     if (Posts::createComment($row['post_id'], $comment)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Message added.
