@@ -61,7 +61,7 @@ if (isset($_POST['code-submit'])) {
 
 <head>
     <?php include_once '../templates/header.php' ?>
-    <title>Login</title>
+    <title>Admin Password Reset</title>
     <link rel="stylesheet" href="auth.css">
 </head>
 
