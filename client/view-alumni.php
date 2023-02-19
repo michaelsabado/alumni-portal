@@ -125,6 +125,12 @@ $postsResult = Posts::getAllUserPosts($id);
                                                 case 2:
                                                     $str = '<span class="badge bg-danger">Closed</span>';
                                                     break;
+                                                case 3:
+                                                    $str = '<span class="badge bg-dark">Disabled</span>';
+                                                    break;
+                                                case 4:
+                                                    $str = '<span class="badge bg-danger">Not Approved</span>';
+                                                    break;
                                             }
                                     ?>
 

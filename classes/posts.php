@@ -22,9 +22,9 @@ class Posts
         global $conn;
         $id = $_SESSION['id'];
         if ($limit != 0) {
-            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status != 0 OR p.user_id = $id ORDER BY p.id DESC LIMIT $limit";
+            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status NOT IN (0,3,4) OR p.user_id = $id ORDER BY p.id DESC LIMIT $limit";
         } else {
-            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status != 0 OR p.user_id = $id ORDER BY p.id DESC ";
+            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status NOT IN (0,3,4)  OR p.user_id = $id ORDER BY p.id DESC ";
         }
 
         $results = $conn->query($sql);
@@ -35,7 +35,7 @@ class Posts
     {
         global $conn;
         $cid = $_SESSION['id'];
-        $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.user_id = $id AND (p.status != 0 OR p.user_id = $cid) ORDER BY p.id DESC ";
+        $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.user_id = $id AND (p.status NOT IN (0,3,4)  OR p.user_id = $cid) ORDER BY p.id DESC ";
 
 
         $results = $conn->query($sql);

@@ -26,6 +26,12 @@ if (isset($_GET['category'])) {
     case 'closed':
       $category = 2;
       break;
+    case 'disabled':
+      $category = 3;
+      break;
+    case 'declined':
+      $category = 4;
+      break;
   }
 } else {
   $category = 'all';
@@ -51,7 +57,22 @@ if (isset($_POST['approve-post'])) {
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>';
 }
-
+if (isset($_POST['decline-post'])) {
+  $postid = $_POST['decline-id'];
+  $conn->query("UPDATE posts SET status = 4 WHERE id = $postid");
+  $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Discussion is declined.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+}
+if (isset($_POST['disable-post'])) {
+  $postid = $_POST['disable-id'];
+  $conn->query("UPDATE posts SET status = 3 WHERE id = $postid");
+  $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Discussion is now disabled.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+}
 $postsResult = Posts::getAllPostsAdmin($category);
 ?>
 <!DOCTYPE html>
@@ -81,8 +102,13 @@ $postsResult = Posts::getAllPostsAdmin($category);
             <select name="" id="" class="form-select" onchange="window.location.href='?category=' + $(this).val()">
               <option value="all" <?= $category == 'all' ? 'selected' : '' ?>>All</option>
               <option value="approval" <?= $category == '0' ? 'selected' : '' ?>>For Approval</option>
+              <option value="declined" <?= $category == '4' ? 'selected' : '' ?>>Declined</option>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <option value="active" <?= $category == '1' ? 'selected' : '' ?>>Active</option>
               <option value="closed" <?= $category == '2' ? 'selected' : '' ?>>Closed</option>
+              <option value="disabled" <?= $category == '3' ? 'selected' : '' ?>>Disabled</option>
             </select>
           </div>
         </div>
@@ -125,6 +151,12 @@ $postsResult = Posts::getAllPostsAdmin($category);
                       case 2:
                         $str = '<span class="badge bg-danger">Closed</span>';
                         break;
+                      case 3:
+                        $str = '<span class="badge bg-dark">Disabled</span>';
+                        break;
+                      case 4:
+                        $str = '<span class="badge bg-danger">Not Approved</span>';
+                        break;
                     }
                 ?>
                     <tr valign="middle">
@@ -133,7 +165,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
                       </td> -->
                       <td><?= ($row['postpic'] == null) ? '<img class="img-list" src="../uploads/posts/' . $row['postpic'] . '" alt="">' : 'N/A' ?></td>
                       <td><?= $row['title'] ?></td>
-                      <td><?= $row['first_name'] . ' ' . $row['last_name'] ?></td>
+                      <td><a href="alumni-view?id=<?= $row['id'] ?>"><?= $row['first_name'] . ' ' . $row['last_name'] ?></a></td>
                       <td class="smalltxt">
                         <div style="max-height: 70px; overflow: hidden;"><?= $row['description'] ?></div>
                       </td>
@@ -144,22 +176,24 @@ $postsResult = Posts::getAllPostsAdmin($category);
                           <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
                           </button>
-                          <ul class="dropdown-menu">
+                          <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" target="_blank" href="../client/view-post?id=<?= $row['post_id'] ?>"><i class="fas fa-eye me-2"></i> View live</a></li>
-                            <?php
-
-                            if ($row['status'] == 0) {
-                            ?> <li><a class="dropdown-item" onclick="approve(<?= $row['post_id'] ?>)"><i class="fas fa-check-circle me-2"></i> Approve</a></li>
-                            <?php
-                            }
-
-                            ?>
-
+                            <li><a class="dropdown-item <?= (in_array($row['status'], [0, 4])) ? '' : 'd-none' ?>" onclick="approve(<?= $row['post_id'] ?>)"><i class="fas fa-check-circle me-2"></i> Approve</a></li>
+                            <li><a class="dropdown-item <?= (in_array($row['status'], [0])) ? '' : 'd-none' ?>" onclick="decline(<?= $row['post_id'] ?>)"><i class="fas fa-times-circle me-2"></i> Decline</a></li>
+                            <li><a class="dropdown-item <?= (in_array($row['status'], [1])) ? '' : 'd-none' ?>" onclick="disable(<?= $row['post_id'] ?>)"><i class="fas fa-ban me-2"></i> Disable</a></li>
                           </ul>
                         </div>
                         <form action="" method="post">
                           <input type="hidden" name="approve-id" value="<?= $row['post_id'] ?>">
                           <input type="submit" name="approve-post" id="approve-post-<?= $row['post_id'] ?>" class="d-none">
+                        </form>
+                        <form action="" method="post">
+                          <input type="hidden" name="decline-id" value="<?= $row['post_id'] ?>">
+                          <input type="submit" name="decline-post" id="decline-post-<?= $row['post_id'] ?>" class="d-none">
+                        </form>
+                        <form action="" method="post">
+                          <input type="hidden" name="disable-id" value="<?= $row['post_id'] ?>">
+                          <input type="submit" name="disable-post" id="disable-post-<?= $row['post_id'] ?>" class="d-none">
                         </form>
                       </td>
 
@@ -200,6 +234,38 @@ $postsResult = Posts::getAllPostsAdmin($category);
       }).then((result) => {
         if (result.isConfirmed) {
           $("#approve-post-" + id).click();
+        }
+      })
+
+    }
+
+    function decline(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $("#decline-post-" + id).click();
+        }
+      })
+
+    }
+
+    function disable(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $("#disable-post-" + id).click();
         }
       })
 
