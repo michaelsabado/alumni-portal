@@ -3,7 +3,20 @@ require_once '../db/db_config.php';
 
 class Posts
 {
+    public static function getAllPostsAdmin($category)
+    {
+        global $conn;
+        $id = $_SESSION['id'];
+        if ($category == 'all') {
+            $sql = "SELECT *, p.id as post_id, p.picture as postpic FROM posts p INNER JOIN users u ON p.user_id = u.id  ORDER BY p.id DESC ";
+        } else {
+            $sql = "SELECT *, p.id as post_id, p.picture as postpic FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE status = $category ORDER BY p.id DESC ";
+        }
 
+
+        $results = $conn->query($sql);
+        return $results;
+    }
     public static function getAllPosts($limit = 0)
     {
         global $conn;
