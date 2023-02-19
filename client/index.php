@@ -173,6 +173,9 @@ function truncate($string, $limit, $break = " ", $pad = "...")
         <?php include_once '../templates/foot.php' ?>
     </div>
     <?php include_once '../templates/footer.php' ?>
+    <script>
+
+    </script>
 </body>
 
 </html>
