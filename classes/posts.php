@@ -49,7 +49,7 @@ class Posts
     public static function getComments($id)
     {
         global $conn;
-        $sql = "SELECT * FROM comments p INNER JOIN users u ON p.user_id = u.id WHERE post_id = $id";
+        $sql = "SELECT *, p.id as comid FROM comments p INNER JOIN users u ON p.user_id = u.id WHERE post_id = $id";
         $results = $conn->query($sql);
         return $results;
     }

@@ -11,7 +11,7 @@ if ($type = Auth::checkLogin()) {
     header('Location: ../authentication/login');
 }
 
-
+$message = '';
 function truncate($string, $limit, $break = " ", $pad = "...")
 {
     // return with no change if string is shorter than $limit
@@ -30,7 +30,7 @@ if (isset($_POST['submit-post'])) {
 
     if (Posts::create($title, $description, $image)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Success!</strong> Discussion is now created.
+          <strong>Success!</strong> Discussion submitted for admin approval. To delete, open discussion and go to actions ( <i class="fas fa-ellipsis-v"></i> ).
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
     }
@@ -55,7 +55,7 @@ $postsResult = Posts::getAllPosts();
         <div id="content" style="z-index:9; position: relative">
             <div class="h4 fw-light text-center bg-white shadow-sm mb-0 text-dark" id="page-head"><i class="fas fa-comments me-2"></i> Forum</div>
             <div class="container pt-5">
-
+                <?= $message ?>
                 <div class="row mb-5">
 
                     <div class="col-md-3">

@@ -4,7 +4,6 @@ require_once '../classes/posts.php';
 $message = '';
 $id = $_GET['id'];
 $readType = 'forum';
-$postRes = Posts::getPost($id);
 
 if (isset($_POST['submit-comment'])) {
     $comment = $conn->real_escape_string($_POST['description']);
@@ -25,6 +24,21 @@ if (isset($_POST['id'])) {
       </div>';
 }
 
+if (isset($_POST['del-id'])) {
+    $postid = $_POST['del-id'];
+    $conn->query("DELETE FROM posts WHERE id = $postid");
+    header('Location: forum');
+}
+
+if (isset($_POST['del-com-id'])) {
+    $comid = $_POST['del-com-id'];
+    $conn->query("DELETE FROM comments WHERE id = $comid");
+    $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> Message deleted.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 $postRes = Posts::getPost($id);
 if ($postRes->num_rows > 0) {
     $row = $postRes->fetch_assoc();
@@ -41,7 +55,7 @@ if ($postRes->num_rows > 0) {
             break;
     }
 } else {
-    header('Location: ' . $type);
+    header('Location: forum');
 }
 
 
@@ -85,6 +99,25 @@ if ($postRes->num_rows > 0) {
                     }
                     ?>
 
+                    <?php
+                    if ($row['status'] == 0) {
+                    ?>
+                        <div class="dropdown">
+                            <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button type="submit" form="delete-post" class="dropdown-item">Delete discusssion</button></li>
+                            </ul>
+                            <form action="" id="delete-post" method="post">
+                                <input type="text" name="del-id" value="<?= $id ?>" hidden>
+
+                            </form>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
                 </div>
 
                 <?= $message ?>
@@ -107,17 +140,33 @@ if ($postRes->num_rows > 0) {
                         if ($comments->num_rows > 0) {
                             while ($row1 = $comments->fetch_assoc()) {
                         ?>
-                                <div class="card mb-1 border" style="border-radius: 10px;">
+                                <div class="card mb-2 border" style="border-radius: 10px;">
                                     <div class="card-body p-3">
                                         <div class="d-flex">
                                             <img src="../uploads/profile/<?= $row1['picture'] ?>" alt="" style="width: 40px; height: 40px; border-radius: 100px; object-fit: cover" class="me-2">
                                             <div>
                                                 <div class="smalltxt text-primary"><?= $row1['first_name'] . ' ' . $row1['last_name'] ?></div>
                                                 <div class="h6 mb-0" style="white-space: pre-wrap"><?= $row1['description'] ?></div>
-
-
                                             </div>
-                                            <div class="smalltxt text-muted ms-auto"><?= date('M d, Y', strtotime($row1['date_commented'])) ?></div>
+                                            <div class="smalltxt text-muted"> | <?= date('M d, Y', strtotime($row1['date_commented'])) ?></div>
+                                            <?php
+                                            if ($row1['user_id'] == $_SESSION['id']) {
+                                            ?>
+                                                <div class="dropdown ms-auto">
+                                                    <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><button type="submit" form="delete-comment-<?= $row1['comid'] ?>" class="dropdown-item">Delete message</button></li>
+                                                    </ul>
+                                                    <form action="" id="delete-comment-<?= $row1['comid'] ?>" method="post">
+                                                        <input type="text" name="del-com-id" value="<?= $row1['comid'] ?>" hidden>
+
+                                                    </form>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
