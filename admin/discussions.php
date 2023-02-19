@@ -43,6 +43,15 @@ function truncate($string, $limit, $break = " ", $pad = "...")
   return $string . $pad;
 }
 
+if (isset($_POST['approve-post'])) {
+  $postid = $_POST['approve-id'];
+  $conn->query("UPDATE posts SET status = 1 WHERE id = $postid");
+  $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Discussion is now approved & active.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+}
+
 $postsResult = Posts::getAllPostsAdmin($category);
 ?>
 <!DOCTYPE html>
@@ -89,7 +98,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
             <table id="example" class="table table-sm " style="width:100%">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <!-- <th>ID</th> -->
                   <th>Picture</th>
                   <th>Title</th>
                   <th>Author</th>
@@ -119,9 +128,9 @@ $postsResult = Posts::getAllPostsAdmin($category);
                     }
                 ?>
                     <tr valign="middle">
-                      <td>
+                      <!-- <td>
                         <?= $count++; ?>
-                      </td>
+                      </td> -->
                       <td><?= ($row['postpic'] == null) ? '<img class="img-list" src="../uploads/posts/' . $row['postpic'] . '" alt="">' : 'N/A' ?></td>
                       <td><?= $row['title'] ?></td>
                       <td><?= $row['first_name'] . ' ' . $row['last_name'] ?></td>
@@ -149,7 +158,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
                           </ul>
                         </div>
                         <form action="" method="post">
-                          <input type="hidden" name="approve-id" value="<?= $row['id'] ?>">
+                          <input type="hidden" name="approve-id" value="<?= $row['post_id'] ?>">
                           <input type="submit" name="approve-post" id="approve-post-<?= $row['post_id'] ?>" class="d-none">
                         </form>
                       </td>
