@@ -106,7 +106,7 @@ if ($postRes->num_rows > 0) {
                     ?>
 
                     <?php
-                    if ($row['status'] == 0 || $row['status'] == 4) {
+                    if ($row['user_id'] == $_SESSION['id'] && ($row['status'] == 0 || $row['status'] == 4)) {
                     ?>
                         <div class="dropdown">
                             <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
