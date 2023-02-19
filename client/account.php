@@ -303,7 +303,7 @@ if ($usersResult->num_rows > 0) {
                                             <select name="employment_status" id="employment_status" value="" class="form-select mb-3">
                                                 <option value="2" <?= ($user['employment_status'] == 2) ? 'selected' : '' ?>>Unmployed</option>
                                                 <option value="1" <?= ($user['employment_status'] == 1) ? 'selected' : '' ?>>Employed</option>
-                                                <option value="3" <?= ($user['employment_status'] == 1) ? 'selected' : '' ?>>Self Employed</option>
+                                                <option value="3" <?= ($user['employment_status'] == 3) ? 'selected' : '' ?>>Self Employed</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
