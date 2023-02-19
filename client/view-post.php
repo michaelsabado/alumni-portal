@@ -30,6 +30,9 @@ if ($postRes->num_rows > 0) {
     $row = $postRes->fetch_assoc();
 
     switch ($row['status']) {
+        case 0:
+            $str = '<span class="badge bg-warning">For Approval</span>';
+            break;
         case 1:
             $str = '<span class="badge bg-success">Active</span>';
             break;
@@ -91,55 +94,62 @@ if ($postRes->num_rows > 0) {
                     <div class="smalltxt mb-5 "><i class="fas fa-calendar-day me-2"></i> <?= date('M d, Y', strtotime($row['date_posted'])) ?> | <?= $str ?></div>
                     <div class="h6 lh-base"><?= $row['description'] ?></div>
                 </div>
-                <hr>
-                <div class="p-2">
-                    <div class="h6 fw-bold"><i class="fas fa-comment-alt me-2"></i> Messages</div>
-                    <?php
-                    $comments = Posts::getComments($row['post_id']);
+                <?php
+                if ($row['status'] != 0) {
+                ?>
+                    <hr>
 
-                    if ($comments->num_rows > 0) {
-                        while ($row1 = $comments->fetch_assoc()) {
-                    ?>
-                            <div class="card mb-1 border" style="border-radius: 10px;">
-                                <div class="card-body p-3">
-                                    <div class="d-flex">
-                                        <img src="../uploads/profile/<?= $row1['picture'] ?>" alt="" style="width: 40px; height: 40px; border-radius: 100px; object-fit: cover" class="me-2">
-                                        <div>
-                                            <div class="smalltxt text-primary"><?= $row1['first_name'] . ' ' . $row1['last_name'] ?></div>
-                                            <div class="h6 mb-0" style="white-space: pre-wrap"><?= $row1['description'] ?></div>
+                    <div class="p-2">
+                        <div class="h6 fw-bold"><i class="fas fa-comment-alt me-2"></i> Messages</div>
+                        <?php
+                        $comments = Posts::getComments($row['post_id']);
+
+                        if ($comments->num_rows > 0) {
+                            while ($row1 = $comments->fetch_assoc()) {
+                        ?>
+                                <div class="card mb-1 border" style="border-radius: 10px;">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex">
+                                            <img src="../uploads/profile/<?= $row1['picture'] ?>" alt="" style="width: 40px; height: 40px; border-radius: 100px; object-fit: cover" class="me-2">
+                                            <div>
+                                                <div class="smalltxt text-primary"><?= $row1['first_name'] . ' ' . $row1['last_name'] ?></div>
+                                                <div class="h6 mb-0" style="white-space: pre-wrap"><?= $row1['description'] ?></div>
 
 
+                                            </div>
+                                            <div class="smalltxt text-muted ms-auto"><?= date('M d, Y', strtotime($row1['date_commented'])) ?></div>
                                         </div>
-                                        <div class="smalltxt text-muted ms-auto"><?= date('M d, Y', strtotime($row1['date_commented'])) ?></div>
                                     </div>
                                 </div>
-                            </div>
-                    <?php
+                        <?php
+                            }
+                        } else  if ($row['status'] == 1) {
+                            echo '<div class="smalltxt fst-italic text-muted">No messages, create one.</div>';
+                        } else {
+                            echo '<div class="smalltxt fst-italic text-muted">Forum closed.</div>';
                         }
-                    } else  if ($row['status'] == 1) {
-                        echo '<div class="smalltxt fst-italic text-muted">No messages, create one.</div>';
-                    } else {
-                        echo '<div class="smalltxt fst-italic text-muted">Forum closed.</div>';
-                    }
 
-                    ?>
+                        ?>
 
-                    <?php
-                    if ($row['status'] == 1) {
-                    ?>
-                        <hr>
-                        <form action="" method="post">
-                            <div class="d-flex">
-                                <img src="../uploads/profile/<?= $_SESSION['user_info']['picture'] ?>" alt="" style="width: 50px; height: 50px; border-radius: 100px; object-fit: cover; aspect-ratio: 1/1" class="me-2">
-                                <textarea name="description" id="" cols="30" rows="3" class="form-control" placeholder="Write here..." style="border-radius: 10px" required></textarea>
-                                <button type="submit" name="submit-comment" class="btn text-info"><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </form>
-                    <?php
-                    }
-                    ?>
+                        <?php
+                        if ($row['status'] == 1) {
+                        ?>
+                            <hr>
+                            <form action="" method="post">
+                                <div class="d-flex">
+                                    <img src="../uploads/profile/<?= $_SESSION['user_info']['picture'] ?>" alt="" style="width: 50px; height: 50px; border-radius: 100px; object-fit: cover; aspect-ratio: 1/1" class="me-2">
+                                    <textarea name="description" id="" cols="30" rows="3" class="form-control" placeholder="Write here..." style="border-radius: 10px" required></textarea>
+                                    <button type="submit" name="submit-comment" class="btn text-info"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </form>
+                        <?php
+                        }
+                        ?>
 
-                </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
 
 

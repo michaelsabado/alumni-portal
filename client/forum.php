@@ -80,6 +80,9 @@ $postsResult = Posts::getAllPosts();
                             while ($row = $postsResult->fetch_assoc()) {
 
                                 switch ($row['status']) {
+                                    case 0:
+                                        $str = '<span class="badge bg-warning">For Approval</span>';
+                                        break;
                                     case 1:
                                         $str = '<span class="badge bg-success">Active</span>';
                                         break;

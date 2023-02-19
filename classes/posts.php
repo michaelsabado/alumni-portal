@@ -7,10 +7,11 @@ class Posts
     public static function getAllPosts($limit = 0)
     {
         global $conn;
+        $id = $_SESSION['id'];
         if ($limit != 0) {
-            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id ORDER BY p.id DESC LIMIT $limit";
+            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status != 0 OR p.user_id = $id ORDER BY p.id DESC LIMIT $limit";
         } else {
-            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id ORDER BY p.id DESC ";
+            $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.status != 0 OR p.user_id = $id ORDER BY p.id DESC ";
         }
 
         $results = $conn->query($sql);
@@ -20,8 +21,8 @@ class Posts
     public static function getAllUserPosts($id)
     {
         global $conn;
-
-        $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.user_id = $id ORDER BY p.id DESC ";
+        $cid = $_SESSION['id'];
+        $sql = "SELECT *, p.id as post_id FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.user_id = $id AND (p.status != 0 OR p.user_id = $cid) ORDER BY p.id DESC ";
 
 
         $results = $conn->query($sql);
@@ -65,7 +66,7 @@ class Posts
             move_uploaded_file($image["tmp_name"], $target_file);
         }
 
-        $sql = "INSERT INTO `posts`( `user_id`, `picture`, `title`, `description`) VALUES ('$userId','$img' ,'$title','$description')";
+        $sql = "INSERT INTO `posts`( `user_id`, `picture`, `title`, `description`, `status`) VALUES ('$userId','$img' ,'$title','$description', 0)";
         if ($conn->query($sql)) return true;
         return false;
     }
