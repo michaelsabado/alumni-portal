@@ -7,7 +7,7 @@ $readType = 'forum';
 
 if (isset($_POST['submit-comment'])) {
     $comment = $conn->real_escape_string($_POST['description']);
-    if (Posts::createComment($row['post_id'], $comment)) {
+    if (Posts::createComment($id, $comment)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Message added.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -145,15 +145,14 @@ if ($postRes->num_rows > 0) {
                                         <div class="d-flex">
                                             <img src="../uploads/profile/<?= $row1['picture'] ?>" alt="" style="width: 40px; height: 40px; border-radius: 100px; object-fit: cover" class="me-2">
                                             <div>
-                                                <div class="smalltxt text-primary"><?= $row1['first_name'] . ' ' . $row1['last_name'] ?></div>
+                                                <div class="smalltxt text-primary"><?= $row1['first_name'] . ' ' . $row1['last_name'] ?> <span class="text-secondary"> • <?= date('M d, Y', strtotime($row1['date_commented'])) ?></span></div>
                                                 <div class="h6 mb-0" style="white-space: pre-wrap"><?= $row1['description'] ?></div>
                                             </div>
-                                            <div class="smalltxt text-muted"> | <?= date('M d, Y', strtotime($row1['date_commented'])) ?></div>
                                             <?php
                                             if ($row1['user_id'] == $_SESSION['id']) {
                                             ?>
                                                 <div class="dropdown ms-auto">
-                                                    <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn py-0 px-0 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
