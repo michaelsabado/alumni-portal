@@ -167,7 +167,7 @@ if (isset($_POST['submit'])) {
                 console.log(response);
                 $("#codeSpinner").addClass('d-none');
                 if (response == 'Success') {
-                    $("#email").attr('disabled', true);
+                    $("#email").attr('readonly', true);
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
