@@ -27,7 +27,7 @@ if ($type == 'registered') {
     $where .= ' AND is_verified = 0';
 }
 // SQL query to fetch data
-$sql = "SELECT u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, u.birth_date, u.address_line, u.muncity as municipality, u.province, u.contact, u.email, c.description as course, u.batch FROM users u INNER JOIN courses c ON u.course = c.id $where";
+$sql = "SELECT u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, u.birth_date, u.address_line as barangay, u.muncity as municipality, u.province, u.contact, u.email, c.description as course, u.batch FROM users u INNER JOIN courses c ON u.course = c.id $where";
 
 // Execute the query and store the result set
 $result = mysqli_query($conn, $sql);
