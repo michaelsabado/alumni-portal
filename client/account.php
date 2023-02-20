@@ -218,22 +218,22 @@ if ($usersResult->num_rows > 0) {
                                 <form action="" method="post">
                                     <div class="row align-items-center">
                                         <div class="col-md-5">
-                                            <div class="h6">Address Line</div>
+                                            <div class="h6">Barangay</div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="address_line" type="text" class="form-control mb-3" value="<?= $user['address_line'] ?>" required>
+                                            <input name="address_line" type="text" class="form-control mb-3" value="<?= $user['address_line'] ?>" readonly>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="h6">Municipality/City</div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="muncity" type="text" class="form-control mb-3" value="<?= $user['muncity'] ?>" required>
+                                            <input name="muncity" type="text" class="form-control mb-3" value="<?= $user['muncity'] ?>" readonly>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="h6">Province</div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="province" type="text" class="form-control mb-3" value="<?= $user['province'] ?>" required>
+                                            <input name="province" type="text" class="form-control mb-3" value="<?= $user['province'] ?>" readonly>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="h6">Zip Code</div>

@@ -20,7 +20,7 @@ if ($usersResult->num_rows > 0) {
 
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`zip_code`='$zip_code',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
     // echo $sql;
     if ($conn->query($sql)) {
         header('Location: ../authentication/login');
@@ -103,21 +103,34 @@ if (isset($_POST['submit'])) {
                             <input type="text" class="form-control mb-3 border" id="contact" name="contact" value="<?= $contact ?>" required>
                         </div>
                         <div class="col-md-8">
-                            <div class="smalltxt mb-1 fw-bold">Address Line</div>
+                            <div class="smalltxt mb-1 fw-bold">Region</div>
+                            <!-- <input type="text" class="form-control mb-3 border" id="address_line" name="address_line" value="<?= $address_line ?>" required> -->
+                            <select name="" id="region" class="form-select mb-3 border"></select>
+                        </div>
+                        <!-- <div class="col-md-8">
+                            <div class="smalltxt mb-1 fw-bold">Barangay</div>
                             <input type="text" class="form-control mb-3 border" id="address_line" name="address_line" value="<?= $address_line ?>" required>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="smalltxt mb-1 fw-bold">Municipality</div>
-                            <input type="text" class="form-control mb-3 border" id="muncity" name="muncity" value="<?= $muncity ?>" required>
-                        </div>
-                        <div class="col-md-5">
+                            <select name="" id="region" class="form-select mb-3 border"></select>
+                        </div> -->
+                        <div class="col-md-4">
                             <div class="smalltxt mb-1 fw-bold">Province</div>
-                            <input type="text" class="form-control mb-3 border" id="province" name="province" value="<?= $province ?>" required>
+                            <input type="text" class="form-control mb-3 border d-none" id="province" name="province" value="<?= $province ?>" required>
+                            <select name="" id="province1" class="form-select mb-3 border" required></select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
+                            <div class="smalltxt mb-1 fw-bold">Municipality</div>
+                            <input type="text" class="form-control mb-3 border d-none" id="muncity" name="muncity" value="<?= $muncity ?>" required>
+                            <select name="" id="city1" class="form-select mb-3 border" required></select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="smalltxt mb-1 fw-bold">Barangay</div>
+                            <input type="text" class="form-control mb-3 border d-none" id="address_line" name="address_line" value="<?= $muncity ?>" required>
+                            <select name="" id="barangay1" class="form-select mb-3 border" required></select>
+                        </div>
+                        <!-- <div class="col-md-2">
                             <div class="smalltxt mb-1 fw-bold">Zip Code</div>
                             <input type="text" class="form-control mb-3 border" id="zip_code" pattern="[0-9]{4}" name="zip_code" value="<?= $zip_code ?>" placeholder="0000" required>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -227,7 +240,69 @@ if (isset($_POST['submit'])) {
     </div>
     <?php include_once '../templates/footer.php' ?>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
     <script>
+        var my_handlers = {
+
+            fill_provinces: function() {
+
+                var region_code = $(this).val();
+                $('#province1').ph_locations('fetch_list', [{
+                    "region_code": region_code
+                }]);
+                var selectedOptionText = $(this).find('option:selected').text();
+                console.log(selectedOptionText);
+
+            },
+
+            fill_cities: function() {
+
+                var province_code = $(this).val();
+                $('#city1').ph_locations('fetch_list', [{
+                    "province_code": province_code
+                }]);
+                var selectedOptionText = $(this).find('option:selected').text();
+                console.log(selectedOptionText);
+                $("#province").val(selectedOptionText);
+            },
+
+
+            fill_barangays: function() {
+
+                var city_code = $(this).val();
+                $('#barangay1').ph_locations('fetch_list', [{
+                    "city_code": city_code
+                }]);
+                var selectedOptionText = $(this).find('option:selected').text();
+                console.log(selectedOptionText);
+                $("#muncity").val(selectedOptionText);
+            }
+        };
+
+        $(function() {
+            $('#region').on('change', my_handlers.fill_provinces);
+            $('#province1').on('change', my_handlers.fill_cities);
+            $('#city1').on('change', my_handlers.fill_barangays);
+            $('#barangay1').on('change', function() {
+                var selectedOptionText = $(this).find('option:selected').text();
+                console.log(selectedOptionText);
+                $("#address_line").val(selectedOptionText);
+            });
+            $('#region').ph_locations({
+                'location_type': 'regions'
+            });
+            $('#province1').ph_locations({
+                'location_type': 'provinces'
+            });
+            $('#city1').ph_locations({
+                'location_type': 'cities'
+            });
+            $('#barangay1').ph_locations({
+                'location_type': 'barangays'
+            });
+
+            $('#region').ph_locations('fetch_list');
+        });
     </script>
 
 </body>
