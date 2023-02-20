@@ -136,7 +136,7 @@ if ($usersResult->num_rows > 0) {
                                 <hr>
                                 <div class="row align-items-center">
                                     <div class="col-md-6">
-                                        <div class="h6">Address Line</div>
+                                        <div class="h6">Barangay</div>
                                     </div>
                                     <div class="col-md-6">
                                         <input name="address_line" type="text" class="form-control mb-3" value="<?= $user['address_line'] ?>" readonly>
