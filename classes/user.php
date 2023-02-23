@@ -82,10 +82,10 @@ class User
         else return false;
     }
 
-    public static function updateUserInformation($fname, $mname, $lname, $ename, $civil)
+    public static function updateUserInformation($fname, $mname, $lname, $ename, $civil, $birth_date, $gender)
     {
         global $conn;
-        $sql = "UPDATE `users` SET `first_name`='$fname',`middle_name`='$mname',`last_name`='$lname',`extension_name`='$ename',`civil_status`='$civil' WHERE id = " . $_SESSION['id'];
+        $sql = "UPDATE `users` SET `first_name`='$fname',`middle_name`='$mname',`last_name`='$lname',`extension_name`='$ename',`civil_status`='$civil',`birth_date`='$birth_date',`gender`='$gender'  WHERE id = " . $_SESSION['id'];
         $_SESSION['user_info']['full_name'] = $fname . ' ' . $lname;
         if ($conn->query($sql)) return true;
         else return false;

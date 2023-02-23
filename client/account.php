@@ -17,8 +17,9 @@ if (isset($_POST['user-submit'])) {
     $lname = $conn->real_escape_string($_POST['last_name']);
     $ename = $conn->real_escape_string($_POST['extension_name']);
     $civil = $conn->real_escape_string($_POST['civil_status']);
-
-    if (User::updateUserInformation($fname, $mname, $lname, $ename, $civil)) {
+    $birth_date = $_POST['birth_date'];
+    $gender =  $_POST['gender'];
+    if (User::updateUserInformation($fname, $mname, $lname, $ename, $civil, $birth_date, $gender)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>Success!</strong> User information updated.
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -179,7 +180,7 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Birth Date</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control mb-3" value="<?= $user['birth_date'] ?>" disabled>
+                                            <input type="date" name="birth_date" class="form-control mb-3" value="<?= $user['birth_date'] ?>" required>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="h6">Civil Status</div>
@@ -196,9 +197,9 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Gender</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <select id="gender" value="" class="form-select mb-3" readonly disabled>
-                                                <option value="1">Male</option>
-                                                <option value="2">Female</option>
+                                            <select id="gender" name="gender" class="form-select mb-3" required>
+                                                <option value="1" <?= ($user['gender'] == 1) ? 'selected' : '' ?>>Male</option>
+                                                <option value="2" <?= ($user['gender'] == 2) ? 'selected' : '' ?>>Female</option>
                                             </select>
                                             <script>
                                                 $("#gender").val(<?= $user['gender'] ?>);
