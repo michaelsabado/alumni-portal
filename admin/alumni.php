@@ -223,7 +223,7 @@ if (isset($_GET['type'])) {
                   <select name="employment" id="empOpt" class="form-select mb-3" onchange="fetchAlumni()">
                     <option value="">All</option>
 
-                    <option value="2">Unemployed</option>
+                    <option value="2" <?= ($type == "unemployed") ? 'selected' : '' ?>>Unemployed</option>
                     <option value="1" <?= ($type == "employed") ? 'selected' : '' ?>>Employed</option>
                     <!-- <option value="3">Self Employed</option> -->
                   </select>

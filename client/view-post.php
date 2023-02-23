@@ -1,9 +1,12 @@
 <?php
 session_start();
 require_once '../classes/posts.php';
+require_once '../classes/auth.php';
 $message = '';
 $id = $_GET['id'];
 $readType = 'forum';
+
+$type = Auth::checkLogin();
 
 if (isset($_POST['submit-comment'])) {
     $comment = $conn->real_escape_string($_POST['description']);
@@ -106,7 +109,7 @@ if ($postRes->num_rows > 0) {
                     ?>
 
                     <?php
-                    if ($row['user_id'] == $_SESSION['id'] && ($row['status'] == 0 || $row['status'] == 4)) {
+                    if ($type == 2 && $row['user_id'] == $_SESSION['id'] && ($row['status'] == 0 || $row['status'] == 4)) {
                     ?>
                         <div class="dropdown">
                             <button class="btn py-0 " type="button" data-bs-toggle="dropdown" aria-expanded="false">

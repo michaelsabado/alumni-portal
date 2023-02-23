@@ -66,10 +66,16 @@ if (isset($_GET['department'])) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni?type=employed'">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3 emp">
                             <div class="card-body">
-                                <div class="h6 fw-bold">Employed</div>
-                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM users WHERE employment_status != 2")->num_rows ?></div>
+                                <div class="h6 fw-bold">Employed <i class="fas fa-sync text-primary ms-2" onclick="toggleCard(2)"></i></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=employed'"><?= $conn->query("SELECT * FROM users WHERE employment_status != 2")->num_rows ?></div>
+                            </div>
+                        </div>
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3 d-none unemp">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Unemployed <i class="fas fa-sync text-primary ms-2" onclick="toggleCard(1)"></i></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=unemployed'"><?= $conn->query("SELECT * FROM users WHERE employment_status = 2")->num_rows ?></div>
                             </div>
                         </div>
                     </div>
@@ -241,7 +247,7 @@ if (isset($_GET['department'])) {
                 data: {
                     labels: data[0],
                     datasets: [{
-                        label: "# of Votes",
+                        label: "# of Graduates",
                         data: data[1],
                         backgroundColor: colors,
                         borderWidth: 1
@@ -261,6 +267,11 @@ if (isset($_GET['department'])) {
                 }
             });
         });
+
+        function toggleCard() {
+            $('.emp').toggleClass('d-none');
+            $('.unemp').toggleClass('d-none');
+        }
     </script>
 
 </body>
