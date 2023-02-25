@@ -43,7 +43,7 @@ class User
     public static function getUser($id)
     {
         global $conn;
-        $sql = "SELECT a.*, b.description as course, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id WHERE a.id = $id";
+        $sql = "SELECT a.*, b.description as course, b.id as cid, c.description as department FROM users a INNER JOIN courses b ON a.course = b.id INNER JOIN departments c ON b.department_id = c.id WHERE a.id = $id";
         $results = $conn->query($sql);
         return $results;
     }
@@ -91,6 +91,13 @@ class User
         else return false;
     }
 
+    public static function updateAlumniInformation($student_id, $course, $batch, $graduation_date)
+    {
+        global $conn;
+        $sql = "UPDATE `users` SET `student_id`='$student_id',`course`='$course',`batch`='$batch',`graduation_date`='$graduation_date' WHERE id = " . $_SESSION['id'];
+        if ($conn->query($sql)) return true;
+        else return false;
+    }
     public static function updateContactInformation($address, $muncity, $province, $zip, $contact)
     {
         global $conn;
@@ -100,10 +107,10 @@ class User
     }
 
 
-    public static function updateEmploymentInformation($status, $date, $position)
+    public static function updateEmploymentInformation($status, $date_first, $date, $position)
     {
         global $conn;
-        $sql = "UPDATE `users` SET `employment_status`='$status',`employment_date_current`='$date',`current_position`='$position' WHERE id = " . $_SESSION['id'];
+        $sql = "UPDATE `users` SET `employment_status`='$status',`employment_date_first`='$date_first',`employment_date_current`='$date',`current_position`='$position' WHERE id = " . $_SESSION['id'];
         if ($conn->query($sql)) return true;
         else return false;
     }

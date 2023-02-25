@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../classes/user.php';
+require_once '../classes/course.php';
 $message = '';
 $id = $_SESSION['id'];
 
@@ -29,6 +30,21 @@ if (isset($_POST['user-submit'])) {
     }
 }
 
+if (isset($_POST['alumni-submit'])) {
+    $student_id = $conn->real_escape_string($_POST['student_id']);
+    $course = $conn->real_escape_string($_POST['course']);
+    $batch = $conn->real_escape_string($_POST['batch']);
+    $graduation_date = $conn->real_escape_string($_POST['graduation_date']);
+    if (User::updateAlumniInformation($student_id, $course, $batch, $graduation_date)) {
+        $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Success!</strong> Alumni information updated.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    } else {
+        echo 'Failed';
+    }
+}
+
 if (isset($_POST['contact-submit'])) {
     $address = $conn->real_escape_string($_POST['address_line']);
     $muncity = $conn->real_escape_string($_POST['muncity']);
@@ -48,10 +64,11 @@ if (isset($_POST['contact-submit'])) {
 
 if (isset($_POST['employment-submit'])) {
     $status = $conn->real_escape_string($_POST['employment_status']);
+    $date_first = $conn->real_escape_string($_POST['employment_date_first']);
     $date = $conn->real_escape_string($_POST['employment_date_current']);
     $position = $conn->real_escape_string($_POST['current_position']);
 
-    if (User::updateEmploymentInformation($status, $date, $position)) {
+    if (User::updateEmploymentInformation($status, $date_first, $date, $position)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Employment information updated.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -262,33 +279,49 @@ if ($usersResult->num_rows > 0) {
                             <div class="card-body">
                                 <div class="h6 fw-bold"><i class="fas fa-user-graduate me-2"></i> Alumni Information</div>
                                 <hr>
-                                <div class="row align-items-center">
-                                    <div class="col-md-6">
-                                        <div class="h6">Student ID</div>
+                                <form action="" method="post">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="h6">Student ID</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="student_id" type="text" class="form-control mb-3" value="<?= $user['student_id'] ?>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="h6">Course</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="course" class="form-select mb-3" required>
+                                                <?php
+                                                $coursesResult = Course::getAllCourses();
+                                                if ($coursesResult->num_rows > 0) {
+                                                    while ($row = $coursesResult->fetch_assoc()) {
+                                                ?>
+                                                        <option value="<?= $row['id'] ?>" <?= ($row['id'] == $user['cid']) ? 'selected' : '' ?>><?= $row['description'] ?></option>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="h6">Batch</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="batch" type="text" class="form-control mb-3" value="<?= $user['batch'] ?>" pattern="[0-9]{4}" placeholder="ex. 2019" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="h6">Graduation Date</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="graduation_date" type="date" class="form-control mb-3" value="<?= $user['graduation_date'] ?>" required>
+                                        </div>
+                                        <div class="col-md-12 text-end">
+                                            <button class="btn btn-info text-white px-4" type="submit" name="alumni-submit">Save</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input name="student_id" type="text" class="form-control mb-3" value="<?= $user['student_id'] ?>" disabled>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="h6">Course</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input name="course" type="text" class="form-control mb-3" value="<?= $user['course'] ?>" disabled>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="h6">Batch</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input name="batch" type="text" class="form-control mb-3" value="<?= $user['batch'] ?>" disabled>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="h6">Graduation Date</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input name="graduation_date" type="date" class="form-control mb-3" value="<?= $user['graduation_date'] ?>" disabled>
-                                    </div>
+                                </form>
 
-                                </div>
                             </div>
                         </div>
                         <div class="card mb-3">
@@ -311,7 +344,7 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Employment Date (1st)</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control mb-3" value="<?= $user['employment_date_first'] ?>" disabled>
+                                            <input type="date" name="employment_date_first" class="form-control mb-3" value="<?= $user['employment_date_first'] ?>">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="h6">Employment Date (Current)</div>
