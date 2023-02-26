@@ -309,7 +309,9 @@ if (isset($_GET['filter'])) {
         });
         $.get('charts/batch_graduates', {
             dep: '<?= $department ?>',
+            course: '<?= $course ?>',
             batch: '<?= $batch ?>',
+            employment: '<?= $employment ?>'
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
