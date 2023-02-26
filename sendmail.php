@@ -11,7 +11,7 @@ require_once __DIR__ . '/vendor/phpmailer/src/SMTP.php';
 // passing true in constructor enables exceptions in PHPMailer
 
 //variables
-function setData($a, $b, $c, $d)
+function setData($a, $b, $c, $d, $e = null)
 {
 
     $mail = new PHPMailer(true);
@@ -44,10 +44,17 @@ function setData($a, $b, $c, $d)
         $mail->Body = $myBody;
 
 
+        if ($e != null) {
+            // Add the PDF attachment       
+            $mail->setFrom($_SESSION['user_info']['email'],  $_SESSION['user_info']['full_name']);
+            $mail->addAttachment($e, $_SESSION['user_info']['full_name'] . ' Resume.pdf');
+        }
+
+
         $mail->send();
         return true;
     } catch (Exception $e) {
-        echo "Error " . $e;
+        // echo "Error " . $e;
         return false;
     }
 

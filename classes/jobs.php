@@ -59,10 +59,10 @@ class Jobs
         } else return false;
     }
 
-    public static function create($title, $description, $company, $type)
+    public static function create($title, $description, $company, $type, $email)
     {
         global $conn;
-        $sql = "INSERT INTO `jobs`(`status`, `type`, `title`, `description`, `company`) VALUES ('1','$type','$title','$description','$company')";
+        $sql = "INSERT INTO `jobs`(`status`, `type`, `title`, `description`, `company`, `email`) VALUES ('1','$type','$title','$description','$company', '$email')";
         if ($conn->query($sql)) return true;
         return false;
     }

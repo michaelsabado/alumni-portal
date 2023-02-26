@@ -27,9 +27,10 @@ if (isset($_POST['submit-job'])) {
     $title = $conn->real_escape_string($_POST['title']);
     $company = $conn->real_escape_string($_POST['company']);
     $description = $conn->real_escape_string($_POST['description']);
+    $email = $conn->real_escape_string($_POST['email']);
     $type = $_POST['type'];
 
-    if (Jobs::create($title, $description, $company, $type)) {
+    if (Jobs::create($title, $description, $company, $type, $email)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Job is now added.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -91,6 +92,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                     <div class="h5 fw-bold mb-0"><i class="fas fa-briefcase me-2"></i>Job</div>
                     <div>
                         <button class="btn btn-danger d-none me-1" id="bulk-btn" onclick="deleteBulk()">Delete Bulk <i class="far fa-trash-alt ms-2"></i></button>
+                        <button class="btn btn-warning me-1" data-bs-toggle="modal" data-bs-target="#job_applications">Job Applications</button>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Job <i class="fas fa-plus ms-2"></i></button>
                     </div>
                 </div>
@@ -112,6 +114,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Company</th>
+                                    <th>Email</th>
                                     <th class="text-nowrap">Date Posted</th>
                                     <th></th>
                                 </tr>
@@ -144,6 +147,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                                 <div style="max-height: 70px; overflow: hidden;"><?= $row['description'] ?></div>
                                             </td>
                                             <td><?= $row['company'] ?></td>
+                                            <td class="smalltxt"><?= $row['email'] ?></td>
                                             <td><?= date('M d, Y', strtotime($row['date_posted'])) ?></td>
                                             <td>
                                                 <div class="dropdown">
@@ -213,6 +217,10 @@ $newsResult = Jobs::getAllJobsAdmin();
                                 <input type="text" name="company" class="form-control mb-3" required>
                             </div>
                             <div class="col-md-6">
+                                <div class="h6">Company Email</div>
+                                <input type="email" name="email" class="form-control mb-3" required>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="h6">Type</div>
                                 <select name="type" id="" class="form-select mb-3">
                                     <option value="1">Full Time</option>
@@ -257,6 +265,10 @@ $newsResult = Jobs::getAllJobsAdmin();
                                 <input type="text" name="company" id="e-company" class="form-control mb-3" required>
                             </div>
                             <div class="col-md-6">
+                                <div class="h6">Company Email</div>
+                                <input type="email" name="email" id="e-email" class="form-control mb-3" required>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="h6">Type</div>
                                 <select name="type" id="e-type" class="form-select mb-3">
                                     <option value="1">Full Time</option>
@@ -281,10 +293,74 @@ $newsResult = Jobs::getAllJobsAdmin();
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="job_applications" tabindex="-1" aria-labelledby="job_applicationsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="job_applicationsLabel">Job Applications</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="example1" class="table table-sm" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Applicant</th>
+                                <th>Company</th>
+                                <th>Position</th>
+                                <th>Resume</th>
+                                <th>Date Applied</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php
+
+                            $job_app = $conn->query("SELECT CONCAT(u.first_name, ' ', u.last_name) as applicant, j.title, j.company, ja.date_created, ja.resume FROM applications ja INNER JOIN users u ON ja.user_id = u.id INNER JOIN jobs j ON ja.job_id = j.id");
+                            if ($job_app->num_rows > 0) {
+                                $count = 1;
+                                while ($row1 = $job_app->fetch_assoc()) {
+                            ?>
+                                    <tr>
+                                        <td>
+                                            <?= $count++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $row1['applicant'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row1['company'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row1['title'] ?>
+                                        </td>
+                                        <td>
+                                            <a href="../uploads/resumes/<?= $row1['resume'] ?>" class="smalltxt" target="_blank"> <?= $row1['applicant'] ?> Resume.pdf</a>
+                                        </td>
+                                        <td>
+                                            <?= $row1['date_created'] ?>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            }
+
+                            ?>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php include_once '../templates/footer.php' ?>
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
+            $('#example1').DataTable();
         });
 
         // Your editable element
@@ -381,6 +457,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                     $("#e-title").val(response.title);
                     $("#e-company").val(response.company);
                     $("#e-type").val(response.type);
+                    $("#e-email").val(response.email);
                     $("#job-e-description").text(response.description);
                     $("#edit-mark-up").html(response.description);
                 }
