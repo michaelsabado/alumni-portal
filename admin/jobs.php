@@ -317,7 +317,7 @@ $newsResult = Jobs::getAllJobsAdmin();
 
                             <?php
 
-                            $job_app = $conn->query("SELECT CONCAT(u.first_name, ' ', u.last_name) as applicant, j.title, j.company, ja.date_created, ja.resume FROM applications ja INNER JOIN users u ON ja.user_id = u.id INNER JOIN jobs j ON ja.job_id = j.id");
+                            $job_app = $conn->query("SELECT CONCAT(u.first_name, ' ', u.last_name) as applicant, j.title, j.company, ja.date_created, ja.resume FROM applications ja INNER JOIN users u ON ja.user_id = u.id INNER JOIN jobs j ON ja.job_id = j.id ORDER BY ja.id DESC");
                             if ($job_app->num_rows > 0) {
                                 $count = 1;
                                 while ($row1 = $job_app->fetch_assoc()) {
