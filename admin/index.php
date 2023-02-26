@@ -120,7 +120,7 @@ if (isset($_GET['filter'])) {
                                         <div class="smalltxt mb-1">
                                             Course
                                         </div>
-                                        <select name="course" class="form-select mb-3">
+                                        <select id="crsOpt" name="course" class="form-select mb-3">
                                             <option value="all">All</option>
                                             <?php
                                             $coursesResult = Course::getAllCourses();
@@ -276,7 +276,9 @@ if (isset($_GET['filter'])) {
 
         });
         $.get('charts/employment_rate', {
-            dep: '<?= $department ?>'
+            dep: '<?= $department ?>',
+            course: '<?= $course ?>',
+            batch: '<?= $batch ?>',
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
@@ -306,7 +308,8 @@ if (isset($_GET['filter'])) {
             });
         });
         $.get('charts/batch_graduates', {
-            dep: '<?= $department ?>'
+            dep: '<?= $department ?>',
+            batch: '<?= $batch ?>',
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
@@ -347,14 +350,18 @@ if (isset($_GET['filter'])) {
         function changeDept(val) {
             console.log(val);
 
+            $("#crsOpt").val('all');
             if (val != '0') {
+                $("#crsOpt").val('all');
+
                 $(".crs").addClass('d-none');
                 $(".crs-dep-" + val).removeClass('d-none');
             } else {
+                $("#crsOpt").val('<?= $course ?>');
                 $(".crs").removeClass('d-none');
             }
 
-            $("#crsOpt").val('');
+
         }
     </script>
 

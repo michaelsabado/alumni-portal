@@ -3,13 +3,16 @@
 require_once '../../db/db_config.php';
 
 $dep = $_GET['dep'];
+$batch = $_GET['batch'];
 
-$sql = "SELECT batch, COUNT(batch) as num from users GROUP BY batch";
+$where = 'WHERE 1 = 1 ';
 
-if ($dep != 0) {
-    $sql = "SELECT u.batch, COUNT(u.batch) as num from users u inner join courses c on u.course = c.id WHERE c.department_id LIKE '$dep' GROUP BY batch";
-}
-// 
+if ($dep != 0) $where .= "AND c.department_id = '$dep'";
+if ($batch != 'all') $where .= "AND u.batch = '$batch'";
+
+
+$sql = "SELECT u.batch, COUNT(u.batch) as num from users u inner join courses c on u.course = c.id $where GROUP BY batch";
+
 
 $result = $conn->query($sql);
 

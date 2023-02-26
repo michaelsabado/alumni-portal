@@ -28,7 +28,9 @@ $result = $conn->query($sql);
 
 $labels = [];
 $data = [];
-$total = $conn->query("SELECT * FROM users")->num_rows;
+
+$total = $conn->query("SELECT * FROM users u RIGHT JOIN courses c ON u.course = c.id  $where")->num_rows;
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         array_push($labels, $row['description'] . ' (' . number_format(($row['num'] / $total) * 100, 1) . '%)');

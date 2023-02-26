@@ -3,18 +3,23 @@
 require_once '../../db/db_config.php';
 
 $dep = $_GET['dep'];
+$course = $_GET['course'];
+$batch = $_GET['batch'];
+
+$where = 'WHERE 1 = 1 ';
+
+if ($dep != 0) $where .= "AND c.department_id = '$dep'";
+if ($course != 'all') $where .= "AND u.course = '$course'";
+if ($batch != 'all') $where .= "AND u.batch = '$batch'";
 
 $sql = "SELECT c.description, 
 SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) as employed_users,
 ROUND((SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) / COUNT(*)) * 100, 1) as employment_rate 
 FROM users u 
-RIGHT JOIN courses c ON u.course = c.id 
+RIGHT JOIN courses c ON u.course = c.id $where
 GROUP BY c.description";
 
-if ($dep != 0) {
-    $sql = "SELECT c.description,SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) as employed_users,
-    (SUM(CASE WHEN u.employment_status IN (1, 3) THEN 1 ELSE 0 END) / COUNT(*)) * 100 as employment_rate from users u RIGHT JOIN courses c ON u.course = c.id WHERE c.department_id LIKE '$dep'  GROUP BY c.description";
-}
+
 // 
 
 
