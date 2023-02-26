@@ -2,6 +2,8 @@
 session_start();
 require_once '../classes/auth.php';
 require_once '../classes/department.php';
+require_once '../classes/user.php';
+require_once '../classes/course.php';
 if ($type = Auth::checkLogin()) {
     if ($type != 1) {
         header('Location: ../authentication/login');
@@ -11,10 +13,16 @@ if ($type = Auth::checkLogin()) {
 }
 
 
-if (isset($_GET['department'])) {
+if (isset($_GET['filter'])) {
     $department = $_GET['department'];
+    $course = $_GET['course'];
+    $batch = $_GET['batch'];
+    $employment = $_GET['employment'];
 } else {
     $department = 0;
+    $course = 'all';
+    $batch = 'all';
+    $employment = 'all';
 }
 
 ?>
@@ -90,22 +98,80 @@ if (isset($_GET['department'])) {
                     <div class="col-md-12">
                         <div class="px-2">
                             <hr>
-                            <div class="float-start">
-                                <div class="h6 fw-bold">Select Department</div>
-                                <select name="department" id="depOpt" class="form-select mb-3" onchange="window.location.href='index?department='+$(this).val()">
-                                    <option value="0">All</option>
-                                    <?php
-                                    $departmentsResult = Department::getAllDepartments();
-                                    if ($departmentsResult->num_rows > 0) {
-                                        while ($row = $departmentsResult->fetch_assoc()) {
-                                    ?>
-                                            <option value="<?= $row['id'] ?>" <?= ($department == $row['id']) ? 'selected' : '' ?>><?= $row['description'] ?></option>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="smalltxt mb-1">Select Department</div>
+                                        <select name="department" id="depOpt" class="form-select mb-3" onchange="changeDept($(this).val())">
+                                            <option value="0">All</option>
+                                            <?php
+                                            $departmentsResult = Department::getAllDepartments();
+                                            if ($departmentsResult->num_rows > 0) {
+                                                while ($row = $departmentsResult->fetch_assoc()) {
+                                            ?>
+                                                    <option value="<?= $row['id'] ?>" <?= ($department == $row['id']) ? 'selected' : '' ?>><?= $row['description'] ?></option>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="smalltxt mb-1">
+                                            Course
+                                        </div>
+                                        <select name="course" class="form-select mb-3">
+                                            <option value="all">All</option>
+                                            <?php
+                                            $coursesResult = Course::getAllCourses();
+                                            if ($coursesResult->num_rows > 0) {
+                                                while ($row = $coursesResult->fetch_assoc()) {
+                                            ?>
+                                                    <option value="<?= $row['id'] ?>" class="crs crs-dep-<?= $row['department_id'] ?>"><?= $row['description'] ?></option>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="smalltxt mb-1">
+                                            Batch
+                                        </div>
+                                        <select name="batch" class="form-select mb-3">
+                                            <option value="all">All</option>
+                                            <?php
+                                            $batchesResult = User::getBatches();
+                                            if ($batchesResult->num_rows > 0) {
+                                                while ($row = $batchesResult->fetch_assoc()) {
+                                            ?>
+                                                    <option value="<?= $row['batch'] ?>" <?= ($batch == $row['batch']) ? 'selected' : '' ?>><?= $row['batch'] ?></option>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="smalltxt mb-1">
+                                            Employment Status
+                                        </div>
+                                        <select name="employment" class="form-select mb-3">
+                                            <option value="all">All</option>
+
+                                            <option value="2" <?= ($employment == 2) ? 'selected' : '' ?>>Unemployed</option>
+                                            <option value="1" <?= ($employment == 1) ? 'selected' : '' ?>>Employed</option>
+                                            <!-- <option value="3">Self Employed</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="smalltxt mb-1">
+                                            Filter
+                                        </div>
+                                        <button type="submit" name="filter" class="btn text-white w-100 bg-info">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                     </div>
@@ -178,7 +244,10 @@ if (isset($_GET['department'])) {
 
         console.log(colors);
         $.get('charts/demographics', {
-            dep: '<?= $department ?>'
+            dep: '<?= $department ?>',
+            course: '<?= $course ?>',
+            batch: '<?= $batch ?>',
+            employment: '<?= $employment ?>'
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
@@ -271,6 +340,21 @@ if (isset($_GET['department'])) {
         function toggleCard() {
             $('.emp').toggleClass('d-none');
             $('.unemp').toggleClass('d-none');
+        }
+
+        changeDept($("#depOpt").val());
+
+        function changeDept(val) {
+            console.log(val);
+
+            if (val != '0') {
+                $(".crs").addClass('d-none');
+                $(".crs-dep-" + val).removeClass('d-none');
+            } else {
+                $(".crs").removeClass('d-none');
+            }
+
+            $("#crsOpt").val('');
         }
     </script>
 

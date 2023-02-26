@@ -337,7 +337,7 @@ if (isset($_GET['type'])) {
         $(".crs").addClass('d-none');
         $(".crs-dep-" + val).removeClass('d-none');
       } else {
-        $(".crs-dep-" + val).removeClass('d-none');
+        $(".crs").removeClass('d-none');
       }
 
       $("#crsOpt").val('');

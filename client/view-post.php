@@ -41,6 +41,15 @@ if (isset($_POST['del-com-id'])) {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
+if (isset($_POST['submit-edit-comment'])) {
+    $comid = $_POST['com-id'];
+    $content = $conn->real_escape_string($_POST['com-content']);
+    $conn->query("UPDATE comments SET description = '$content'WHERE id = $comid");
+    $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> Message updated.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 
 $postRes = Posts::getPost($id);
 if ($postRes->num_rows > 0) {
@@ -161,10 +170,11 @@ if ($postRes->num_rows > 0) {
                                             if ($row1['user_id'] == $_SESSION['id']) {
                                             ?>
                                                 <div class="dropdown ms-auto">
-                                                    <button class="btn py-0 px-0 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn py-0 ps-3 px-0  border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
+                                                        <li><button type="button" class="dropdown-item" data-id="<?= $row1['comid'] ?>" data-content="<?= htmlspecialchars($row1['description']) ?>" onclick="loadEdit($(this))">Edit message</button></li>
                                                         <li><button type="submit" form="delete-comment-<?= $row1['comid'] ?>" class="dropdown-item">Delete message</button></li>
                                                     </ul>
                                                     <form action="" id="delete-comment-<?= $row1['comid'] ?>" method="post">
@@ -213,7 +223,40 @@ if ($postRes->num_rows > 0) {
         </div>
         <?php include_once '../templates/foot.php' ?>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="editForm">
+                        <input type="hidden" name="com-id" id="com-id">
+                        <textarea name="com-content" id="com-content" cols="30" rows="5" class="form-control" placeholder="Write here . . ." required></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white border-0" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="editForm" name="submit-edit-comment" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php include_once '../templates/footer.php' ?>
+
+    <script>
+        function loadEdit(e) {
+            var id = e.attr('data-id');
+            var content = e.attr('data-content');
+
+            $("#com-id").val(id);
+            $("#com-content").val(content);
+
+            $("#editModal").modal("show")
+        }
+    </script>
 </body>
 
 </html>
