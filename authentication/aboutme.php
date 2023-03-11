@@ -177,7 +177,7 @@ if (isset($_POST['submit'])) {
                                     <select name="employment_status" id="employment_status" value="" class="form-select mb-3" onchange="checkEmp($(this))">
                                         <option value="2" <?= ($employment_status == 2) ? 'selected' : '' ?>>Unemployed</option>
                                         <option value="1" <?= ($employment_status == 1) ? 'selected' : '' ?>>Employed</option>
-                                        <option value="3" <?= ($employment_status == 3) ? 'selected' : '' ?>>Self Employed</option>
+                                        <!-- <option value="3" <?= ($employment_status == 3) ? 'selected' : '' ?>>Self Employed</option> -->
                                     </select>
 
 
