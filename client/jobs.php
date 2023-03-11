@@ -41,11 +41,19 @@ $archived = Jobs::getAllArchived();
 
                             if ($jobsResult->num_rows > 0) {
                                 while ($row = $jobsResult->fetch_assoc()) {
+                                    switch ($row['type']) {
+                                        case 1:
+                                            $type = 'Fulltime';
+                                            break;
+                                        case 2:
+                                            $type = 'Contractual';
+                                            break;
+                                    }
                             ?>
                                     <div class="col-md-4 jobs-data" data-title="<?= $row['title'] ?>" data-company="<?= $row['company'] ?>">
                                         <div class="card jobs-card mb-3 h-100">
                                             <div class="card-body">
-                                                <div class="smalltxt fw-normal badge bg-light border text-dark mb-3">Fulltime</div>
+                                                <div class="smalltxt fw-normal badge bg-light border text-dark mb-3"><?= $type ?></div>
                                                 <div class="h6 fw-bold mb-0"><?= $row['title'] ?></div>
                                                 <div class="h6 smalltxt"><?= $row['company'] ?></div>
                                             </div>
@@ -76,11 +84,19 @@ $archived = Jobs::getAllArchived();
 
                             if ($archived->num_rows > 0) {
                                 while ($row = $archived->fetch_assoc()) {
+                                    switch ($row['type']) {
+                                        case 1:
+                                            $type = 'Fulltime';
+                                            break;
+                                        case 2:
+                                            $type = 'Contractual';
+                                            break;
+                                    }
                             ?>
                                     <div class="col-md-4 ">
                                         <div class="card jobs-card mb-3 h-100">
                                             <div class="card-body">
-                                                <div class="smalltxt fw-normal badge bg-light border text-dark mb-3">Fulltime</div>
+                                                <div class="smalltxt fw-normal badge bg-light border text-dark mb-3"><?= $type ?></div>
                                                 <div class="h6 fw-bold mb-0"><?= $row['title'] ?></div>
                                                 <div class="h6 smalltxt"><?= $row['company'] ?></div>
                                             </div>
