@@ -2,7 +2,9 @@
 session_start();
 require_once '../classes/auth.php';
 $first_name = '';
+$middle_name = '';
 $last_name = '';
+$suffix = '';
 $message = '';
 $email = "";
 
@@ -15,7 +17,9 @@ if (Auth::checkLogin()) {
 if (isset($_POST['submit'])) {
     $message = '<i class="fas fa-exclamation-circle"></i> ';
     $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
+    $middle_name = mysqli_real_escape_string($conn, $_POST['middle_name']);
     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
+    $suffix = mysqli_real_escape_string($conn, $_POST['extension_name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $code = mysqli_real_escape_string($conn, $_POST['code']);
     $password = $_POST['password'];
@@ -38,7 +42,7 @@ if (isset($_POST['submit'])) {
                 if (isset($_SESSION['email_code']) && $code == $_SESSION['email_code']) {
                     // insert to DB
                     $password = md5($password);
-                    $sql = "INSERT INTO `users`( `first_name`, `last_name`, `email`, `password`, `picture`, `email_verified_at`, `is_verified`) VALUES ('$first_name','$last_name','$email','$password', 'default.webp', '" . date('Y-m-d') . "','0')";
+                    $sql = "INSERT INTO `users`( `first_name`, `middle_name`, `last_name`, `extension_name`, `email`, `password`, `picture`, `email_verified_at`, `is_verified`) VALUES ('$first_name', '$middle_name' ,'$last_name', '$suffix', '$email','$password', 'default.webp', '" . date('Y-m-d') . "','0')";
                     if ($conn->query($sql)) {
                         $id = $conn->insert_id;
                         header('Location: aboutme?id=' . $id);
@@ -100,8 +104,20 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
+                                <input type="text" class="form-control mb-3 border" id="middle_name" name="middle_name" placeholder="Middle Name" value="<?= $middle_name ?>" required>
+                                <label for="name">Midde Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control mb-3 border" id="last_name" name="last_name" placeholder="Last Name" value="<?= $last_name ?>" required>
                                 <label for="last_name">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control mb-3 border" id="last_name" name="extension_name" placeholder="Suffix" value="<?= $suffix ?>">
+                                <label for="last_name">Suffix <span class="smalltxt">(Optional)</span></label>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -188,6 +204,14 @@ if (isset($_POST['submit'])) {
                         position: 'top-end',
                         icon: 'info',
                         title: 'Email already in used.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else if (response == 'Error') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Sending failed.',
                         showConfirmButton: false,
                         timer: 1500
                     })

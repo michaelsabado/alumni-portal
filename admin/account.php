@@ -121,7 +121,7 @@ if (isset($_POST['update-password'])) {
                                 <div class="col-md-6"></div>
 
                                 <div class="col-md-2">
-                                    <div class="h6">Extension</div>
+                                    <div class="h6">Suffix</div>
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control mb-3" name="extension_name" value="<?= $extension_name ?>">

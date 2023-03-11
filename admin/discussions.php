@@ -125,7 +125,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
               <thead>
                 <tr>
                   <!-- <th>ID</th> -->
-                  <th>Picture</th>
+                  <!-- <th>Picture</th> -->
                   <th>Title</th>
                   <th>Author</th>
                   <th>Content</th>
@@ -163,7 +163,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
                       <!-- <td>
                         <?= $count++; ?>
                       </td> -->
-                      <td><?= ($row['postpic'] == null) ? '<img class="img-list" src="../uploads/posts/' . $row['postpic'] . '" alt="">' : 'N/A' ?></td>
+                      <!-- <td><?= ($row['postpic'] == null) ? '<img class="img-list" src="../uploads/posts/' . $row['postpic'] . '" alt="">' : 'N/A' ?></td> -->
                       <td><?= $row['title'] ?></td>
                       <td><a href="alumni-view?id=<?= $row['id'] ?>"><?= $row['first_name'] . ' ' . $row['last_name'] ?></a></td>
                       <td class="smalltxt">

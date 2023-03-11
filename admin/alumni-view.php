@@ -91,7 +91,7 @@ if ($usersResult->num_rows > 0) {
                                         <input name="last_name" type="text" class="form-control mb-3" value="<?= $user['last_name'] ?>" readonly>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="h6">Extension Name</div>
+                                        <div class="h6">Suffix</div>
                                     </div>
                                     <div class="col-md-6">
                                         <input name="extension_name" type="text" class="form-control mb-3" value="<?= $user['extension_name'] ?>" readonly>

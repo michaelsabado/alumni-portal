@@ -8,7 +8,7 @@ $batch = $_POST['batch'];
 $employment = $_POST['employment'];
 $where = '';
 
-$where = 'WHERE 1 = 1';
+$where = 'WHERE birth_date IS NOT NULL';
 if ($department != '') $where .= " AND c.department_id = '$department'";
 if ($course != '') $where .= " AND u.course = '$course'";
 if ($batch != '') $where .= " AND u.batch = '$batch'";

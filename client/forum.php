@@ -146,10 +146,10 @@ $postsResult = Posts::getAllPosts();
                                 <div class="h6">Topic or Title</div>
                                 <input type="text" name="title" class="form-control mb-3" required>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="h6">Image</div>
                                 <input type="file" accept="image/*" name="image" class="form-control mb-3">
-                            </div>
+                            </div> -->
                         </div>
 
                         <textarea name="description" id="news-description" cols="30" rows="10" hidden></textarea>
