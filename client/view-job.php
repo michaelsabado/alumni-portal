@@ -20,7 +20,7 @@ if (isset($_POST['apply'])) {
     $target_file = $target_dir . $pdf;
     move_uploaded_file($_FILES['resume']["tmp_name"], $target_file);
 
-    if (setData('Job Application - ' . $row['title'] . ' [' . $row['company'] . ']', $pitch, $row['email'], $row['company'], $target_file)) {
+    if (setData('Job Application - ' . $row['title'] . ' [' . $row['company'] . ']', $pitch, $row['email'], $row['company'], $target_file, $_SESSION['user_info']['email'])) {
         $sql = "INSERT INTO `applications`(`job_id`, `user_id`, `resume`, `description`) VALUES ('" . $row['id'] . "','" . $_SESSION['id'] . "','$pdf','$pitch')";
         $conn->query($sql);
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">

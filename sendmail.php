@@ -11,7 +11,7 @@ require_once __DIR__ . '/vendor/phpmailer/src/SMTP.php';
 // passing true in constructor enables exceptions in PHPMailer
 
 //variables
-function setData($a, $b, $c, $d, $e = null)
+function setData($a, $b, $c, $d, $e = null, $app = null)
 {
 
     $mail = new PHPMailer(true);
@@ -36,7 +36,12 @@ function setData($a, $b, $c, $d, $e = null)
         // Sender and recipient settings
         $mail->setFrom('pclualumniportal@gmail.com', 'PCLU Alumni Portal');
         $mail->addAddress($toEmail, $toName);
-        $mail->addReplyTo('pclualumniportal@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
+        if ($e !== null) {
+            $mail->addReplyTo($app, $app); // to set the reply to
+        } else {
+            $mail->addReplyTo('pclualumniportal@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
+        }
+
 
         // Setting the email content
         $mail->IsHTML(true);
