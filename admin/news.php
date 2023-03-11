@@ -106,7 +106,7 @@ $newsResult = News::getAllNews();
         </form>
         <hr>
         <?= $message ?>
-        <div class="card">
+        <div class="card" style="min-height: 500px">
           <div class="card-body table-responsive">
 
             <table id="example" class="table table-sm " style="width:100%">
