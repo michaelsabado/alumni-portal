@@ -66,7 +66,7 @@ class Posts
         $results = $conn->query($sql);
         return $results;
     }
-    public static function create($title, $description, $image)
+    public static function create($title, $description)
     {
         global $conn;
         $userId = $_SESSION['id'];
