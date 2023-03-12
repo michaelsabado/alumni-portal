@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control mb-3 border" id="middle_name" name="middle_name" placeholder="Middle Name" value="<?= $middle_name ?>" required>
+                                <input type="text" class="form-control mb-3 border" id="middle_name" name="middle_name" placeholder="Middle Name" value="<?= $middle_name ?>">
                                 <label for="name">Midde Name</label>
                             </div>
                         </div>
