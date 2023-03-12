@@ -213,7 +213,7 @@ if ($usersResult->num_rows > 0) {
                                     </div>
                                     <div class="col-md-6">
                                         <select name="employment_status" id="employment_status" value="" class="form-select mb-3" readonly disabled>
-                                            <option value="3">Self Employed</option>
+                                            <!-- <option value="3">Self Employed</option> -->
                                             <option value="1">Employed</option>
                                             <option value="2">Unmployed</option>
 
