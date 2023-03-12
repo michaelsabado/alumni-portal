@@ -165,7 +165,7 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">Old password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="old_pass" class="form-control mb-3" required>
+                                    <input type="password" name="old_pass" class="form-control mb-3 pass-prev" required>
                                 </div>
                                 <div class="col-md-6"></div>
 
@@ -173,7 +173,7 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">New Password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="new_pass" class="form-control" pattern=".{8,}" required>
+                                    <input type="password" name="new_pass" class="form-control pass-prev" pattern=".{8,}" required>
                                     <div class="smalltxt text-muted mb-3">8 characters above</div>
                                 </div>
                                 <div class="col-md-6"></div>
@@ -182,14 +182,18 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">Confirm Password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="confirm_pass" class="form-control mb-3" required>
+                                    <input type="password" name="confirm_pass" class="form-control mb-3 pass-prev" required>
                                 </div>
                                 <div class="col-md-6"></div>
 
                                 <div class="col-md-2">
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="submit" name="update-password" class="btn btn-info float-end text-white px-3">Update</button>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <i class="fas fa-eye-slash me-4 preview-pass cursor text-primary"></i>
+                                        <button type="submit" name="update-password" class="btn btn-info float-end text-white px-3">Update</button>
+                                    </div>
+
                                 </div>
                             </div>
                         </form>

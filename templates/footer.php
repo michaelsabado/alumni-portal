@@ -17,4 +17,19 @@
     $("#image-viewer .close").click(function() {
         $('#image-viewer').hide();
     });
+
+    var pass_preview = false;
+    $('.preview-pass').click(function() {
+        if (!pass_preview) {
+            pass_preview = true;
+            $(".pass-prev").attr('type', 'text');
+            $(this).addClass('fa-eye');
+            $(this).removeClass('fa-eye-slash');
+        } else {
+            pass_preview = false;
+            $(".pass-prev").attr('type', 'password');
+            $(this).removeClass('fa-eye');
+            $(this).addClass('fa-eye-slash');
+        }
+    })
 </script>

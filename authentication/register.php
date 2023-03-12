@@ -146,16 +146,20 @@ if (isset($_POST['submit'])) {
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="password" class="form-control border" id="password" placeholder="Password" name="password" pattern=".{8,}" required>
+                                <input type="password" class="form-control border pass-prev" id="password" placeholder="Password" name="password" pattern=".{8,}" required>
                                 <label for="password">Password</label>
                             </div>
                             <div class="smalltxt mb-2 mt-1 text-muted">8 characters above</div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control  mb-3 border" id="confirm_password" placeholder="Confirm Password" name="confirm_password" required>
+                                <input type="password" class="form-control  mb-3 border pass-prev" id="confirm_password" placeholder="Confirm Password" name="confirm_password" required>
                                 <label for="confirm_password">Confirm Password</label>
                             </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end"></i>
+
                         </div>
                     </div>
 
