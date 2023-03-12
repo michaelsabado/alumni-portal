@@ -23,7 +23,7 @@ class Auth
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            if ($row['birth_date'] === null) {
+            if ($row['birth_date'] === null && $type == 2) {
                 return ['is_authenticated' => false, 'message' => 'Please continue your registration <a href="aboutme?id=' . $row['id'] . '">here</a>.'];
             }
             if ($row['password'] == md5($password)) {
