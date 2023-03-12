@@ -67,7 +67,7 @@ function setData($a, $b, $c, $d, $e = null, $app = null)
         $mail->send();
         return true;
     } catch (Exception $e) {
-        echo "Mail error: " . $mail->ErrorInfo;
+        var_dump($mail->ErrorInfo);
         return false;
     }
 
