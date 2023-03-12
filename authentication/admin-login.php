@@ -73,9 +73,11 @@ if (isset($_POST['submit'])) {
                         <label for="emailFLoat">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control  mb-5 border" id="passFloat" placeholder="Password" name="password" required>
+                        <input type="password" class="form-control pass-prev mb-5 border" id="passFloat" placeholder="Password" name="password" required>
                         <label for="passFloat">Password</label>
                     </div>
+
+                    <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end"></i>
                     <div class="g-recaptcha mb-3" data-sitekey="6LecUlMkAAAAAGZe8uSpiMjbWXsk0oENDiiHIhpX"></div>
                     <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn shadow">Log In <i class="fas fa-arrow-right float-end mt-1"></i></button>
                     <div class="text-center mt-3">
