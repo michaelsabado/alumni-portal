@@ -26,9 +26,8 @@ function truncate($string, $limit, $break = " ", $pad = "...")
 if (isset($_POST['submit-post'])) {
     $title = $conn->real_escape_string($_POST['title']);
     $description = $conn->real_escape_string($_POST['description']);
-    $image = $_FILES['image'];
 
-    if (Posts::create($title, $description, $image)) {
+    if (Posts::create($title, $description)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>Success!</strong> Discussion submitted for admin approval. To delete, open discussion and go to actions ( <i class="fas fa-ellipsis-v"></i> ).
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

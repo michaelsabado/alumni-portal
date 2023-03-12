@@ -70,16 +70,16 @@ class Posts
     {
         global $conn;
         $userId = $_SESSION['id'];
-        if ($image['size'] == 0) {
-            $img = null;
-        } else {
-            $target_dir = "../uploads/posts/";
-            $img = uniqid()  . basename($image["name"]);
-            $target_file = $target_dir . $img;
-            move_uploaded_file($image["tmp_name"], $target_file);
-        }
+        // if ($image['size'] == 0) {
+        //     $img = null;
+        // } else {
+        //     $target_dir = "../uploads/posts/";
+        //     $img = uniqid()  . basename($image["name"]);
+        //     $target_file = $target_dir . $img;
+        //     move_uploaded_file($image["tmp_name"], $target_file);
+        // }
 
-        $sql = "INSERT INTO `posts`( `user_id`, `picture`, `title`, `description`, `status`) VALUES ('$userId','$img' ,'$title','$description', 0)";
+        $sql = "INSERT INTO `posts`( `user_id`, `title`, `description`, `status`) VALUES ('$userId' ,'$title','$description', 0)";
         if ($conn->query($sql)) return true;
         return false;
     }
