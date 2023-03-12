@@ -24,22 +24,30 @@ function setData($a, $b, $c, $d, $e = null, $app = null)
     try {
         // Server settings
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+        // $mail->isSMTP();
+        // $mail->Host = 'sandbox.smtp.mailtrap.io';
+        // $mail->SMTPAuth = true;
+        // $mail->Port = 2525;
+        // $mail->Username = '7bbcdd4a9cb05c';
+        // $mail->Password = '71277b41b355a5';
+
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->Username = 'michaelsabado.ms04@gmail.com'; // YOUR gmail email
-        $mail->Password = 'phexfkpdvbnjrtyk'; // YOUR gmail password
+        $mail->Username = 'alumniportalpclu@gmail.com'; // YOUR gmail email
+        $mail->Password = 'nwdgjkpisuoxfvtd'; // YOUR gmail password
 
         // Sender and recipient settings
-        $mail->setFrom('pclualumniportal@gmail.com', 'PCLU Alumni Portal');
+        $mail->setFrom('alumniportalpclu@gmail.com', 'PCLU Alumni Portal');
         $mail->addAddress($toEmail, $toName);
         if ($e !== null) {
             $mail->addReplyTo($app, $app); // to set the reply to
         } else {
-            $mail->addReplyTo('pclualumniportal@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
+            $mail->addReplyTo('alumniportalpclu@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
         }
 
 
@@ -59,7 +67,7 @@ function setData($a, $b, $c, $d, $e = null, $app = null)
         $mail->send();
         return true;
     } catch (Exception $e) {
-        // echo "Error " . $e;
+        echo "Mail error: " . $mail->ErrorInfo;
         return false;
     }
 
