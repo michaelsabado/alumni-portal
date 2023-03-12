@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
                                     <div class="h6 mb-0">Alumni Information</div>
                                     <hr>
 
-                                    <div class="smalltxt mb-1 fw-bold">Student ID</div>
+                                    <div class="smalltxt mb-1 fw-bold">Student ID <span class="smalltxt">(Optional)</span></div>
                                     <input type="text" class="form-control mb-3 border" id="student_id" name="student_id" value="<?= $student_id ?>">
 
                                     <div class="smalltxt mb-1 fw-bold">Course</div>
