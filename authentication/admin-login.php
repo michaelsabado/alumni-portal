@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 
                     <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end"></i>
                     <div class="g-recaptcha mb-3" data-sitekey="6LecUlMkAAAAAGZe8uSpiMjbWXsk0oENDiiHIhpX"></div>
-                    <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn shadow">Log In <i class="fas fa-arrow-right float-end mt-1"></i></button>
+                    <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn-primary shadow">Log In <i class="fas fa-arrow-right float-end mt-1"></i></button>
                     <div class="text-center mt-3">
                         <a href="admin-forgot-password" class="text-decoration-none">Forgot password?</a>
                     </div>

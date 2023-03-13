@@ -118,7 +118,7 @@ if (isset($_POST['code-submit'])) {
                                 <input type="text" class="form-control mb-3 border" id="emailFLoat" placeholder="name@example.com" name="email" value="<?= $email ?>" required>
                                 <label for="emailFLoat">Email address</label>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn shadow">Send email <i class="fas fa-arrow-right float-end mt-1"></i></button>
+                            <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn-primary shadow">Send email <i class="fas fa-arrow-right float-end mt-1"></i></button>
                             <div class="text-center mt-3">
                                 <a href="admin-login" class="text-decoration-none">Go back to admin login</a>
                             </div>

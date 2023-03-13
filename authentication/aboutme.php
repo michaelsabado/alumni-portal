@@ -204,7 +204,7 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="text-end mt-2">
-                        <button type="submit" name="submit" class="btn btn-lg text-white btn shadow">Submit <i class="fas fa-arrow-right ms-3 mt-1"></i></button>
+                        <button type="submit" name="submit" class="btn btn-lg text-white btn-primary shadow">Submit <i class="fas fa-arrow-right ms-3 mt-1"></i></button>
                     </div>
 
                 </form>

@@ -168,7 +168,7 @@ if (isset($_GET['filter'])) {
                                         <div class="smalltxt mb-1">
                                             Filter
                                         </div>
-                                        <button type="submit" name="filter" class="btn text-white w-100 bg-info">Filter</button>
+                                        <button type="submit" name="filter" class="btn text-white w-100 bg-primary">Filter</button>
                                     </div>
                                 </div>
                             </form>
