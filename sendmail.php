@@ -38,8 +38,8 @@ function setData($a, $b, $c, $d, $e = null, $app = null)
         // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         // $mail->Port = 587;
 
-        $mail->Username = 'alumniportalpclu@gmail.com'; // YOUR gmail email
-        $mail->Password = 'nwdgjkpisuoxfvtd'; // YOUR gmail password
+        // $mail->Username = 'alumniportalpclu@gmail.com'; // YOUR gmail email
+        // $mail->Password = 'nwdgjkpisuoxfvtd'; // YOUR gmail password
 
         // Sender and recipient settings
         $mail->setFrom('alumniportalpclu@gmail.com', 'PCLU Alumni Portal');
