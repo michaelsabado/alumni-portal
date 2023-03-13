@@ -61,7 +61,7 @@ $postsResult = Posts::getAllPosts();
                         <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Discussion <i class="fas fa-plus-circle ms-2"></i></button>
 
                         <div class="smalltxt fw-bold mb-2"><i class="fas fa-search me-1"></i> Search Alumni</div>
-                        <input type="text" class="form-control mb-2" onkeyup="search($(this).val())" placeholder="Enter name">
+                        <input type="text" class="form-control mb-2" onkeyup="searchAlumni($(this).val())" placeholder="Enter name">
                         <div class="mb-2">
                             <ul class="list-group" id="search-res">
                             </ul>
@@ -191,7 +191,7 @@ $postsResult = Posts::getAllPosts();
             });
         }
 
-        function search(keyword) {
+        function searchAlumni(keyword) {
             $("#search-res").html('');
 
             if (keyword != '') {
