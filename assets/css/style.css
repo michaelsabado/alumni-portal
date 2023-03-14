@@ -176,7 +176,7 @@ body {
 .news-head {
     overflow: hidden;
     border-radius: 10px;
-    border: 3px solid rgb(13, 110, 253);
+    border: 3px solid #ddd;
     position: relative;
 }
 
