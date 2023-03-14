@@ -13,15 +13,14 @@ if ($type = Auth::checkLogin()) {
 
 $message = '';
 
-if (isset($_POST['submit-verify'])) {
-    if (User::verifyUser($_POST['id'])) {
+if (isset($_POST['verify-id'])) {
+    if (User::verifyUser($_POST['verify-id'])) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Success!</strong> User is now verified.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
     }
 }
-
 
 $id = $_GET['id'];
 $usersResult = User::getUser($id);
@@ -30,8 +29,9 @@ if ($usersResult->num_rows > 0) {
 } else {
     header('Location: alumni');
 }
-if (isset($_POST['decline-account'])) {
-    User::declineUser($_POST['id']);
+
+if (isset($_POST['decline-id'])) {
+    User::declineUser($_POST['decline-id']);
     header('Location: alumni?status=account-declined');
 }
 
@@ -264,17 +264,19 @@ if (isset($_POST['decline-account'])) {
                                 if ($a == 0) {
                                 ?>
                                     <div class="d-flex justify-content-end">
+                                        <button class="btn btn-danger px-3 me-2" name="decline-account" type="button" onclick="declineUser()">Decline</button>
+                                        <button class="btn btn-primary px-3" name="submit-verify" type="button" onclick="verifyUser()">Verify Account</button>
 
-                                        <form action="" method="post" id="decline-form">
-                                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                            <div class="text-end"><button class="btn btn-danger px-3 me-2" name="decline-account" type="button" onclick="declineUser()">Decline</button></div>
-                                        </form>
-                                        <form action="" method="post" id="verify-form">
-                                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                            <div class="text-end"><button class="btn btn-primary px-3" name="submit-verify" type="button" onclick="verifyUser()()">Verify Account</button></div>
-                                        </form>
 
                                     </div>
+                                    <form action="" method="post" id="decline-form">
+                                        <input type="hidden" name="decline-id" value="<?= $user['id'] ?>">
+                                        <div class="text-end"></div>
+                                    </form>
+                                    <form action="" method="post" id="verify-form">
+                                        <input type="hidden" name="verify-id" value="<?= $user['id'] ?>">
+                                        <div class="text-end"></div>
+                                    </form>
                                 <?php
                                 }
 
