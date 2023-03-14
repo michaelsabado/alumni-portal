@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 
             </div>
         </div>
-        <div class=" w-100 d-flex align-items-center justify-content-center">
+        <div class=" w-75 d-flex align-items-center justify-content-center">
             <div class="p-3 login-form">
                 <a href="login" class="h6 text-decoration-none float-end">Admin <i class="fas fa-toggle-on ms-1"></i></a>
                 <div id="login-title">

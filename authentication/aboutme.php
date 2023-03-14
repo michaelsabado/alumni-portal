@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
             </div>
         </div>
-        <div class=" w-100  px-md-5" id="right-side">
+        <div class=" w-75  px-md-5" id="right-side">
             <div class="p-3 login-form">
                 <div id="login-title" class=" mt-md-5 mt-sm-0 mt-0 mb-5">
                     <div class="h5 fw-">Tell us more about you,</div>
