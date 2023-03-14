@@ -59,11 +59,11 @@ if (isset($_GET['type'])) {
     </div>
 
 </div>
-<div id="menu-bar" class="d-md-flex d-sm-none d-none">
-    <a href="index" class="menu-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'index') ? 'menu-active' : '' ?>">Home</a>
-    <a href="news" class="menu-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'news'  || $readType == 'news') ? 'menu-active' : '' ?>">News</a>
-    <a href="events" class="menu-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'events'  || $readType == 'events') ? 'menu-active' : '' ?>">Events</a>
-    <a href="jobs" class="menu-links  <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'jobs' || $readType == 'jobs') ? 'menu-active' : '' ?>">Job Posts</a>
+<div id="menu-bar" class="d-md-flex d-sm-none d-none bg-info">
+    <a href="index" class="menu-links text-dark <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'index') ? 'menu-active' : '' ?>">Home</a>
+    <a href="news" class="menu-links text-dark <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'news'  || $readType == 'news') ? 'menu-active' : '' ?>">News</a>
+    <a href="events" class="menu-links text-dark <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'events'  || $readType == 'events') ? 'menu-active' : '' ?>">Events</a>
+    <a href="jobs" class="menu-links text-dark <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'jobs' || $readType == 'jobs') ? 'menu-active' : '' ?>">Job Posts</a>
     <?php
 
     if (isset($_SESSION['user_login']) && $_SESSION['admin'] == false) {

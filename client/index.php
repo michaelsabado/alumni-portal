@@ -48,14 +48,8 @@ function truncate($string, $limit, $break = " ", $pad = "...")
     <div id="wrapper">
         <?php include_once '../templates/client_nav.php' ?>
         <div id="header">
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" id="cutout">
-                <path fill="#ffffff" fill-opacity="1" d="M0,160L40,144C80,128,160,96,240,96C320,96,400,128,480,144C560,160,640,160,720,154.7C800,149,880,139,960,149.3C1040,160,1120,192,1200,186.7C1280,181,1360,139,1400,117.3L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
-            </svg> -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" id="cutout">
-                <path fill="#fff" fill-opacity="1" d="M0,192L60,181.3C120,171,240,149,360,165.3C480,181,600,235,720,229.3C840,224,960,160,1080,160C1200,160,1320,224,1380,256L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-            </svg>
         </div>
-        <div class="container" style="z-index:9; position: relative">
+        <div class="container" style="z-index:9; position: relative; margin-top: 100px">
             <div id="content">
                 <div class="row">
                     <div class="col-md-8 col-sm-6 " id="divider">
