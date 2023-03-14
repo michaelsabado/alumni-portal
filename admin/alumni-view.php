@@ -267,11 +267,11 @@ if (isset($_POST['decline-account'])) {
 
                                         <form action="" method="post" id="decline-form">
                                             <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                            <div class="text-end"><button class="btn btn-danger px-3 me-2" name="decline-account" onclick="declineUser()">Decline</button></div>
+                                            <div class="text-end"><button class="btn btn-danger px-3 me-2" name="decline-account" type="button" onclick="declineUser()">Decline</button></div>
                                         </form>
                                         <form action="" method="post" id="verify-form">
                                             <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                            <div class="text-end"><button class="btn btn-primary px-3" name="submit-verify" onclick="verifyUser()()">Verify Account</button></div>
+                                            <div class="text-end"><button class="btn btn-primary px-3" name="submit-verify" type="button" onclick="verifyUser()()">Verify Account</button></div>
                                         </form>
 
                                     </div>
