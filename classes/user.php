@@ -82,6 +82,14 @@ class User
         else return false;
     }
 
+    public static function declineuser($id)
+    {
+        global $conn;
+        $sql = "DELETE FROM users WHERE id = $id";
+        if ($conn->query($sql)) return true;
+        else return false;
+    }
+
     public static function updateUserInformation($fname, $mname, $lname, $ename, $civil, $birth_date, $gender)
     {
         global $conn;

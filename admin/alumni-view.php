@@ -12,6 +12,7 @@ if ($type = Auth::checkLogin()) {
 }
 
 $message = '';
+
 if (isset($_POST['submit-verify'])) {
     if (User::verifyUser($_POST['id'])) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -21,12 +22,17 @@ if (isset($_POST['submit-verify'])) {
     }
 }
 
+
 $id = $_GET['id'];
 $usersResult = User::getUser($id);
 if ($usersResult->num_rows > 0) {
     $user = $usersResult->fetch_assoc();
 } else {
     header('Location: alumni');
+}
+if (isset($_POST['decline-account'])) {
+    User::declineUser($_POST['id']);
+    header('Location: alumni?status=account-declined');
 }
 
 ?>
@@ -257,10 +263,18 @@ if ($usersResult->num_rows > 0) {
 
                                 if ($a == 0) {
                                 ?>
-                                    <form action="" method="post">
-                                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                        <div class="text-end"><button class="btn btn-primary px-3" name="submit-verify" type="submit">Verify Account</button></div>
-                                    </form>
+                                    <div class="d-flex justify-content-end">
+
+                                        <form action="" method="post" id="decline-form">
+                                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                            <div class="text-end"><button class="btn btn-danger px-3 me-2" name="decline-account" onclick="declineUser()">Decline</button></div>
+                                        </form>
+                                        <form action="" method="post" id="verify-form">
+                                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                            <div class="text-end"><button class="btn btn-primary px-3" name="submit-verify" onclick="verifyUser()()">Verify Account</button></div>
+                                        </form>
+
+                                    </div>
                                 <?php
                                 }
 
@@ -323,6 +337,42 @@ if ($usersResult->num_rows > 0) {
         $(document).ready(function() {
             $('#example').DataTable();
         });
+
+
+
+        function verifyUser() {
+            Swal.fire({
+                title: 'Verify this user',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#verify-form').submit();
+                } else {
+                    return false;
+                }
+            })
+        }
+
+        function declineUser() {
+            Swal.fire({
+                title: 'Decline this user',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#decline-form').submit();
+                } else {
+                    return false;
+                }
+            })
+        }
     </script>
 </body>
 

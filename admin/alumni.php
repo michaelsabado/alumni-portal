@@ -12,7 +12,7 @@ if ($type = Auth::checkLogin()) {
 } else {
   header('Location: ../authentication/login');
 }
-
+$message = '';
 $message2 = '';
 if (isset($_POST['submit-department'])) {
   $department = $conn->real_escape_string($_POST['department']);
@@ -48,6 +48,13 @@ if (isset($_POST['deleteRecord'])) {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>';
   }
+}
+
+if (isset($_GET['status']) && $_GET['status'] == 'account-declined') {
+  $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Account Declined.</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>';
 }
 
 
@@ -233,6 +240,7 @@ if (isset($_GET['type'])) {
             </div>
           </div>
           <div class="col-md-9">
+            <?= $message ?>
             <div class="" id="tbl-res"></div>
           </div>
         </div>
