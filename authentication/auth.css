@@ -43,4 +43,10 @@
         height: 80px;
         margin-bottom: 20px;
     }
+    .span-all {
+        width: 100% !important;
+    }
+    .login-form {
+        min-width: 320px !important;
+    }
 }

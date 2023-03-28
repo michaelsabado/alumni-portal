@@ -21,7 +21,7 @@ if ($usersResult->num_rows > 0) {
 if (isset($_POST['submit'])) {
     extract($_POST);
     $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
-    // echo $sql;
+    echo $sql;
     if ($conn->query($sql)) {
         header('Location: ../authentication/login');
     }
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
 
 
                                     <div class="smalltxt fw-bold mb-1">Employment Date (1st) <span class="fw-light">Optional</span></div>
-                                    <input type="date" class="form-control mb-3" value="<?= $employment_date_first ?>">
+                                    <input type="date" name="employment_date_first" class="form-control mb-3" value="<?= $employment_date_first ?>">
 
 
                                     <div class="smalltxt fw-bold mb-1">Employment Date (Current) <span class="fw-light">Optional</span></div>

@@ -76,7 +76,7 @@ if (isset($_POST['code-submit'])) {
 
             </div>
         </div>
-        <div class=" w-75 d-flex align-items-center justify-content-center">
+        <div class=" w-75 d-flex align-items-center justify-content-center span-all">
             <div class="p-3 login-form">
                 <div id="login-title">
                     <div class="h2 fw-bold">Alumni<br>Password Reset</div>

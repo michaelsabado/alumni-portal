@@ -68,14 +68,14 @@ if (isset($_GET['type'])) {
 
     if (isset($_SESSION['user_login']) && $_SESSION['admin'] == false) {
     ?>
-        <a href="forum" class="menu-links <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'forum' || $readType == 'forum') ? 'menu-active' : '' ?>">Forum</a>
+        <a href="forum" class="menu-links text-dark <?= (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'forum' || $readType == 'forum') ? 'menu-active' : '' ?>">Forum</a>
     <?php
     }
 
     ?>
 
 </div>
-<div class="offcanvas offcanvas-end d-md-none d-sm-block d-block" tabindex="-1" id="sidebar" aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas offcanvas-end d-md-none d-sm-block d-block bg-info" tabindex="-1" id="sidebar" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <div></div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
