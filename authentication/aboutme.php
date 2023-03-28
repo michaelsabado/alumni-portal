@@ -21,9 +21,11 @@ if ($usersResult->num_rows > 0) {
 if (isset($_POST['submit'])) {
     extract($_POST);
     $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
-    echo $sql;
+    // echo $sql;
     if ($conn->query($sql)) {
-        header('Location: ../authentication/login');
+        session_destroy();
+        
+        header('Location: ../authentication/login?status=success');
     }
 }
 ?>

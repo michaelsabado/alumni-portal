@@ -45,6 +45,13 @@ class Auth
                 return ['is_authenticated' => true, 'message' => 'Success', 'data' => $row];
             } else {
                 // Incorrect pass
+                if(isset($_SESSION['pass_attempt'])){
+                    $_SESSION['pass_attempt'] += 1;
+                }else{
+                    $_SESSION['pass_attempt'] = 1;
+                }
+
+
                 return ['is_authenticated' => false, 'message' => 'Incorrect Password'];
             }
         } else {
