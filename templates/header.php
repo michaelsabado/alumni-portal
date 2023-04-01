@@ -6,4 +6,4 @@
 <link rel="stylesheet" href="../assets/css/style.css?d=<?= time() ?>">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+<link rel="icon" type="image/x-icon" href="../favicon.ico">

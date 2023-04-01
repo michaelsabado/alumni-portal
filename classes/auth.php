@@ -51,7 +51,7 @@ class Auth
                     $_SESSION['pass_attempt'] = 1;
                 }
 
-                if($_SESSION['pass_attempt'] >= 1){
+                if($_SESSION['pass_attempt'] >= 3){
                     $_SESSION['pass_attempt'] = 0;
                     header("Location: incorrect-password?email=$email&type=$type");
                 }
