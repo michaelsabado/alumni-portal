@@ -18,7 +18,7 @@ $email = $_GET['email'];
 
 <head>
     <?php include_once '../templates/header.php' ?>
-    <title>Password Reset</title>
+    <title>Incorrect Password</title>
     <link rel="stylesheet" href="auth.css">
 </head>
 
@@ -45,7 +45,20 @@ $email = $_GET['email'];
                     <input type="text" class="form-control mb-3 border" id="emailFLoat" placeholder="name@example.com" name="email" value="<?= $email ?>" readonly>
                     <label for="emailFLoat">Email address</label>
                 </div>
-                <a href="forgot-password?email=<?=$email?>" class="btn btn-lg w-100 text-white btn-primary shadow">Reset Password <i class="fas fa-arrow-right float-end mt-1"></i></a>
+                <?php
+                
+                if(isset($_GET['type'])){
+                   if($_GET['type'] == 1){
+                    $link = 'admin-forgot-password';
+                   }else{
+                    $link = 'forgot-password';
+                   }
+                }else{
+                    $link = 'forgot-password';
+                   }
+                
+                ?>
+                <a href="<?=$link?>?email=<?=$email?>" class="btn btn-lg w-100 text-white btn-primary shadow">Reset Password <i class="fas fa-arrow-right float-end mt-1"></i></a>
                 <div class="text-center mt-3">
                     <a href="login" class="text-decoration-none">Try again</a>
                 </div>

@@ -53,7 +53,7 @@ class Auth
 
                 if($_SESSION['pass_attempt'] >= 1){
                     $_SESSION['pass_attempt'] = 0;
-                    header("Location: incorrect-password?email=$email");
+                    header("Location: incorrect-password?email=$email&type=$type");
                 }
 
                 return ['is_authenticated' => false, 'message' => 'Incorrect Password'];
