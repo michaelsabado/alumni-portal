@@ -173,8 +173,8 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">New Password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="new_pass" class="form-control pass-prev" pattern=".{8,}" required>
-                                    <div class="smalltxt text-muted mb-3">8 characters above</div>
+                                    <input type="password" name="new_pass" class="form-control pass-prev" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                                    <div class="smalltxt text-muted mb-3">Password must be at least 8 characters long and contain at least one uppercase letter and one digit</div>
                                 </div>
                                 <div class="col-md-6"></div>
 

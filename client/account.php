@@ -386,8 +386,8 @@ if ($usersResult->num_rows > 0) {
                                     <div class="h6">Old password</div>
                                     <input name="old_password" type="password" class="form-control mb-3 pass-prev" required>
                                     <div class="h6">New password</div>
-                                    <input name="new_password" type="password" class="form-control pass-prev" pattern=".{8,}" required>
-                                    <div class="smalltxt mb-3 text-muted">8 characters above</div>
+                                    <input name="new_password" type="password" class="form-control pass-prev" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                                    <div class="smalltxt mb-3 text-muted">Password must be at least 8 characters long and contain at least one uppercase letter and one digit</div>
                                     <div class=" text-end">
                                         <div class="d-flex justify-content-end">
                                             <i class="fas fa-eye-slash me-4 preview-pass cursor text-primary"></i>

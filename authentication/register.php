@@ -146,10 +146,10 @@ if (isset($_POST['submit'])) {
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="password" class="form-control border pass-prev" id="password" placeholder="Password" name="password" pattern=".{8,}" required>
+                                <input type="password" class="form-control border pass-prev" id="password" placeholder="Password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" required>
                                 <label for="password">Password</label>
                             </div>
-                            <div class="smalltxt mb-2 mt-1 text-muted">8 characters above</div>
+                            <div class="smalltxt mb-2 mt-1 text-muted">Password must be at least 8 characters long and contain at least one uppercase letter and one digit</div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
