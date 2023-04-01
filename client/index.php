@@ -48,6 +48,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
     <div id="wrapper">
         <?php include_once '../templates/client_nav.php' ?>
         <div id="header">
+            <img src="../assets/images/banner.jpg" class="w-100" alt="">
         </div>
         <div class="container" style="z-index:9; position: relative; margin-top: 100px">
             <div id="content">

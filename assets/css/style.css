@@ -135,14 +135,15 @@ body {
 
 #header {
     /* background-image: linear-gradient(to right, rgba(134, 207, 243, 0.7), rgba(134, 207, 243, 0.7)), url("../../assets/images/banner.jpg"); */
-    background-image: url("../../assets/images/banner.jpg");
+    /* background-image: url("../../assets/images/banner.jpg");
     background-size: cover;
+    background-position: bottom; */
     /* background-attachment: fixed; */
-    background-position: top;
-    min-height: 50vh;
-    padding: 20px 0px;
-    display: flex;
-    align-items: center;
+    /* background-position: top;
+    min-height: 50vh; */
+    /* padding: 20px 0px;
+    display: flex; */
+    /* align-items: center; */
     position: relative;
 }
 

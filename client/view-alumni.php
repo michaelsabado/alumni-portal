@@ -54,9 +54,6 @@ $postsResult = Posts::getAllUserPosts($id);
                             <div class="h6">
                                 <?= $user['course'] ?> | Batch <?= $user['batch'] ?>
                             </div>
-                            <div class="h6 text-secondary">
-                                <?= $user['email'] ?>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,10 +69,6 @@ $postsResult = Posts::getAllUserPosts($id);
                     <div class="col-md-4">
                         <div class="card mb-3">
                             <div class="card-body">
-                                <div class="smalltxt fw-bold">Birthdate</div>
-                                <div class="h6 mb-3">
-                                    <?= date('F d, Y', strtotime($user['birth_date'])) ?>
-                                </div>
                                 <div class="smalltxt fw-bold">Address</div>
                                 <div class="h6 mb-3">
                                     <?= $user['address_line'] . ', ' . $user['muncity'] . ', ' . $user['province'] . ' ' . $user['zip_code'] ?>

@@ -48,16 +48,21 @@ $filename = "Alma-Tech_Alumni_List.csv";
 
 // Open the file for writing
 $fp = fopen($filename, 'w');
-
+fputcsv($fp,['AlUMNI INFORMATION - MASTER LIST']);
 // Add the column names to the first row of the file
 $header = array();
 foreach ($columns as $column) {
-    $header[] = $column->name;
+    $header[] =  ucwords(str_replace('_', ' ', $column->name));
 }
 fputcsv($fp, $header);
-
 // Add the data to the file
 while ($row = mysqli_fetch_assoc($result)) {
+    $row = array_map(function($str, $index) { 
+        if($index != 'email'){
+             return ucwords($str); 
+        }
+        return $str; 
+    }, $row, array_keys($row));
     fputcsv($fp, $row);
 }
 

@@ -15,6 +15,9 @@ $message = '';
 
 if (isset($_POST['verify-id'])) {
     if (User::verifyUser($_POST['verify-id'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        setData('Account Verified!', 'Hello ' . $name . ', this is to inform you that your alumni portal account is now verified. You may now login.', $email, $name);
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Success!</strong> User is now verified.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -275,6 +278,8 @@ if (isset($_POST['decline-id'])) {
                                     </form>
                                     <form action="" method="post" id="verify-form">
                                         <input type="hidden" name="verify-id" value="<?= $user['id'] ?>">
+                                        <input type="hidden" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>">
+                                        <input type="hidden" name="email" value="<?= $user['email'] ?>">
                                         <div class="text-end"></div>
                                     </form>
                                 <?php
