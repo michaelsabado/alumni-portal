@@ -6,6 +6,10 @@ $message = '';
 $message1 = '';
 $email = "";
 
+if(isset($_GET['email'])){
+    $email = $_GET['email'];
+}
+
 $codeSent = false;
 $done = false;
 if (Auth::checkLogin()) {
