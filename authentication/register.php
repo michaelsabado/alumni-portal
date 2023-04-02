@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="vh-100 d-flex flex-md-row flex-sm-column flex-column align-items-stretch justify-content-stretch">
-        <div class=" w-100 login-left d-flex align-items-center justify-content-center">
+        <div class=" w-75 login-left d-flex align-items-center justify-content-center">
             <div class="text-center">
                 <img src="../assets/images/logo.png" height="200" alt="" id="logo" class="mb-md-4 md-sm-2 md-2">
                 <div style="text-shadow: 2px 3px 9px rgba(0,0,0,0.45)">
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
             </div>
         </div>
-        <div class=" w-75 d-flex align-items-center justify-content-center px-md-5 span-all">
+        <div class=" w-100 d-flex align-items-center justify-content-center px-md-5 span-all">
             <div class="p-3 login-form">
                 <div id="login-title">
                     <div class="h2 fw-bold">Alumni<br>Registration</div>

@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="vh-100 d-flex flex-md-row flex-sm-column flex-column align-items-stretch justify-content-stretch">
-        <div class=" w-100 login-left d-flex align-items-center justify-content-center">
+        <div class=" w-75 login-left d-flex align-items-center justify-content-center">
             <div class="text-center">
                 <img src="../assets/images/logo.png" height="200" alt="" id="logo" class="mb-md-4 md-sm-2 md-2">
                 <div style="text-shadow: 2px 3px 9px rgba(0,0,0,0.45)">
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
             </div>
         </div>
-        <div class=" w-75  px-md-5" id="right-side">
+        <div class=" w-100  px-md-5" id="right-side">
             <div class="p-3 login-form">
                 <div id="login-title" class=" mt-md-5 mt-sm-0 mt-0 mb-5">
                     <div class="h5 fw-">Tell us more about you,</div>
