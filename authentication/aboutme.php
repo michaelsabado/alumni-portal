@@ -6,6 +6,21 @@ require_once '../classes/course.php';
 
 $id = $_GET['id'];
 $message = '';
+
+
+if (isset($_POST['submit'])) {
+    extract($_POST);
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
+    // echo $sql;
+    if ($conn->query($sql)) {
+        session_destroy();
+        
+        header('Location: ../authentication/login?status=success');
+    }else{
+        $conn->error;
+    }
+}
+
 $usersResult = $conn->query("SELECT * FROM users WHERE id = $id");
 if ($usersResult->num_rows > 0) {
     $user = $usersResult->fetch_assoc();
@@ -18,16 +33,6 @@ if ($usersResult->num_rows > 0) {
     header('Location: ../authentication/login');
 }
 
-if (isset($_POST['submit'])) {
-    extract($_POST);
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
-    // echo $sql;
-    if ($conn->query($sql)) {
-        session_destroy();
-        
-        header('Location: ../authentication/login?status=success');
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
