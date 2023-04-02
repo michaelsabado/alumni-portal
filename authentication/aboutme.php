@@ -6,11 +6,19 @@ require_once '../classes/course.php';
 
 $id = $_GET['id'];
 $message = '';
-
+$str1 = '';
+$str2 = '';
 
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status',`employment_date_first`='$employment_date_first',`employment_date_current`='$employment_date_current',`current_position`='$current_position' WHERE id = $id";
+
+    if($employment_date_current != ''){
+        $str1 ="`employment_date_first` = '$employment_date_first',";
+    }
+   if($employment_date_first != ''){
+        $str2 = "`employment_date_current`='$employment_date_current',";
+    }
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `current_position`='$current_position' WHERE id = $id";
     // echo $sql;
     if ($conn->query($sql)) {
         session_destroy();

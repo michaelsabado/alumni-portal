@@ -50,7 +50,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
         <div id="header">
             <img src="../assets/images/banner.jpg" class="w-100" alt="">
         </div>
-        <div class="container" style="z-index:9; position: relative; margin-top: 100px">
+        <div class="container" style="z-index:9; position: relative;">
             <div id="content">
                 <div class="row">
                     <div class="col-md-8 col-sm-6 " id="divider">

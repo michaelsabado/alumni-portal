@@ -59,7 +59,7 @@ fputcsv($fp, $header);
 while ($row = mysqli_fetch_assoc($result)) {
     $row = array_map(function($str, $index) { 
         if($index != 'email'){
-             return ucwords($str); 
+             return strtoupper($str); 
         }
         return $str; 
     }, $row, array_keys($row));
