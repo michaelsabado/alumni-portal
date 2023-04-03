@@ -36,7 +36,7 @@ class User
     public static function getBatches()
     {
         global $conn;
-        $sql = "SELECT DISTINCT(batch) FROM users WHERE email_verified_at IS NOT NULL ORDER BY batch";
+        $sql = "SELECT DISTINCT(batch) FROM users WHERE is_verified = 1 ORDER BY batch";
         $results = $conn->query($sql);
         return $results;
     }
