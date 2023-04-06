@@ -7,7 +7,7 @@ $course = $_GET['course'];
 $batch = $_GET['batch'];
 $employment = $_GET['employment'];
 
-$where = 'WHERE 1 = 1 ';
+$where = 'WHERE is_verified = 1 ';
 
 if ($dep != 0) $where .= "AND c.department_id = '$dep'";
 if ($course != 'all') $where .= "AND u.course = '$course'";
