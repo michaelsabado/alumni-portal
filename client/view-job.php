@@ -90,8 +90,8 @@ if (isset($_POST['apply'])) {
                     <form action="" method="post" id="apply_form" enctype="multipart/form-data">
                         <div class="h6">Attach Resume (PDF)</div>
                         <input type="file" name="resume" id="" class="form-control mb-3" accept="application/pdf" required>
-                        <div class="h6">Make your Pitch! (Recommended)</div>
-                        <textarea name="pitch" id="" cols="30" rows="10" class="form-control" placeholder="Tell the employer why you are best suited for this role. Highlight specific skills and how you can contribute. Avoid generic pitches e.g I am responsible."></textarea>
+                        <div class="h6">Make your Pitch!</div>
+                        <textarea name="pitch" id="" cols="30" rows="10" class="form-control" placeholder="Tell the employer why you are best suited for this role. Highlight specific skills and how you can contribute. Avoid generic pitches e.g I am responsible." required></textarea>
                     </form>
                 </div>
                 <div class="modal-footer">
