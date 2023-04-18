@@ -68,16 +68,17 @@ if (isset($_POST['submit'])) {
                 <div class="h6 text-danger ">
                     <?= $message; ?>
                 </div>
-                <form action="" method="POST">
+                <form action="" method="GET">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control mb-3 border" id="emailFLoat" placeholder="name@example.com" name="email" value="<?= $email ?>" required>
                         <label for="emailFLoat">Email address</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3" style="position: relative;">
+                        <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end" style="position: absolute; right: 12px; top: 20px;"></i>
                         <input type="password" class="form-control  mb-5 border pass-prev" id="passFloat" placeholder="Password" name="password" required>
                         <label for="passFloat">Password</label>
                     </div>
-                    <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end"></i>
+                    
                     <div class="g-recaptcha mb-3" data-sitekey="6LecUlMkAAAAAGZe8uSpiMjbWXsk0oENDiiHIhpX"></div>
                     <div></div>
                     <button type="submit" name="submit" class="btn btn-lg w-100 text-white btn-primary shadow">Log In <i class="fas fa-arrow-right float-end mt-1"></i></button>

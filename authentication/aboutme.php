@@ -260,7 +260,6 @@ if ($usersResult->num_rows > 0) {
         var my_handlers = {
 
             fill_provinces: function() {
-
                 var region_code = $(this).val();
                 $('#province1').ph_locations('fetch_list', [{
                     "region_code": region_code
@@ -283,7 +282,6 @@ if ($usersResult->num_rows > 0) {
 
 
             fill_barangays: function() {
-
                 var city_code = $(this).val();
                 $('#barangay1').ph_locations('fetch_list', [{
                     "city_code": city_code

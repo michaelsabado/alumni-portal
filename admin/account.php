@@ -182,7 +182,10 @@ if (isset($_POST['update-password'])) {
                                     <div class="h6">Confirm Password</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="password" name="confirm_pass" class="form-control mb-3 pass-prev" required>
+                                    <div style="position: relative;">
+                                        <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end" style="position: absolute; right: 12px; top: 12px;"></i>
+                                        <input type="password" name="confirm_pass" class="form-control mb-3 pass-prev" required>
+                                    </div>
                                 </div>
                                 <div class="col-md-6"></div>
 
@@ -190,7 +193,6 @@ if (isset($_POST['update-password'])) {
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex justify-content-end align-items-center">
-                                        <i class="fas fa-eye-slash me-4 preview-pass cursor text-primary"></i>
                                         <button type="submit" name="update-password" class="btn btn-info float-end text-white px-3">Update</button>
                                     </div>
 

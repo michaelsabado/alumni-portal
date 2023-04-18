@@ -285,7 +285,7 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Student ID</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="student_id" type="text" class="form-control mb-3" value="<?= $user['student_id'] ?>" required>
+                                            <input name="student_id" type="text" class="form-control mb-3" value="<?= $user['student_id'] ?>">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="h6">Course</div>
@@ -386,11 +386,13 @@ if ($usersResult->num_rows > 0) {
                                     <div class="h6">Old password</div>
                                     <input name="old_password" type="password" class="form-control mb-3 pass-prev" required>
                                     <div class="h6">New password</div>
-                                    <input name="new_password" type="password" class="form-control pass-prev" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                                    <div style="position: relative;">
+                                        <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end" style="position: absolute; right: 12px; top: 12px;"></i>
+                                        <input name="new_password" type="password" class="form-control pass-prev" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                                    </div>
                                     <div class="smalltxt mb-3 text-muted">Password must be at least 8 characters long and contain at least one uppercase letter and one digit</div>
                                     <div class=" text-end">
                                         <div class="d-flex justify-content-end">
-                                            <i class="fas fa-eye-slash me-4 preview-pass cursor text-primary"></i>
                                             <button class="btn btn-info text-white px-4" type="submit" name="password-submit">Save</button>
                                         </div>
 
