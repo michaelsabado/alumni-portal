@@ -55,12 +55,12 @@ function setData($a, $b, $c, $d, $e = null, $app = null)
 
 
         // Sender and recipient settings
-        $mail->setFrom('almatechpclu@gmail.com', 'PCLU Alumni Portal');
+        $mail->setFrom('almatechpclu.2023@gmail.com', 'PCLU Alumni Portal');
         $mail->addAddress($toEmail, $toName);
         if ($e !== null) {
             $mail->addReplyTo($app, $app); // to set the reply to
         } else {
-            $mail->addReplyTo('almatechpclu@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
+            $mail->addReplyTo('almatechpclu.2023@gmail.com', 'PCLU Alumni Portal'); // to set the reply to
         }
 
 
