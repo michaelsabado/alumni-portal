@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
                 <div class="h6 text-danger ">
                     <?= $message; ?>
                 </div>
-                <form action="" method="GET">
+                <form action="" method="POST">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control mb-3 border" id="emailFLoat" placeholder="name@example.com" name="email" value="<?= $email ?>" required>
                         <label for="emailFLoat">Email address</label>
