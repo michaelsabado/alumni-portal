@@ -152,13 +152,13 @@ if (isset($_POST['submit'])) {
                             <div class="smalltxt mb-2 mt-1 text-muted">Password must be at least 8 characters long and contain at least one uppercase letter and one digit</div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3" style="position: relative;">
+                                <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end" style="position: absolute; right: 12px; top: 20px;"></i>
                                 <input type="password" class="form-control  mb-3 border pass-prev" id="confirm_password" placeholder="Confirm Password" name="confirm_password" required>
                                 <label for="confirm_password">Confirm Password</label>
                             </div>
                         </div>
                         <div>
-                            <i class="fas fa-eye-slash  preview-pass cursor text-primary float-end"></i>
 
                         </div>
                     </div>
