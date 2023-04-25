@@ -120,7 +120,10 @@ class Auth
     {
         global $conn;
 
-        if ($conn->query("SELECT * FROM $type where email = '$email' AND is_verified = 1")->num_rows > 0) {
+        if($type == 'users') $query = "SELECT * FROM $type where email = '$email' AND is_verified = 1";
+        else $query = "SELECT * FROM $type where email = '$email'";
+
+        if ($conn->query($query)->num_rows > 0) {
             return true;
         }
 
