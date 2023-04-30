@@ -12,20 +12,20 @@ $str2 = '';
 if (isset($_POST['submit'])) {
     extract($_POST);
 
-    if($employment_date_current != ''){
-        $str1 ="`employment_date_first` = '$employment_date_first',";
+    if ($employment_date_current != '') {
+        $str1 = "`employment_date_first` = '$employment_date_first',";
     }
-   if($employment_date_first != ''){
+    if ($employment_date_first != '') {
         $str2 = "`employment_date_current`='$employment_date_current',";
     }
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `current_position`='$current_position' WHERE id = $id";
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `nature_of_work` = '$nature_of_work', `current_position`='$current_position' WHERE id = $id";
     // echo $sql;
     if ($conn->query($sql)) {
         session_destroy();
-        
+
         header('Location: ../authentication/login?status=success');
-    }else{
-        $conn->error;
+    } else {
+        echo $conn->error;
     }
 }
 
@@ -155,8 +155,8 @@ if ($usersResult->num_rows > 0) {
                                     <div class="h6 mb-0">Alumni Information</div>
                                     <hr>
 
-                                    <div class="smalltxt mb-1 fw-bold">Student ID <span class="smalltxt">(Optional)</span></div>
-                                    <input type="text" class="form-control mb-3 border" id="student_id" name="student_id" value="<?= $student_id ?>">
+                                    <div class="smalltxt mb-1 fw-bold">Student ID</div>
+                                    <input type="text" class="form-control mb-3 border" id="student_id" name="student_id" value="<?= $student_id ?>" required>
 
                                     <div class="smalltxt mb-1 fw-bold">Course</div>
                                     <select name="course" id="" class="form-select mb-3" required>
@@ -174,7 +174,14 @@ if ($usersResult->num_rows > 0) {
                                     </select>
 
                                     <div class="smalltxt mb-1 fw-bold">Batch</div>
-                                    <input type="text" name="batch" class="form-control mb-3 border" pattern="[0-9]{4}" value="<?= $batch ?>" placeholder="ex. 2019">
+                                    <select name="batch" id="" class="form-select border mb-3">
+                                        <?php
+                                        for ($current = date('Y'); $current >= 1980; $current--) {
+                                            echo '<option value="' . $current . '">' . $current . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <!-- <input type="text" name="batch" class="form-control mb-3 border" pattern="[0-9]{4}" value="<?= $batch ?>" placeholder="ex. 2019"> -->
 
                                     <div class="smalltxt mb-1 fw-bold">Graduation Date</div>
                                     <input type="date" class="form-control mb-3 border" id="graduation_date" name="graduation_date" value="<?= $graduation_date ?>" required>
@@ -195,17 +202,72 @@ if ($usersResult->num_rows > 0) {
                                         <!-- <option value="3" <?= ($employment_status == 3) ? 'selected' : '' ?>>Self Employed</option> -->
                                     </select>
 
+                                    <div id="employed-form">
+                                        <div class="smalltxt fw-bold mb-1">Employment Date (1st) <span class="fw-light">Optional</span></div>
+                                        <input type="date" name="employment_date_first" class="form-control mb-3 emp-add" value="<?= $employment_date_first ?>">
 
-                                    <div class="smalltxt fw-bold mb-1">Employment Date (1st) <span class="fw-light">Optional</span></div>
-                                    <input type="date" name="employment_date_first" class="form-control mb-3" value="<?= $employment_date_first ?>">
+
+                                        <div class="smalltxt fw-bold mb-1">Employment Date (Current) <span class="fw-light">Optional</span></div>
+                                        <input name="employment_date_current" type="date" class="form-control mb-3 emp-add" value="<?= $employment_date_current ?>">
 
 
-                                    <div class="smalltxt fw-bold mb-1">Employment Date (Current) <span class="fw-light">Optional</span></div>
-                                    <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $employment_date_current ?>">
+                                        <div class="smalltxt fw-bold mb-1">Nature of Work</div>
+                                        <select name="nature_of_work" id="nature_of_work" class="form-select border mb-3 emp-add" required>
+                                            <option value="">- - -</option>
+                                            <?php
 
-                                    <div class="smalltxt fw-bold mb-1">Current Position <span class="fw-light">Optional</span></div>
-                                    <input name="current_position" type="text" class="form-control mb-3" value="<?= $current_position ?>" placeholder="ex. Business Manager">
+                                            $natures = array(
+                                                'Car Dealership',
+                                                'Casino/Gambling',
+                                                'Construction and Engineering',
+                                                'Education',
+                                                'Farming, Fishing and Forestry',
+                                                'Fashion and Entertainment',
+                                                'Finance and Accounting',
+                                                'Food and Retail',
+                                                'Forex Trading and Money Changer',
+                                                'General Labor',
+                                                'Government Employee',
+                                                'Healthcare and Medical Services',
+                                                'Hospitality and Tourism',
+                                                'Human Resource',
+                                                'Insurance',
+                                                'IT and Technical Services',
+                                                'Jewelry Trading',
+                                                'Legal Practice',
+                                                'Management and Consultancy',
+                                                'Manpower Services',
+                                                'Manufacturing and Production',
+                                                'Maritime Industry',
+                                                'Media and Journalism',
+                                                'Mining and Quarrying',
+                                                'Multi-Level Marketing',
+                                                'Non-Profits, Charity, and Social Work',
+                                                'Pawnshop',
+                                                'Personal, Wellness, Beautification, Leisure Services',
+                                                'Pharmaceuticals',
+                                                'Public Services and National Defense',
+                                                'Real State',
+                                                'Remittance',
+                                                'Specialized Professionals',
+                                                'Transportation and Logistics',
+                                                'Trust Entities',
+                                                'Utilities and Sanitation',
+                                                'Wholesale and Retail'
+                                            );
 
+                                            foreach ($natures as $nature) {
+                                                echo '<option value="' . $nature . '">' . $nature . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+
+
+                                        <div class="smalltxt fw-bold mb-1">Current Position <span class="fw-light">Optional</span></div>
+                                        <input name="current_position" type="text" class="form-control mb-3" value="<?= $current_position ?>" placeholder="ex. Business Manager">
+
+
+                                    </div>
 
                                 </div>
                             </div>
@@ -257,6 +319,23 @@ if ($usersResult->num_rows > 0) {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
     <script>
+        checkEmp($("#employment_status"));
+
+        function checkEmp(emp) {
+            empValue = emp.val();
+            if (empValue == 1) {
+                //show
+                $('#employed-form').removeClass("d-none");
+                $('.emp-add').val("");
+                $('#nature_of_work').attr('required', true);
+            } else {
+                //hide
+                $('#employed-form').addClass("d-none");
+                $('#nature_of_work').attr('required', false);
+            }
+        }
+
+
         var my_handlers = {
 
             fill_provinces: function() {

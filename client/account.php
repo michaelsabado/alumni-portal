@@ -66,9 +66,10 @@ if (isset($_POST['employment-submit'])) {
     $status = $conn->real_escape_string($_POST['employment_status']);
     $date_first = $conn->real_escape_string($_POST['employment_date_first']);
     $date = $conn->real_escape_string($_POST['employment_date_current']);
+    $nature = $conn->real_escape_string($_POST['nature_of_work']);
     $position = $conn->real_escape_string($_POST['current_position']);
 
-    if (User::updateEmploymentInformation($status, $date_first, $date, $position)) {
+    if (User::updateEmploymentInformation($status, $date_first, $date, $nature, $position)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Employment information updated.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -350,7 +351,63 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Employment Date (Current)</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_current'] ?>" required>
+                                            <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_current'] ?>" >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="h6">Nature of Work</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="nature_of_work" id="nature_of_work" class="form-select border mb-3 emp-add" required>
+                                                <option value="">- - -</option>
+                                                <?php
+
+                                                $natures = array(
+                                                    'Car Dealership',
+                                                    'Casino/Gambling',
+                                                    'Construction and Engineering',
+                                                    'Education',
+                                                    'Farming, Fishing and Forestry',
+                                                    'Fashion and Entertainment',
+                                                    'Finance and Accounting',
+                                                    'Food and Retail',
+                                                    'Forex Trading and Money Changer',
+                                                    'General Labor',
+                                                    'Government Employee',
+                                                    'Healthcare and Medical Services',
+                                                    'Hospitality and Tourism',
+                                                    'Human Resource',
+                                                    'Insurance',
+                                                    'IT and Technical Services',
+                                                    'Jewelry Trading',
+                                                    'Legal Practice',
+                                                    'Management and Consultancy',
+                                                    'Manpower Services',
+                                                    'Manufacturing and Production',
+                                                    'Maritime Industry',
+                                                    'Media and Journalism',
+                                                    'Mining and Quarrying',
+                                                    'Multi-Level Marketing',
+                                                    'Non-Profits, Charity, and Social Work',
+                                                    'Pawnshop',
+                                                    'Personal, Wellness, Beautification, Leisure Services',
+                                                    'Pharmaceuticals',
+                                                    'Public Services and National Defense',
+                                                    'Real State',
+                                                    'Remittance',
+                                                    'Specialized Professionals',
+                                                    'Transportation and Logistics',
+                                                    'Trust Entities',
+                                                    'Utilities and Sanitation',
+                                                    'Wholesale and Retail'
+                                                );
+
+                                                foreach ($natures as $nature) {
+                                                    if($nature == $user['nature_of_work']) $str = 'selected';
+                                                    else $str="";
+                                                    echo '<option value="' . $nature . '" '.$str.'>' . $nature . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="h6">Current Position</div>

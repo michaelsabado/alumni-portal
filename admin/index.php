@@ -14,15 +14,11 @@ if ($type = Auth::checkLogin()) {
 
 
 if (isset($_GET['filter'])) {
-    $department = $_GET['department'];
-    $course = $_GET['course'];
-    $batch = $_GET['batch'];
-    $employment = $_GET['employment'];
+    $from = $_GET['batch-from'];
+    $to =  $_GET['batch-to'];
 } else {
-    $department = 0;
-    $course = 'all';
-    $batch = 'all';
-    $employment = 'all';
+    $from = (int)(date('Y')) - 5;
+    $to = date('Y');
 }
 
 ?>
@@ -73,7 +69,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3 emp">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Employed <i class="fas fa-sync text-primary ms-2" onclick="toggleCard(2)"></i></div>
@@ -87,7 +83,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Batches</div>
@@ -95,95 +91,96 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3 male">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Gender (Male) <i class="fas fa-sync text-primary ms-2" onclick="toggleCardGender(2)"></i></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=employed'"><?= $conn->query("SELECT * FROM users WHERE gender = 1 AND is_verified = 1")->num_rows ?></div>
+                            </div>
+                        </div>
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3 d-none female">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Gender (Female) <i class="fas fa-sync text-primary ms-2" onclick="toggleCardGender(1)"></i></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=unemployed'"><?= $conn->query("SELECT * FROM users WHERE gender = 2 AND is_verified = 1")->num_rows ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='news'">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">News</div>
+                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM news")->num_rows ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='events'">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Events</div>
+                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT * FROM events")->num_rows ?></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="px-2">
                             <hr>
+                            <div class="h6 fw-bold">Alumni Demographics</div>
+                            <?php
+                            
+                            if($from > $to) echo '<div class="smalltxt text-danger fw-bold">Batch range is invalid.</div>';
+                            
+                            ?>
+                
                             <form action="">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="smalltxt mb-1">Select Department</div>
-                                        <select name="department" id="depOpt" class="form-select mb-3" onchange="changeDept($(this).val())">
-                                            <option value="0">All</option>
-                                            <?php
-                                            $departmentsResult = Department::getAllDepartments();
-                                            if ($departmentsResult->num_rows > 0) {
-                                                while ($row = $departmentsResult->fetch_assoc()) {
-                                            ?>
-                                                    <option value="<?= $row['id'] ?>" <?= ($department == $row['id']) ? 'selected' : '' ?>><?= $row['description'] ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
+                                    <div class="col-md-2">
+                                        <div class="smalltxt mb-1">From</div>
+                                        <select name="batch-from" id="batch-from" class="form-select border mb-3">
+                                        <?php
+                                        for ($current = date('Y'); $current >= 1980; $current--) {
+                                            echo '<option value="' . $current . '" '.(($current == $from) ? 'selected':'').'>' . $current . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="smalltxt mb-1">To</div>
+                                        <select name="batch-to" id="batch-to" class="form-select border mb-3">
+                                        <?php
+                                        for ($current = date('Y'); $current >= 1980; $current--) {
+                                            echo '<option value="' . $current . '" '.(($current == $to) ? 'selected':'').'>' . $current . '</option>';
+                                        }
+                                        ?>
+                                    </select>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="smalltxt mb-1">
-                                            Course
+                                            .
                                         </div>
-                                        <select id="crsOpt" name="course" class="form-select mb-3">
-                                            <option value="all">All</option>
-                                            <?php
-                                            $coursesResult = Course::getAllCourses();
-                                            if ($coursesResult->num_rows > 0) {
-                                                while ($row = $coursesResult->fetch_assoc()) {
-                                            ?>
-                                                    <option value="<?= $row['id'] ?>" class="crs crs-dep-<?= $row['department_id'] ?>"><?= $row['description'] ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="smalltxt mb-1">
-                                            Batch
-                                        </div>
-                                        <select name="batch" class="form-select mb-3">
-                                            <option value="all">All</option>
-                                            <?php
-                                            $batchesResult = User::getBatches();
-                                            if ($batchesResult->num_rows > 0) {
-                                                while ($row = $batchesResult->fetch_assoc()) {
-                                            ?>
-                                                    <option value="<?= $row['batch'] ?>" <?= ($batch == $row['batch']) ? 'selected' : '' ?>><?= $row['batch'] ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="smalltxt mb-1">
-                                            Employment Status
-                                        </div>
-                                        <select name="employment" class="form-select mb-3">
-                                            <option value="all">All</option>
-
-                                            <option value="2" <?= ($employment == 2) ? 'selected' : '' ?>>Unemployed</option>
-                                            <option value="1" <?= ($employment == 1) ? 'selected' : '' ?>>Employed</option>
-                                            <!-- <option value="3">Self Employed</option> -->
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="smalltxt mb-1">
-                                            Filter
-                                        </div>
-                                        <button type="submit" name="filter" class="btn text-white w-100 bg-primary">Filter</button>
+                                        <button type="submit" name="filter" class="btn text-white w-100 bg-primary">Fetch</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
-                                <div class="h6 fw-bold mb-4">Alumni Demographics</div>
+                                <div class="h6 fw-bold mb-4">Department</div>
+                                <canvas id="myDepartmentPie" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold mb-4">Course</div>
                                 <canvas id="myPieChart" width="400" height="400"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Employment Rate</div>
@@ -191,11 +188,62 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold mb-4">Gender</div>
+                                <canvas id="myGenderPie" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>         
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold mb-4">Civil Status</div>
+                                <canvas id="myCivilPie" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Batch Graduates</div>
-                                <canvas id="myHorizontalBarChart" width="400" height=""></canvas>
+                                <canvas id="myHorizontalBarChart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold mb-4">Location</div>
+                                <canvas id="myLocationBar" width="400" height="800"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold mb-4">Nature of Work</div>
+                                <canvas id="myWorkBar" width="400" height=""></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <div class="h6 fw-bold ">Forum</div>
+                                <div class="smalltxt text-secondary mb-4">Based from dates Jan 1, <?= $from ?> to Dec 31, <?= $to?></div>
+                                <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='discussions'">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Discussion Creator/s</div>
+                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM posts WHERE date_posted >= '$from-01-01' AND date_posted <= '$to-12-31'")->num_rows ?></div>
+                            </div>
+                        </div><div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='discussions'">
+                            <div class="card-body">
+                                <div class="h6 fw-bold">Commentator/s</div>
+                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM comments WHERE date_commented >= '$from-01-01' AND date_commented <= '$to-12-31'")->num_rows ?></div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
@@ -242,14 +290,12 @@ if (isset($_GET['filter'])) {
         //     colors.push(`rgba(${red}, ${green}, ${blue}, ${alpha})`);
         // }
 
-        console.log(colors);
+        // console.log(colors);
         $.get('charts/demographics', {
-            dep: '<?= $department ?>',
-            course: '<?= $course ?>',
-            batch: '<?= $batch ?>',
-            employment: '<?= $employment ?>'
+            from: '<?= $from ?>',
+            to: '<?= $to ?>',
         }, function(response) {
-            console.log(response);
+            // console.log(response);
             var data = JSON.parse(response);
             var pie = document.getElementById("myPieChart").getContext('2d');
             var myPieChart = new Chart(pie, {
@@ -274,13 +320,80 @@ if (isset($_GET['filter'])) {
                 }
             });
 
+            var genderPie = document.getElementById("myGenderPie").getContext('2d');
+            var myGenderPie = new Chart(genderPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        label: 'Gender',
+                        data: data[2],
+                        backgroundColor: ['rgba(132,132,216,0.7)', 'rgba(213,111,111,0.7)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var civilPie = document.getElementById("myCivilPie").getContext('2d');
+            var myCivilPie = new Chart(civilPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Single', 'Married', 'Annuled'],
+                    datasets: [{
+                        label: 'Civil Status',
+                        data: data[5],
+                        backgroundColor: ['rgba(210,175,76,0.7)', 'rgba(184,210,76,0.7)', 'rgba(76,210,148,0.7)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var depPie = document.getElementById("myDepartmentPie").getContext('2d');
+            var myDepartmentPie = new Chart(depPie, {
+                type: 'pie',
+                data: {
+                    labels: data[3],
+                    datasets: [{
+                        label: 'Gender',
+                        data: data[4],
+                        backgroundColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         });
         $.get('charts/employment_rate', {
-            dep: '<?= $department ?>',
-            course: '<?= $course ?>',
-            batch: '<?= $batch ?>',
+            from: '<?= $from ?>',
+            to: '<?= $to ?>',
         }, function(response) {
-            console.log(response);
+            // console.log(response);
             var data = JSON.parse(response);
             var bar = document.getElementById("myBarChart").getContext('2d');
             var myBarChart = new Chart(bar, {
@@ -307,13 +420,13 @@ if (isset($_GET['filter'])) {
                 }
             });
         });
+
+
         $.get('charts/batch_graduates', {
-            dep: '<?= $department ?>',
-            course: '<?= $course ?>',
-            batch: '<?= $batch ?>',
-            employment: '<?= $employment ?>'
+            from: '<?= $from ?>',
+            to: '<?= $to ?>',
         }, function(response) {
-            console.log(response);
+            // console.log(response);
             var data = JSON.parse(response);
             const hbar = document.getElementById("myHorizontalBarChart").getContext("2d");
             const myHorizontalBarChart = new Chart(hbar, {
@@ -342,29 +455,80 @@ if (isset($_GET['filter'])) {
             });
         });
 
+        $.get('charts/location', {
+            from: '<?= $from ?>',
+            to: '<?= $to ?>',
+        }, function(response) {      console.log(response);
+            var data = JSON.parse(response);
+      
+            const locationBar = document.getElementById("myLocationBar").getContext("2d");
+            const myLocationBar = new Chart(locationBar, {
+                type: "horizontalBar",
+                data: {
+                    labels: data[0],
+                    datasets: [{
+                        label: "Location",
+                        data: data[1],
+                        backgroundColor: "rgba(43, 229, 240, 0.7)",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            const workBar = document.getElementById("myWorkBar").getContext("2d");
+            const myWorkBar = new Chart(workBar, {
+                type: "horizontalBar",
+                data: {
+                    labels: data[2],
+                    datasets: [{
+                        label: "Nature of Work",
+                        data: data[3],
+                        backgroundColor: "rgba(43, 110, 110, 0.7)",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
+ 
         function toggleCard() {
             $('.emp').toggleClass('d-none');
             $('.unemp').toggleClass('d-none');
         }
 
-        changeDept($("#depOpt").val());
 
-        function changeDept(val) {
-            console.log(val);
-
-            $("#crsOpt").val('all');
-            if (val != '0') {
-                $("#crsOpt").val('all');
-
-                $(".crs").addClass('d-none');
-                $(".crs-dep-" + val).removeClass('d-none');
-            } else {
-                $("#crsOpt").val('<?= $course ?>');
-                $(".crs").removeClass('d-none');
-            }
-
-
+        function toggleCardGender() {
+            $('.male').toggleClass('d-none');
+            $('.female').toggleClass('d-none');
         }
+
+      
     </script>
 
 </body>
