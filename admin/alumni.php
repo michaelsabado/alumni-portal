@@ -192,38 +192,44 @@ if (isset($_GET['type'])) {
                     }
                     ?>
                   </select>
-                  <div class="smalltxt mb-1">
-                    Course
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="smalltxt mb-1">
+                        Course
+                      </div>
+                      <select name="course" id="crsOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                        <option value="">All</option>
+                        <?php
+                        $coursesResult = Course::getAllCourses();
+                        if ($coursesResult->num_rows > 0) {
+                          while ($row = $coursesResult->fetch_assoc()) {
+                        ?>
+                            <option value="<?= $row['id'] ?>" class="crs crs-dep-<?= $row['department_id'] ?>"><?= $row['description'] ?></option>
+                        <?php
+                          }
+                        }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="smalltxt mb-1">
+                        Batch
+                      </div>
+                      <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                        <option value="">All</option>
+                        <?php
+                        $batchesResult = User::getBatches();
+                        if ($batchesResult->num_rows > 0) {
+                          while ($row = $batchesResult->fetch_assoc()) {
+                        ?>
+                            <option value="<?= $row['batch'] ?>"><?= $row['batch'] ?></option>
+                        <?php
+                          }
+                        }
+                        ?>
+                      </select>
+                    </div>
                   </div>
-                  <select name="course" id="crsOpt" class="form-select mb-3" onchange="fetchAlumni()">
-                    <option value="">All</option>
-                    <?php
-                    $coursesResult = Course::getAllCourses();
-                    if ($coursesResult->num_rows > 0) {
-                      while ($row = $coursesResult->fetch_assoc()) {
-                    ?>
-                        <option value="<?= $row['id'] ?>" class="crs crs-dep-<?= $row['department_id'] ?>"><?= $row['description'] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                  <div class="smalltxt mb-1">
-                    Batch
-                  </div>
-                  <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
-                    <option value="">All</option>
-                    <?php
-                    $batchesResult = User::getBatches();
-                    if ($batchesResult->num_rows > 0) {
-                      while ($row = $batchesResult->fetch_assoc()) {
-                    ?>
-                        <option value="<?= $row['batch'] ?>"><?= $row['batch'] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
                   <div class="smalltxt mb-1">
                     Employment Status
                   </div>
@@ -234,6 +240,49 @@ if (isset($_GET['type'])) {
                     <option value="1" <?= ($type == "employed") ? 'selected' : '' ?>>Employed</option>
                     <!-- <option value="3">Self Employed</option> -->
                   </select>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="smalltxt mb-1">
+                        Gender
+                      </div>
+                      <select name="gender" id="genderOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                        <option value="">All</option>
+
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <!-- <option value="3">Self Employed</option> -->
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="smalltxt mb-1">
+                        Civil Status
+                      </div>
+                      <select name="civil" id="civilOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                        <option value="">All</option>
+
+                        <option value="1">Single</option>
+                        <option value="2">Married</option>
+                        <option value="3">Annuled</option>
+                        <!-- <option value="3">Self Employed</option> -->
+                      </select>
+                    </div>
+                  </div>
+                  <div class="smalltxt mb-1">
+                        Location
+                      </div>
+                      <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                        <option value="">All</option>
+                        <?php
+                        $locations =$conn->query("SELECT DISTINCT(CONCAT(province, ', ', muncity, ', ', address_line)) as location, COUNT(id) as total   FROM `users` WHERE is_verified = 1 GROUP BY location");
+                        if ($locations->num_rows > 0) {
+                          while ($row = $locations->fetch_assoc()) {
+                        ?>
+                            <option value="<?= $row['location'] ?>"><?= $row['location'] ?></option>
+                        <?php
+                          }
+                        }
+                        ?>
+                      </select>
                   <button type="submit" class="btn w-100 btn-success">Export to CSV</button>
                 </form>
               </div>
@@ -313,6 +362,8 @@ if (isset($_GET['type'])) {
         course: $("#crsOpt").val(),
         batch: $("#batchOpt").val(),
         employment: $("#empOpt").val(),
+        gender: $("#genderOpt").val(),
+        civil: $("#civilOpt").val(),
       });
     }
 

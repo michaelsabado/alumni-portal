@@ -16,7 +16,7 @@ $data = [];
 
 $deps = [];
 $depsCount = [];
-$sqldep = $conn->query("SELECT DISTINCT(d.`description`), COUNT(u.`id`) as total FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id  WHERE u.batch >= '$from' AND u.batch <= '$to' GROUP BY d.description");
+$sqldep = $conn->query("SELECT DISTINCT(d.`description`), COUNT(u.`id`) as total FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1 GROUP BY d.description");
 
 if ($sqldep->num_rows > 0) {
     while ($row1 = $sqldep->fetch_assoc()) {

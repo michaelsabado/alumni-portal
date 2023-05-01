@@ -6,12 +6,16 @@ $department = $_POST['department'];
 $course = $_POST['course'];
 $batch = $_POST['batch'];
 $employment = $_POST['employment'];
+$gender = $_POST['gender'];
+$civil = $_POST['civil'];
 $where = '';
 
 $where = 'WHERE birth_date IS NOT NULL';
 if ($department != '') $where .= " AND c.department_id = '$department'";
 if ($course != '') $where .= " AND u.course = '$course'";
 if ($batch != '') $where .= " AND u.batch = '$batch'";
+if ($gender != '') $where .= " AND u.gender = '$gender'";
+if ($civil != '') $where .= " AND u.civil_status = '$civil'";
 if ($employment != '') {
     if ($employment != 2) $where .= " AND u.employment_status !=2";
     else  $where .= " AND u.employment_status = 2";

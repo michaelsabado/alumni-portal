@@ -6,7 +6,7 @@ require_once '../../db/db_config.php';
 $from = $_GET['from'];
 $to = $_GET['to'];
 
-$sql = "SELECT DISTINCT(CONCAT(province, ', ', muncity, ', ', address_line)) as location, COUNT(id) as total   FROM `users` WHERE batch >= '$from' AND batch <= '$to' GROUP BY location";
+$sql = "SELECT DISTINCT(CONCAT(province, ', ', muncity, ', ', address_line)) as location, COUNT(id) as total   FROM `users` WHERE batch >= '$from' AND batch <= '$to' AND is_verified = 1 GROUP BY location";
 
 $result = $conn->query($sql);
 
@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT DISTINCT(nature_of_work) as nature, COUNT(id) as total  FROM `users` WHERE batch >= '$from' AND batch <= '$to' GROUP BY nature ORDER BY nature";
+$sql = "SELECT DISTINCT(nature_of_work) as nature, COUNT(id) as total  FROM `users` WHERE batch >= '$from' AND batch <= '$to' AND is_verified = 1 GROUP BY nature ORDER BY nature";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row1 = $result->fetch_assoc()) {

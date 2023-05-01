@@ -6,7 +6,7 @@ require_once '../../db/db_config.php';
 $from = $_GET['from'];
 $to = $_GET['to'];
 
-$sql = "SELECT u.batch, COUNT(u.batch) as num from users u inner join courses c on u.course = c.id WHERE u.batch >= '$from' AND u.batch <= '$to' GROUP BY batch";
+$sql = "SELECT u.batch, COUNT(u.batch) as num from users u inner join courses c on u.course = c.id WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1 GROUP BY batch";
 
 
 $result = $conn->query($sql);
