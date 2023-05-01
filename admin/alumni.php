@@ -270,7 +270,7 @@ if (isset($_GET['type'])) {
                   <div class="smalltxt mb-1">
                         Location
                       </div>
-                      <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                      <select name="location" id="locationOpt" class="form-select mb-3" onchange="fetchAlumni()">
                         <option value="">All</option>
                         <?php
                         $locations =$conn->query("SELECT DISTINCT(CONCAT(province, ', ', muncity, ', ', address_line)) as location, COUNT(id) as total   FROM `users` WHERE is_verified = 1 GROUP BY location");
@@ -364,6 +364,7 @@ if (isset($_GET['type'])) {
         employment: $("#empOpt").val(),
         gender: $("#genderOpt").val(),
         civil: $("#civilOpt").val(),
+        location: $("#locationOpt").val(),
       });
     }
 

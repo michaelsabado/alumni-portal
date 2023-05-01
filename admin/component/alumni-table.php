@@ -8,6 +8,7 @@ $batch = $_POST['batch'];
 $employment = $_POST['employment'];
 $gender = $_POST['gender'];
 $civil = $_POST['civil'];
+$location = $_POST['location'];
 $where = '';
 
 $where = 'WHERE birth_date IS NOT NULL';
@@ -16,6 +17,7 @@ if ($course != '') $where .= " AND u.course = '$course'";
 if ($batch != '') $where .= " AND u.batch = '$batch'";
 if ($gender != '') $where .= " AND u.gender = '$gender'";
 if ($civil != '') $where .= " AND u.civil_status = '$civil'";
+if ($location != '') $where .= " AND CONCAT(u.province, ', ' , u.muncity, ', ', u.address_line) LIKE '%$location%'";
 if ($employment != '') {
     if ($employment != 2) $where .= " AND u.employment_status !=2";
     else  $where .= " AND u.employment_status = 2";
@@ -28,6 +30,7 @@ if ($type == 'registered') {
 }
 
 $sql = "SELECT u.id, u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, c.description as course, u.batch, u.employment_status, u.is_verified FROM users u INNER JOIN courses c ON u.course = c.id $where";
+// echo $sql;
 $usersResult = $conn->query($sql);
 ?>
 
