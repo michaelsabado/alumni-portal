@@ -5,7 +5,7 @@ require_once '../../db/db_config.php';
 $from = $_GET['from'];
 $to = $_GET['to'];
 
-$sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' GROUP BY c.description";
+$sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1 GROUP BY c.description";
 
 // echo $sql;
 
@@ -26,7 +26,7 @@ if ($sqldep->num_rows > 0) {
 }
 
 
-$total = $conn->query("SELECT * FROM users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
+$total = $conn->query("SELECT * FROM users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
 
 if ($result->num_rows > 0) {
   
@@ -38,14 +38,14 @@ if ($result->num_rows > 0) {
 
 
 
-$totalMale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
-$totalFemale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
+$totalMale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
+$totalFemale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
 
 $civilStatus = [];
 
-$c1 = $conn->query("SELECT * FROM users u WHERE civil_status = 1 AND u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
-$c2 = $conn->query("SELECT * FROM users u WHERE civil_status = 2 AND u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
-$c3 = $conn->query("SELECT * FROM users u WHERE civil_status = 3 AND u.batch >= '$from' AND u.batch <= '$to'")->num_rows;
+$c1 = $conn->query("SELECT * FROM users u WHERE civil_status = 1 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
+$c2 = $conn->query("SELECT * FROM users u WHERE civil_status = 2 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
+$c3 = $conn->query("SELECT * FROM users u WHERE civil_status = 3 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
 
 
 echo json_encode([$labels, $data, [$totalMale, $totalFemale], $deps, $depsCount, [$c1, $c2, $c3]]);
