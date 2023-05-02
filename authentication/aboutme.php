@@ -103,16 +103,7 @@ if ($usersResult->num_rows > 0) {
                     <?= $message; ?>
                 </div>
                 <form action="" method="POST" enctype="multipart/form-data">
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <div class="h6 mb-0">Profile Picture</div>
-                            <input type="file" id="profilePic" name="profilePic" class="form-control" accept="image/*" onchange="previewImage()" required>
-                        </div>
-                        <div class="col-md-6">
 
-                            <img id="preview" src="../uploads/profile/default.webp" alt="Preview">
-                        </div>
-                    </div>
 
                     <div class="h6 mb-0">Personal Information</div>
                     <hr>
@@ -181,7 +172,16 @@ if ($usersResult->num_rows > 0) {
 
                                     <div class="h6 mb-0">Alumni Information</div>
                                     <hr>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="h6 mb-0">Profile Picture</div>
+                                            <input type="file" id="profilePic" name="profilePic" class="form-control" accept="image/*" onchange="previewImage()" required>
+                                        </div>
+                                        <div class="col-md-6">
 
+                                            <img id="preview" src="../uploads/profile/default.webp" alt="Preview">
+                                        </div>
+                                    </div>
                                     <div class="smalltxt mb-1 fw-bold">Student ID</div>
                                     <input type="text" class="form-control mb-3 border" id="student_id" name="student_id" value="<?= $student_id ?>" required>
 
