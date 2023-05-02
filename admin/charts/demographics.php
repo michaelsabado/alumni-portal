@@ -29,7 +29,7 @@ if ($sqldep->num_rows > 0) {
 $total = $conn->query("SELECT * FROM users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
 
 if ($result->num_rows > 0) {
-  
+
     while ($row = $result->fetch_assoc()) {
         array_push($labels, $row['description'] . ' (' . number_format(($row['num'] / $total) * 100, 1) . '%)');
         array_push($data, $row['num']);
@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
 
 
 $totalMale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
-$totalFemale = $conn->query("SELECT * FROM users u WHERE gender = 1 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
+$totalFemale = $conn->query("SELECT * FROM users u WHERE gender = 2 AND u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
 
 $civilStatus = [];
 

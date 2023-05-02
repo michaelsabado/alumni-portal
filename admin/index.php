@@ -69,7 +69,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3 emp">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Employed <i class="fas fa-sync text-primary ms-2" onclick="toggleCard(2)"></i></div>
@@ -83,7 +83,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Batches</div>
@@ -91,7 +91,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3 male">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Gender (Male) <i class="fas fa-sync text-primary ms-2" onclick="toggleCardGender(2)"></i></div>
@@ -105,7 +105,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='news'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">News</div>
@@ -113,7 +113,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='events'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Events</div>
@@ -126,32 +126,32 @@ if (isset($_GET['filter'])) {
                             <hr>
                             <div class="h6 fw-bold">Alumni Demographics</div>
                             <?php
-                            
-                            if($from > $to) echo '<div class="smalltxt text-danger fw-bold">Batch range is invalid.</div>';
-                            
+
+                            if ($from > $to) echo '<div class="smalltxt text-danger fw-bold">Batch range is invalid.</div>';
+
                             ?>
-                
+
                             <form action="">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="smalltxt mb-1">From</div>
                                         <select name="batch-from" id="batch-from" class="form-select border mb-3">
-                                        <?php
-                                        for ($current = date('Y'); $current >= 1980; $current--) {
-                                            echo '<option value="' . $current . '" '.(($current == $from) ? 'selected':'').'>' . $current . '</option>';
-                                        }
-                                        ?>
-                                    </select>
+                                            <?php
+                                            for ($current = date('Y'); $current >= 1980; $current--) {
+                                                echo '<option value="' . $current . '" ' . (($current == $from) ? 'selected' : '') . '>' . $current . '</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="smalltxt mb-1">To</div>
                                         <select name="batch-to" id="batch-to" class="form-select border mb-3">
-                                        <?php
-                                        for ($current = date('Y'); $current >= 1980; $current--) {
-                                            echo '<option value="' . $current . '" '.(($current == $to) ? 'selected':'').'>' . $current . '</option>';
-                                        }
-                                        ?>
-                                    </select>
+                                            <?php
+                                            for ($current = date('Y'); $current >= 1980; $current--) {
+                                                echo '<option value="' . $current . '" ' . (($current == $to) ? 'selected' : '') . '>' . $current . '</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="smalltxt mb-1">
@@ -195,7 +195,7 @@ if (isset($_GET['filter'])) {
                                 <canvas id="myGenderPie" width="400" height="400"></canvas>
                             </div>
                         </div>
-                    </div>         
+                    </div>
                     <div class="col-md-4">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
@@ -232,18 +232,19 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold ">Forum</div>
-                                <div class="smalltxt text-secondary mb-4">Based from dates Jan 1, <?= $from ?> to Dec 31, <?= $to?></div>
+                                <div class="smalltxt text-secondary mb-4">Based from dates Jan 1, <?= $from ?> to Dec 31, <?= $to ?></div>
                                 <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='discussions'">
-                            <div class="card-body">
-                                <div class="h6 fw-bold">Discussion Creator/s</div>
-                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM posts WHERE date_posted >= '$from-01-01' AND date_posted <= '$to-12-31'")->num_rows ?></div>
-                            </div>
-                        </div><div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='discussions'">
-                            <div class="card-body">
-                                <div class="h6 fw-bold">Commentator/s</div>
-                                <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM comments WHERE date_commented >= '$from-01-01' AND date_commented <= '$to-12-31'")->num_rows ?></div>
-                            </div>
-                        </div>
+                                    <div class="card-body">
+                                        <div class="h6 fw-bold">Discussion Creator/s</div>
+                                        <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM posts WHERE date_posted >= '$from-01-01' AND date_posted <= '$to-12-31'")->num_rows ?></div>
+                                    </div>
+                                </div>
+                                <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='discussions'">
+                                    <div class="card-body">
+                                        <div class="h6 fw-bold">Commentator/s</div>
+                                        <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(user_id) FROM comments WHERE date_commented >= '$from-01-01' AND date_commented <= '$to-12-31'")->num_rows ?></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -458,9 +459,10 @@ if (isset($_GET['filter'])) {
         $.get('charts/location', {
             from: '<?= $from ?>',
             to: '<?= $to ?>',
-        }, function(response) {      console.log(response);
+        }, function(response) {
+            console.log(response);
             var data = JSON.parse(response);
-      
+
             const locationBar = document.getElementById("myLocationBar").getContext("2d");
             const myLocationBar = new Chart(locationBar, {
                 type: "horizontalBar",
@@ -516,7 +518,7 @@ if (isset($_GET['filter'])) {
             });
         });
 
- 
+
         function toggleCard() {
             $('.emp').toggleClass('d-none');
             $('.unemp').toggleClass('d-none');
@@ -527,8 +529,6 @@ if (isset($_GET['filter'])) {
             $('.male').toggleClass('d-none');
             $('.female').toggleClass('d-none');
         }
-
-      
     </script>
 
 </body>
