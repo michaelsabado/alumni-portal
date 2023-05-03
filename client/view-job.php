@@ -55,6 +55,14 @@ if (isset($_POST['apply'])) {
                 <?= $message ?>
                 <button class="btn text-primary" onclick="history.back()"><i class="fas fa-arrow-circle-left"></i> Back</button>
                 <div id="news" class="p-3 mb-3">
+                    <?php
+
+                    if ($row['picture'] !== null) {
+                        echo '<img src="../uploads/jobs/' . $row['picture'] . '" alt="" class="w-100 rounded-2 border">';
+                    }
+
+                    ?>
+
                     <div class="h5 fw-bold"><?= $row['company'] ?></div>
                     <div class="h1 fw-bold mb-3 "><?= $row['title'] ?></div>
                     <div class="smalltxt mb-5 "><i class="fas fa-calendar-day me-2"></i> <?= date('M d, Y', strtotime($row['date_posted'])) ?></div>

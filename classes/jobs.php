@@ -59,17 +59,37 @@ class Jobs
         } else return false;
     }
 
-    public static function create($title, $description, $company, $type, $email)
+    public static function create($title, $description, $company, $type, $email, $image)
     {
         global $conn;
-        $sql = "INSERT INTO `jobs`(`status`, `type`, `title`, `description`, `company`, `email`) VALUES ('1','$type','$title','$description','$company', '$email')";
+
+        if ($image['size'] == 0) {
+            $img = 'default.jpg';
+        } else {
+            $target_dir = "../uploads/jobs/";
+            $img = uniqid()  . basename($image["name"]);
+            $target_file = $target_dir . $img;
+            move_uploaded_file($image["tmp_name"], $target_file);
+        }
+
+        $sql = "INSERT INTO `jobs`(`status`, `type`, `title`, `description`, `company`, `email`, `picture`) VALUES ('1','$type','$title','$description','$company', '$email', '$img')";
         if ($conn->query($sql)) return true;
         return false;
     }
-    public static function update($id, $title, $description, $company,  $type)
+    public static function update($id, $title, $description, $company,  $type, $image)
     {
         global $conn;
-        $sql = "UPDATE `jobs` SET `type`='$type',`title`='$title',`description`='$description',`company`='$company' WHERE id = $id";
+
+        if ($image['size'] == 0) {
+            $img = 'default.jpg';
+            $sql = "UPDATE `jobs` SET `type`='$type',`title`='$title',`description`='$description',`company`='$company' WHERE id = $id";
+        } else {
+            $target_dir = "../uploads/jobs/";
+            $img = uniqid()  . basename($image["name"]);
+            $target_file = $target_dir . $img;
+            move_uploaded_file($image["tmp_name"], $target_file);
+            $sql = "UPDATE `jobs` SET `type`='$type',`title`='$title',`description`='$description',`company`='$company', `picture` = '$img' WHERE id = $id";
+        }
 
         if ($conn->query($sql)) return true;
         return false;

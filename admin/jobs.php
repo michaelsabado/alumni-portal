@@ -29,8 +29,9 @@ if (isset($_POST['submit-job'])) {
     $description = $conn->real_escape_string($_POST['description']);
     $email = $conn->real_escape_string($_POST['email']);
     $type = $_POST['type'];
+    $image = $_FILES['image'];
 
-    if (Jobs::create($title, $description, $company, $type, $email)) {
+    if (Jobs::create($title, $description, $company, $type, $email, $image)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Job is now added.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -44,8 +45,9 @@ if (isset($_POST['submit-edit-job'])) {
     $company = $conn->real_escape_string($_POST['company']);
     $description = $conn->real_escape_string($_POST['description']);
     $type = $_POST['type'];
+    $image = $_FILES['image'];
 
-    if (Jobs::update($id, $title, $description, $company, $type)) {
+    if (Jobs::update($id, $title, $description, $company, $type, $image)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Job is updated.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -115,6 +117,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                     <th>Description</th>
                                     <th>Company</th>
                                     <th>Email</th>
+                                    <th>Picture</th>
                                     <th class="text-nowrap">Date Posted</th>
                                     <th></th>
                                 </tr>
@@ -148,6 +151,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                             </td>
                                             <td><?= $row['company'] ?></td>
                                             <td class="smalltxt"><?= $row['email'] ?></td>
+                                            <td><img class="img-list" src="../uploads/jobs/<?= $row['picture'] ?>" alt=""> </td>
                                             <td><?= date('M d, Y', strtotime($row['date_posted'])) ?></td>
                                             <td>
                                                 <div class="dropdown">
@@ -227,6 +231,10 @@ $newsResult = Jobs::getAllJobsAdmin();
                                     <option value="2">Contractual</option>
                                 </select>
                             </div>
+                            <div class="col-md-6">
+                                <div class="h6">Image</div>
+                                <input type="file" accept="image/*" name="image" class="form-control mb-3">
+                            </div>
                         </div>
                         <textarea name="description" id="job-description" cols="30" rows="10" hidden></textarea>
                         <div class="h6">Description</div>
@@ -274,6 +282,10 @@ $newsResult = Jobs::getAllJobsAdmin();
                                     <option value="1">Full Time</option>
                                     <option value="2">Contractual</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="h6">New Image (optional)</div>
+                                <input type="file" accept="image/*" name="image" class="form-control mb-3">
                             </div>
                         </div>
 
