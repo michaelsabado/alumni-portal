@@ -64,7 +64,7 @@ class Jobs
         global $conn;
 
         if ($image['size'] == 0) {
-            $img = 'default.jpg';
+            $img = '';
         } else {
             $target_dir = "../uploads/jobs/";
             $img = uniqid()  . basename($image["name"]);

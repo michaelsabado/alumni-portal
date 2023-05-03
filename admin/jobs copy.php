@@ -86,7 +86,7 @@ function truncate($string, $limit, $break = " ", $pad = "...")
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" target="_blank" href="../client/read?type=news&id=<?= $row['id'] ?>">View live</a></li>
+                                                <li><a class="dropdown-item" target="_blank" href="../client/read?type=news&id=<?= $row['id'] ?>">View as visitor</a></li>
                                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                                             </ul>

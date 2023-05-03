@@ -159,7 +159,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" target="_blank" href="../client/view-job?id=<?= $row['id'] ?>"><i class="fas fa-eye me-2"></i> View live</a></li>
+                                                        <li><a class="dropdown-item" target="_blank" href="../client/view-job?id=<?= $row['id'] ?>"><i class="fas fa-eye me-2"></i> View as visitor</a></li>
                                                         <li><a class="dropdown-item" onclick="loadEdit(<?= $row['id'] ?>)"><i class="fas fa-edit me-2"></i> Edit</a></li>
                                                         <li><a class="dropdown-item" onclick="deleteJob(<?= $row['id'] ?>)"><i class="fas fa-trash-alt me-2"></i> Delete</a></li>
                                                         <li>

@@ -23,7 +23,7 @@
             <a href="news" class="menu-link <?= (in_array(basename($_SERVER["SCRIPT_FILENAME"], '.php'), ['news', ''])) ? 'menu-active' : '' ?>"><i class="far fa-newspaper me-2"></i>News <i class="fas fa-angle-right float-end mt-1"></i></a>
             <a href="events" class="menu-link <?= (in_array(basename($_SERVER["SCRIPT_FILENAME"], '.php'), ['events', ''])) ? 'menu-active' : '' ?>"><i class="far fa-calendar-check me-2"></i>Events <i class="fas fa-angle-right float-end mt-1"></i></a>
             <a href="jobs" class="menu-link <?= (in_array(basename($_SERVER["SCRIPT_FILENAME"], '.php'), ['jobs', ''])) ? 'menu-active' : '' ?>"><i class="fas fa-briefcase me-2"></i>Job Posts <i class="fas fa-angle-right float-end mt-1"></i></a>
-            <a href="discussions" class="menu-link <?= (in_array(basename($_SERVER["SCRIPT_FILENAME"], '.php'), ['discussions', ''])) ? 'menu-active' : '' ?>"><i class="fas fa-comments me-2"></i>Discussions <i class="fas fa-angle-right float-end mt-1"></i></a>
+            <a href="discussions" class="menu-link <?= (in_array(basename($_SERVER["SCRIPT_FILENAME"], '.php'), ['discussions', ''])) ? 'menu-active' : '' ?>"><i class="fas fa-comments me-2"></i>Forums <i class="fas fa-angle-right float-end mt-1"></i></a>
         </div>
 
     </div>

@@ -177,7 +177,7 @@ $postsResult = Posts::getAllPostsAdmin($category);
                             <i class="fas fa-ellipsis-v"></i>
                           </button>
                           <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" target="_blank" href="../client/view-post?id=<?= $row['post_id'] ?>"><i class="fas fa-eye me-2"></i> View live</a></li>
+                            <li><a class="dropdown-item" target="_blank" href="../client/view-post?id=<?= $row['post_id'] ?>"><i class="fas fa-eye me-2"></i> View as visitor</a></li>
                             <li><a class="dropdown-item <?= (in_array($row['status'], [0, 4])) ? '' : 'd-none' ?>" onclick="approve(<?= $row['post_id'] ?>)"><i class="fas fa-check-circle me-2"></i> Approve</a></li>
                             <li><a class="dropdown-item <?= (in_array($row['status'], [0])) ? '' : 'd-none' ?>" onclick="decline(<?= $row['post_id'] ?>)"><i class="fas fa-times-circle me-2"></i> Decline</a></li>
                             <li><a class="dropdown-item <?= (in_array($row['status'], [1])) ? '' : 'd-none' ?>" onclick="disable(<?= $row['post_id'] ?>)"><i class="fas fa-ban me-2"></i> Disable</a></li>
