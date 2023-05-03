@@ -11,7 +11,7 @@ $str2 = '';
 
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $image = $_FILES['profilePic'];
+    $image = $_FILES['idPic'];
 
     if ($employment_date_current != '') {
         $str1 = "`employment_date_first` = '$employment_date_first',";
@@ -21,12 +21,12 @@ if (isset($_POST['submit'])) {
     }
 
 
-    $target_dir = "../uploads/profile/";
+    $target_dir = "../uploads/id/";
     $img = uniqid() . basename($image["name"]);
     $target_file = $target_dir . $img;
     move_uploaded_file($image["tmp_name"], $target_file);
 
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `nature_of_work` = '$nature_of_work', `current_position`='$current_position', `picture` = '$img' WHERE id = $id";
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `nature_of_work` = '$nature_of_work', `current_position`='$current_position', `id_picture` = '$img' WHERE id = $id";
     // echo $sql;
     if ($conn->query($sql)) {
         session_destroy();
@@ -172,16 +172,10 @@ if ($usersResult->num_rows > 0) {
 
                                     <div class="h6 mb-0">Alumni Information</div>
                                     <hr>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <div class="h6 mb-0">Profile Picture</div>
-                                            <input type="file" id="profilePic" name="profilePic" class="form-control" accept="image/*" onchange="previewImage()" required>
-                                        </div>
-                                        <div class="col-md-6">
 
-                                            <img id="preview" src="../uploads/profile/default.webp" alt="Preview">
-                                        </div>
-                                    </div>
+                                    <div class="smalltxt mb-1 fw-bold">ID Picture</div>
+                                    <input type="file" id="idPic" name="idPic" class="form-control mb-3 border" accept="image/*" required>
+
                                     <div class="smalltxt mb-1 fw-bold">Student ID</div>
                                     <input type="text" class="form-control mb-3 border" id="student_id" name="student_id" value="<?= $student_id ?>" required>
 
@@ -422,22 +416,6 @@ if ($usersResult->num_rows > 0) {
 
             $('#region').ph_locations('fetch_list');
         });
-
-        function previewImage() {
-            const preview = document.getElementById('preview');
-            const file = document.getElementById('profilePic').files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function() {
-                preview.src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = '';
-            }
-        }
     </script>
 
 </body>

@@ -186,6 +186,12 @@ if (isset($_POST['decline-id'])) {
                                 <hr>
                                 <div class="row align-items-center">
                                     <div class="col-md-6">
+                                        <div class="h6">ID Picture</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="../uploads/id/<?= $user['id_picture'] ?>" alt="" class="img w-100 mb-3 rounded-2 border shadow-sm">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="h6">Student ID</div>
                                     </div>
                                     <div class="col-md-6">
@@ -303,7 +309,6 @@ if (isset($_POST['decline-id'])) {
         </div>
     </div>
 
-
     <!-- Modal -->
     <div class="modal fade" id="depModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -345,12 +350,24 @@ if (isset($_POST['decline-id'])) {
             </div>
         </div>
     </div>
-
+    <div id="image-viewer">
+        <span class="close">&times;</span>
+        <img class="modal-contents mb-5" id="full-image">
+    </div>
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
         });
 
+
+        $("img").click(function() {
+            $("#full-image").attr("src", $(this).attr("src"));
+            $('#image-viewer').show();
+        });
+
+        $("#image-viewer .close").click(function() {
+            $('#image-viewer').hide();
+        });
 
 
         function verifyUser() {
