@@ -1,5 +1,6 @@
 <?php
 require_once '../db/db_config.php';
+require_once '../notifier.php';
 
 class News
 {
@@ -38,7 +39,13 @@ class News
         }
 
         $sql = "INSERT INTO `news`( `picture`, `title`, `author`, `description`) VALUES ('" . $img . "','$title','$author','$description')";
-        if ($conn->query($sql)) return true;
+        if ($conn->query($sql)) {
+            $id = $conn->insert_id;
+            notify(1, $id);
+            return true;
+        }
+
+
         return false;
     }
     public static function update($id, $title, $author, $description, $image)

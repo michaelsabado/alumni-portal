@@ -1,5 +1,6 @@
 <?php
 require_once '../db/db_config.php';
+require_once '../notifier.php';
 
 class Events
 {
@@ -38,7 +39,12 @@ class Events
         }
 
         $sql = "INSERT INTO `events`( `picture`, `title`, `description`) VALUES ('" . $img . "','$title', '$description')";
-        if ($conn->query($sql)) return true;
+        if ($conn->query($sql)) {
+            $id = $conn->insert_id;
+            notify(2, $id);
+            return true;
+        }
+
         return false;
     }
     public static function update($id, $title, $description, $image)
