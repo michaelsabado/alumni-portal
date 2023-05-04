@@ -183,7 +183,7 @@ if (isset($_GET['filter'])) {
                     <div class="col-md-4">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
-                                <div class="h6 fw-bold mb-4">Employment Rate</div>
+                                <div class="h6 fw-bold mb-4">Employment Status</div>
                                 <canvas id="myBarChart" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -402,9 +402,14 @@ if (isset($_GET['filter'])) {
                 data: {
                     labels: data[0],
                     datasets: [{
-                        label: 'Percentage (%)',
+                        label: 'Employed (%)',
                         data: data[1],
-                        backgroundColor: colors,
+                        backgroundColor: 'rgba(255, 99, 71, 0.7) ',
+                        borderWidth: 1
+                    }, {
+                        label: 'Unemployed (%)',
+                        data: data[2],
+                        backgroundColor: 'rgba(0, 128, 0, 0.7)',
                         borderWidth: 1
                     }]
                 },
@@ -417,7 +422,7 @@ if (isset($_GET['filter'])) {
                             }
                         }]
                     },
-                    legend: false
+                    // legend: false
                 }
             });
         });
