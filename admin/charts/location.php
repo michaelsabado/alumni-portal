@@ -22,11 +22,11 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT DISTINCT(nature_of_work) as nature, COUNT(id) as total  FROM `users` WHERE batch >= '$from' AND batch <= '$to' AND is_verified = 1 GROUP BY nature ORDER BY nature";
+$sql = "SELECT DISTINCT(nature_of_work) as nature, COUNT(id) as total  FROM `users` WHERE batch >= '$from' AND batch <= '$to' AND is_verified = 1 AND (nature_of_work IS NOT NULL OR nature_of_work != '') GROUP BY nature ORDER BY nature";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row1 = $result->fetch_assoc()) {
-        if($row1['nature'] != '') array_push($natures, $row1['nature']);
+        if ($row1['nature'] != '') array_push($natures, $row1['nature']);
         else array_push($natures, 'Not set');
         array_push($naturesCount, $row1['total']);
     }
