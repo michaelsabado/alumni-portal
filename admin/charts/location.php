@@ -26,8 +26,7 @@ $sql = "SELECT DISTINCT(nature_of_work) as nature, COUNT(id) as total  FROM `use
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row1 = $result->fetch_assoc()) {
-        if ($row1['nature'] != '') array_push($natures, $row1['nature']);
-        else array_push($natures, 'Not set');
+        array_push($natures, $row1['nature']);
         array_push($naturesCount, $row1['total']);
     }
 }
