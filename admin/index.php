@@ -467,7 +467,9 @@ if (isset($_GET['filter'])) {
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
-
+            var size = data[0].length;
+            console.log(size);
+            $("#myLocationBar").attr('height', size * 25);
             const locationBar = document.getElementById("myLocationBar").getContext("2d");
             const myLocationBar = new Chart(locationBar, {
                 type: "horizontalBar",
@@ -494,7 +496,7 @@ if (isset($_GET['filter'])) {
                     }
                 }
             });
-
+            $("#myWorkBar").attr('height', size * 30);
             const workBar = document.getElementById("myWorkBar").getContext("2d");
             const myWorkBar = new Chart(workBar, {
                 type: "horizontalBar",
