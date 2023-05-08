@@ -18,8 +18,9 @@ $data = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        array_push($labels, $row['batch']  . ' (' . number_format(($row['num'] / $total) * 100, 1) . '%)');
+        array_push($labels, $row['batch']);
         array_push($data, $row['num']);
+        //  . ' (' . number_format(($row['num'] / $total) * 100, 1) . '%)'
     }
 }
 
