@@ -5,6 +5,9 @@ require_once '../../db/db_config.php';
 $from = $_GET['from'];
 $to = $_GET['to'];
 
+
+$total = $conn->query("SELECT * FROM users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1")->num_rows;
+
 $sql = "SELECT c.description, COUNT(u.id) as num from users u RIGHT JOIN courses c ON u.course = c.id  WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1 GROUP BY c.description";
 
 // echo $sql;
@@ -20,7 +23,7 @@ $sqldep = $conn->query("SELECT DISTINCT(d.`description`), COUNT(u.`id`) as total
 
 if ($sqldep->num_rows > 0) {
     while ($row1 = $sqldep->fetch_assoc()) {
-        array_push($deps, $row1['description']);
+        array_push($deps, $row1['description'] . ' (' . number_format(($row1['total'] / $total) * 100, 1) . '%)');
         array_push($depsCount, $row1['total']);
     }
 }

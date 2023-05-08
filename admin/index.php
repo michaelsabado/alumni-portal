@@ -354,11 +354,15 @@ if (isset($_GET['filter'])) {
                 }
             });
 
+            var total = data[5][0] + data[5][1] + data[5][2];
+            var c1 = (data[5][0] / total) * 100;
+            var c2 = (data[5][1] / total) * 100;
+            var c3 = (data[5][2] / total) * 100;
             var civilPie = document.getElementById("myCivilPie").getContext('2d');
             var myCivilPie = new Chart(civilPie, {
                 type: 'pie',
                 data: {
-                    labels: ['Single', 'Married', 'Annuled'],
+                    labels: [`Single (${c1.toFixed(1)}%)`, `Married (${c2.toFixed(1)}%)`, `Annuled (${c3.toFixed(1)}%)`],
                     datasets: [{
                         label: 'Civil Status',
                         data: data[5],
@@ -452,7 +456,7 @@ if (isset($_GET['filter'])) {
                 data: {
                     labels: data[0],
                     datasets: [{
-                        label: "# of Graduates",
+                        label: "Graduated",
                         data: data[1],
                         backgroundColor: colors,
                         borderWidth: 1
@@ -481,7 +485,7 @@ if (isset($_GET['filter'])) {
             var data = JSON.parse(response);
             var size = data[0].length;
             console.log(size);
-            $("#myLocationBar").attr('height', size * 25);
+            $("#myLocationBar").attr('height', size * 30);
             const locationBar = document.getElementById("myLocationBar").getContext("2d");
             const myLocationBar = new Chart(locationBar, {
                 type: "horizontalBar",
