@@ -326,11 +326,15 @@ if (isset($_GET['filter'])) {
                 }
             });
 
+
+            var total = data[2][0] + data[2][1];
+            var maleP = (data[2][0] / total) * 100;
+            var femaleP = (data[2][1] / total) * 100;
             var genderPie = document.getElementById("myGenderPie").getContext('2d');
             var myGenderPie = new Chart(genderPie, {
                 type: 'pie',
                 data: {
-                    labels: ['Male', 'Female'],
+                    labels: [`Male (${maleP.toFixed(1)}%)`, `Female (${femaleP.toFixed(1)}%)`],
                     datasets: [{
                         label: 'Gender',
                         data: data[2],
