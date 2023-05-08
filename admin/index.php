@@ -418,12 +418,12 @@ if (isset($_GET['filter'])) {
                 data: {
                     labels: data[0],
                     datasets: [{
-                        label: 'Employed (%)',
+                        label: 'Employed ',
                         data: data[1],
                         backgroundColor: 'rgba(255, 99, 71, 0.7) ',
                         borderWidth: 1
                     }, {
-                        label: 'Unemployed (%)',
+                        label: 'Unemployed ',
                         data: data[2],
                         backgroundColor: 'rgba(0, 128, 0, 0.7)',
                         borderWidth: 1
@@ -431,14 +431,14 @@ if (isset($_GET['filter'])) {
                 },
                 options: {
                     scales: {
+                        xAxes: [{
+                            display: true
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                max: 100
-                            }
+                            display: false
                         }]
                     },
-                    // legend: false
+                    legend: false
                 }
             });
         });
@@ -468,11 +468,12 @@ if (isset($_GET['filter'])) {
                     },
                     scales: {
                         xAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                            display: false
+                        }],
+                        yAxes: [{
+                            display: true
                         }]
-                    }
+                    },
                 }
             });
         });
@@ -506,8 +507,10 @@ if (isset($_GET['filter'])) {
                     scales: {
                         xAxes: [{
                             ticks: {
-                                beginAtZero: true
-                            }
+                                beginAtZero: true,
+                                max: data[4]
+                            },
+                            display: false
                         }]
                     }
                 }
@@ -533,8 +536,10 @@ if (isset($_GET['filter'])) {
                     scales: {
                         xAxes: [{
                             ticks: {
-                                beginAtZero: true
-                            }
+                                beginAtZero: true,
+                                max: data[4]
+                            },
+                            display: false
                         }]
                     }
                 }

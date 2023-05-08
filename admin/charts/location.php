@@ -31,4 +31,4 @@ if ($result->num_rows > 0) {
         array_push($naturesCount, $row1['total']);
     }
 }
-echo json_encode([$labels, $data, $natures, $naturesCount]);
+echo json_encode([$labels, $data, $natures, $naturesCount, $total]);
