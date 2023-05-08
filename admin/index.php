@@ -438,7 +438,7 @@ if (isset($_GET['filter'])) {
                             display: false
                         }]
                     },
-                    legend: false
+                    // legend: true
                 }
             });
         });
