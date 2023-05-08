@@ -164,7 +164,7 @@ if (isset($_GET['filter'])) {
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Department</div>
@@ -172,7 +172,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Course</div>
@@ -180,7 +180,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Employment Status</div>
@@ -188,7 +188,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Gender</div>
@@ -196,7 +196,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Civil Status</div>
@@ -204,7 +204,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Batch Graduates</div>
@@ -212,7 +212,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Location</div>
@@ -220,7 +220,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Nature of Work</div>
@@ -228,7 +228,7 @@ if (isset($_GET['filter'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold ">Forum</div>
@@ -292,6 +292,10 @@ if (isset($_GET['filter'])) {
         // }
 
         // console.log(colors);
+
+
+
+
         $.get('charts/demographics', {
             from: '<?= $from ?>',
             to: '<?= $to ?>',
@@ -312,10 +316,11 @@ if (isset($_GET['filter'])) {
                 },
                 options: {
                     scales: {
+                        xAxes: [{
+                            display: false
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                            display: false
                         }]
                     }
                 }
@@ -335,10 +340,11 @@ if (isset($_GET['filter'])) {
                 },
                 options: {
                     scales: {
+                        xAxes: [{
+                            display: false
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                            display: false
                         }]
                     }
                 }
@@ -358,10 +364,11 @@ if (isset($_GET['filter'])) {
                 },
                 options: {
                     scales: {
+                        xAxes: [{
+                            display: false
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                            display: false
                         }]
                     }
                 }
@@ -381,10 +388,11 @@ if (isset($_GET['filter'])) {
                 },
                 options: {
                     scales: {
+                        xAxes: [{
+                            display: false
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                            display: false
                         }]
                     }
                 }
@@ -525,6 +533,13 @@ if (isset($_GET['filter'])) {
             });
         });
 
+        <?php
+
+        if ($from > $to) {
+
+        ?>
+            $(".my-chart").addClass("d-none");
+        <?php } ?>
 
         function toggleCard() {
             $('.emp').toggleClass('d-none');
