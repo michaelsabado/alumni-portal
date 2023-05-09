@@ -26,9 +26,10 @@ $ave = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        array_push($labels, $row['description'] . ' (' . number_format(($row['employed_users'] / $row['total_users']) * 100, 1) . '%)');
+        array_push($labels, $row['description']);
         array_push($emp, $row['employed_users']);
         array_push($unemp, $row['unemployed_users']);
+        // . ' (' . number_format(($row['employed_users'] / $row['total_users']) * 100, 1) . '%)'
     }
 }
 

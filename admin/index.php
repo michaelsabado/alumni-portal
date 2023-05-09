@@ -435,7 +435,10 @@ if (isset($_GET['filter'])) {
                             display: true
                         }],
                         yAxes: [{
-                            display: true
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1
+                            }
                         }]
                     },
                     // legend: true
