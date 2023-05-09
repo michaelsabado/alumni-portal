@@ -468,10 +468,14 @@ if (isset($_GET['filter'])) {
                     },
                     scales: {
                         xAxes: [{
-                            display: false
+                            display: false,
+                            ticks: {
+                                beginAtZero: true
+                            }
+
                         }],
                         yAxes: [{
-                            display: true
+                            display: true,
                         }]
                     },
                 }
