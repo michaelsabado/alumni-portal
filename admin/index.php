@@ -484,8 +484,9 @@ if (isset($_GET['filter'])) {
         }, function(response) {
             console.log(response);
             var data = JSON.parse(response);
-            var size = data[0].length;
+            var size = data[0].length + 3;
             console.log(size);
+
             $("#myLocationBar").attr('height', size * 30);
             const locationBar = document.getElementById("myLocationBar").getContext("2d");
             const myLocationBar = new Chart(locationBar, {
