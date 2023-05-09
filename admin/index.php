@@ -515,7 +515,7 @@ if (isset($_GET['filter'])) {
                                 beginAtZero: true,
                                 max: data[4]
                             },
-                            display: false
+                            display: true
                         }]
                     }
                 }
@@ -544,7 +544,7 @@ if (isset($_GET['filter'])) {
                                 beginAtZero: true,
                                 max: data[4]
                             },
-                            display: false
+                            display: true
                         }]
                     }
                 }
