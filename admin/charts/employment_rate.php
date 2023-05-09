@@ -5,13 +5,12 @@ require_once '../../db/db_config.php';
 $from = $_GET['from'];
 $to = $_GET['to'];
 
-$sql = "SELECT c.description,
-COUNT(CASE WHEN u.employment_status = 1 THEN 1 ELSE NULL END) as employed_users,
-COUNT(CASE WHEN u.employment_status = 2 THEN 1 ELSE NULL END) as unemployed_users,
-COUNT(u.id) as total_users
-FROM users u
-RIGHT JOIN courses c ON u.course = c.id
-WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1
+
+$sql = "SELECT c.description, 
+ROUND((SUM(CASE WHEN u.employment_status = 1 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 1) as employed_users,
+ROUND((SUM(CASE WHEN u.employment_status = 2 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 1) as unemployed_users
+FROM users u 
+RIGHT JOIN courses c ON u.course = c.id WHERE u.batch >= '$from' AND u.batch <= '$to' AND u.is_verified = 1
 GROUP BY c.description";
 
 // 

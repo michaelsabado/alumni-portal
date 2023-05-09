@@ -418,12 +418,12 @@ if (isset($_GET['filter'])) {
                 data: {
                     labels: data[0],
                     datasets: [{
-                        label: 'Employed ',
+                        label: 'Employed %',
                         data: data[1],
                         backgroundColor: 'rgba(255, 99, 71, 0.7) ',
                         borderWidth: 1
                     }, {
-                        label: 'Unemployed ',
+                        label: 'Unemployed %',
                         data: data[2],
                         backgroundColor: 'rgba(0, 128, 0, 0.7)',
                         borderWidth: 1
@@ -437,7 +437,7 @@ if (isset($_GET['filter'])) {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                stepSize: 1
+                                stepSize: 10
                             }
                         }]
                     },
