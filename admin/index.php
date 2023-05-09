@@ -435,7 +435,7 @@ if (isset($_GET['filter'])) {
                             display: true
                         }],
                         yAxes: [{
-                            display: false
+                            display: true
                         }]
                     },
                     // legend: true
@@ -468,7 +468,7 @@ if (isset($_GET['filter'])) {
                     },
                     scales: {
                         xAxes: [{
-                            display: false,
+                            display: true,
                             ticks: {
                                 beginAtZero: true
                             }
