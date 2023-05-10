@@ -48,6 +48,8 @@ $archived = Jobs::getAllArchived();
                                         case 2:
                                             $type = 'Contractual';
                                             break;
+                                        default:
+                                            $type = $row['type'];
                                     }
                             ?>
                                     <div class="col-md-4 jobs-data" data-title="<?= $row['title'] ?>" data-company="<?= $row['company'] ?>">
@@ -91,6 +93,8 @@ $archived = Jobs::getAllArchived();
                                         case 2:
                                             $type = 'Contractual';
                                             break;
+                                        default:
+                                            $type = $row['type'];
                                     }
                             ?>
                                     <div class="col-md-4 ">

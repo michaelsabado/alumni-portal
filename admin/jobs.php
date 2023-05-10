@@ -31,6 +31,11 @@ if (isset($_POST['submit-job'])) {
     $type = $_POST['type'];
     $image = $_FILES['image'];
 
+
+    if ($type  == 3) {
+        $type = $conn->real_escape_string($_POST['others']);
+    }
+
     if (Jobs::create($title, $description, $company, $type, $email, $image)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Job is now added.
@@ -135,6 +140,7 @@ $newsResult = Jobs::getAllJobsAdmin();
 
                                         if ($row['type'] == 1) $type = '<span class="badge bg-warning">Full Time</span>';
                                         else  if ($row['type'] == 2) $type = '<span class="badge bg-success">Contractual</span>';
+                                        else  $type = '<span class="badge bg-secondary">' . $row['type'] . '</span>';
                                 ?>
                                         <tr valign="middle">
                                             <td>
@@ -226,10 +232,15 @@ $newsResult = Jobs::getAllJobsAdmin();
                             </div>
                             <div class="col-md-6">
                                 <div class="h6">Type</div>
-                                <select name="type" id="" class="form-select mb-3">
+                                <select name="type" id="" class="form-select mb-3" onchange="checkJob($(this).val())">
                                     <option value="1">Full Time</option>
                                     <option value="2">Contractual</option>
+                                    <option value="3">Others</option>
                                 </select>
+                                <div id="othersPanel" class="d-none">
+                                    <div class="smalltxt ">Specify</div>
+                                    <input type="text" name="others" class="form-control mb-3" required>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="h6">Image</div>
@@ -474,6 +485,14 @@ $newsResult = Jobs::getAllJobsAdmin();
                     $("#edit-mark-up").html(response.description);
                 }
             });
+        }
+
+        function checkJob(val) {
+            if (val == 3) {
+                $("#othersPanel").removeClass('d-none');
+            } else {
+                $("#othersPanel").addClass('d-none');
+            }
         }
     </script>
 </body>
