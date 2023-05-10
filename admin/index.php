@@ -302,6 +302,9 @@ if (isset($_GET['filter'])) {
         }, function(response) {
             // console.log(response);
             var data = JSON.parse(response);
+
+
+
             var pie = document.getElementById("myPieChart").getContext('2d');
             var myPieChart = new Chart(pie, {
                 type: 'doughnut',
@@ -327,60 +330,64 @@ if (isset($_GET['filter'])) {
             });
 
 
+
             var total = data[2][0] + data[2][1];
             var maleP = (data[2][0] / total) * 100;
             var femaleP = (data[2][1] / total) * 100;
-            var genderPie = document.getElementById("myGenderPie").getContext('2d');
-            var myGenderPie = new Chart(genderPie, {
-                type: 'pie',
-                data: {
-                    labels: [`Male (${maleP.toFixed(1)}%)`, `Female (${femaleP.toFixed(1)}%)`],
-                    datasets: [{
-                        label: 'Gender',
-                        data: data[2],
-                        backgroundColor: ['rgba(132,132,216,0.7)', 'rgba(213,111,111,0.7)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: false
-                        }],
-                        yAxes: [{
-                            display: false
+            if (total > 0) {
+                var genderPie = document.getElementById("myGenderPie").getContext('2d');
+                var myGenderPie = new Chart(genderPie, {
+                    type: 'pie',
+                    data: {
+                        labels: [`Male (${maleP.toFixed(1)}%)`, `Female (${femaleP.toFixed(1)}%)`],
+                        datasets: [{
+                            label: 'Gender',
+                            data: data[2],
+                            backgroundColor: ['rgba(132,132,216,0.7)', 'rgba(213,111,111,0.7)'],
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: false
+                            }],
+                            yAxes: [{
+                                display: false
+                            }]
+                        }
                     }
-                }
-            });
-
+                });
+            }
             var total = data[5][0] + data[5][1] + data[5][2];
             var c1 = (data[5][0] / total) * 100;
             var c2 = (data[5][1] / total) * 100;
             var c3 = (data[5][2] / total) * 100;
-            var civilPie = document.getElementById("myCivilPie").getContext('2d');
-            var myCivilPie = new Chart(civilPie, {
-                type: 'pie',
-                data: {
-                    labels: [`Single (${c1.toFixed(1)}%)`, `Married (${c2.toFixed(1)}%)`, `Annuled (${c3.toFixed(1)}%)`],
-                    datasets: [{
-                        label: 'Civil Status',
-                        data: data[5],
-                        backgroundColor: ['rgba(210,175,76,0.7)', 'rgba(184,210,76,0.7)', 'rgba(76,210,148,0.7)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: false
-                        }],
-                        yAxes: [{
-                            display: false
+            if (total > 0) {
+                var civilPie = document.getElementById("myCivilPie").getContext('2d');
+                var myCivilPie = new Chart(civilPie, {
+                    type: 'pie',
+                    data: {
+                        labels: [`Single (${c1.toFixed(1)}%)`, `Married (${c2.toFixed(1)}%)`, `Annuled (${c3.toFixed(1)}%)`],
+                        datasets: [{
+                            label: 'Civil Status',
+                            data: data[5],
+                            backgroundColor: ['rgba(210,175,76,0.7)', 'rgba(184,210,76,0.7)', 'rgba(76,210,148,0.7)'],
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: false
+                            }],
+                            yAxes: [{
+                                display: false
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            }
 
             var depPie = document.getElementById("myDepartmentPie").getContext('2d');
             var myDepartmentPie = new Chart(depPie, {
@@ -412,38 +419,41 @@ if (isset($_GET['filter'])) {
         }, function(response) {
             // console.log(response);
             var data = JSON.parse(response);
-            var bar = document.getElementById("myBarChart").getContext('2d');
-            var myBarChart = new Chart(bar, {
-                type: 'bar',
-                data: {
-                    labels: data[0],
-                    datasets: [{
-                        label: 'Employed %',
-                        data: data[1],
-                        backgroundColor: 'rgba(255, 99, 71, 0.7) ',
-                        borderWidth: 1
-                    }, {
-                        label: 'Unemployed %',
-                        data: data[2],
-                        backgroundColor: 'rgba(0, 128, 0, 0.7)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: true
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                stepSize: 10
-                            }
+
+            if (data[1].length > 0) {
+                var bar = document.getElementById("myBarChart").getContext('2d');
+                var myBarChart = new Chart(bar, {
+                    type: 'bar',
+                    data: {
+                        labels: data[0],
+                        datasets: [{
+                            label: 'Employed %',
+                            data: data[1],
+                            backgroundColor: 'rgba(255, 99, 71, 0.7) ',
+                            borderWidth: 1
+                        }, {
+                            label: 'Unemployed %',
+                            data: data[2],
+                            backgroundColor: 'rgba(0, 128, 0, 0.7)',
+                            borderWidth: 1
                         }]
                     },
-                    // legend: true
-                }
-            });
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: true
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize: 10
+                                }
+                            }]
+                        },
+                        // legend: true
+                    }
+                });
+            }
         });
 
 
@@ -453,36 +463,39 @@ if (isset($_GET['filter'])) {
         }, function(response) {
             // console.log(response);
             var data = JSON.parse(response);
-            const hbar = document.getElementById("myHorizontalBarChart").getContext("2d");
-            const myHorizontalBarChart = new Chart(hbar, {
-                type: "horizontalBar",
-                data: {
-                    labels: data[0],
-                    datasets: [{
-                        label: "Graduated",
-                        data: data[1],
-                        backgroundColor: colors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: true,
-                            ticks: {
-                                beginAtZero: true
-                            }
 
-                        }],
-                        yAxes: [{
-                            display: true,
+            if (data[1].length > 0) {
+                const hbar = document.getElementById("myHorizontalBarChart").getContext("2d");
+                const myHorizontalBarChart = new Chart(hbar, {
+                    type: "horizontalBar",
+                    data: {
+                        labels: data[0],
+                        datasets: [{
+                            label: "Graduated",
+                            data: data[1],
+                            backgroundColor: colors,
+                            borderWidth: 1
                         }]
                     },
-                }
-            });
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+
+                            }],
+                            yAxes: [{
+                                display: true,
+                            }]
+                        },
+                    }
+                });
+            }
         });
 
         $.get('charts/location', {
@@ -495,71 +508,75 @@ if (isset($_GET['filter'])) {
             console.log(size);
 
             $("#myLocationBar").attr('height', size * 30);
-            const locationBar = document.getElementById("myLocationBar").getContext("2d");
-            const myLocationBar = new Chart(locationBar, {
-                type: "horizontalBar",
-                data: {
-                    labels: data[0],
-                    datasets: [{
-                        label: "Location",
-                        data: data[1],
-                        backgroundColor: "rgba(43, 229, 240, 0.7)",
-                        borderWidth: 1,
-                        borderRadius: 10,
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                max: data[4]
-                            },
-                            display: true
+            if (data[1].length > 0) {
+                const locationBar = document.getElementById("myLocationBar").getContext("2d");
+                const myLocationBar = new Chart(locationBar, {
+                    type: "horizontalBar",
+                    data: {
+                        labels: data[0],
+                        datasets: [{
+                            label: "Location",
+                            data: data[1],
+                            backgroundColor: "rgba(43, 229, 240, 0.7)",
+                            borderWidth: 1,
+                            borderRadius: 10,
                         }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    max: data[4]
+                                },
+                                display: true
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            }
             $("#myWorkBar").attr('height', size * 30);
-            const workBar = document.getElementById("myWorkBar").getContext("2d");
-            const myWorkBar = new Chart(workBar, {
-                type: "horizontalBar",
-                data: {
-                    labels: data[2],
-                    datasets: [{
-                        label: "Nature of Work",
-                        data: data[3],
-                        backgroundColor: "rgba(43, 110, 110, 0.7)",
-                        borderWidth: 1,
-                        borderRadius: 10,
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                max: data[4]
-                            },
-                            display: true
+
+            if (data[3].length > 0) {
+                const workBar = document.getElementById("myWorkBar").getContext("2d");
+                const myWorkBar = new Chart(workBar, {
+                    type: "horizontalBar",
+                    data: {
+                        labels: data[2],
+                        datasets: [{
+                            label: "Nature of Work",
+                            data: data[3],
+                            backgroundColor: "rgba(43, 110, 110, 0.7)",
+                            borderWidth: 1,
+                            borderRadius: 10,
                         }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    max: data[4]
+                                },
+                                display: true
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            }
         });
 
         <?php
 
         if ($from > $to) {
 
-        ?>
-            $(".my-chart").addClass("d-none");
+        ?> $(".my-chart").addClass("d-none");
         <?php } ?>
 
         function toggleCard() {
