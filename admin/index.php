@@ -168,6 +168,7 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Department</div>
+                                <div class="mx-auto my-auto text-muted d-none" id="d-no">No data available</div>
                                 <canvas id="myDepartmentPie" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -176,6 +177,7 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Course</div>
+                                <div class="mx-auto my-auto text-muted d-none" id="co-no">No data available</div>
                                 <canvas id="myPieChart" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -184,6 +186,7 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Employment Status</div>
+                                <div class="mx-auto my-auto text-muted d-none" id="em-no">No data available</div>
                                 <canvas id="myBarChart" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -192,7 +195,8 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Gender</div>
-                                <canvas id="myGenderPie" width="400" height="400"></canvas>
+                                <div class="mx-auto my-auto text-muted d-none" id="ge-no">No data available</div><canvas id="myGenderPie" width="400" height="400"></canvas>
+
                             </div>
                         </div>
                     </div>
@@ -200,7 +204,8 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Civil Status</div>
-                                <canvas id="myCivilPie" width="400" height="400"></canvas>
+                                <div class="mx-auto my-auto text-muted d-none" id="ci-no">No data available</div> <canvas id="myCivilPie" width="400" height="400"></canvas>
+
                             </div>
                         </div>
                     </div>
@@ -208,6 +213,7 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Batch Graduates</div>
+                                <div class="mx-auto my-auto text-muted d-none" id="ba-no">No data available</div>
                                 <canvas id="myHorizontalBarChart" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -215,7 +221,9 @@ if (isset($_GET['filter'])) {
                     <div class="col-md-4 my-chart">
                         <div class="card border-0 mb-3">
                             <div class="card-body">
+
                                 <div class="h6 fw-bold mb-4">Location</div>
+                                <div class="mx-auto my-auto text-muted d-none" id="lo-no">No data available</div>
                                 <canvas id="myLocationBar" width="400" height="800"></canvas>
                             </div>
                         </div>
@@ -224,7 +232,7 @@ if (isset($_GET['filter'])) {
                         <div class="card border-0 mb-3">
                             <div class="card-body">
                                 <div class="h6 fw-bold mb-4">Nature of Work</div>
-                                <canvas id="myWorkBar" width="400" height=""></canvas>
+                                <div class="mx-auto my-auto text-muted d-none" id="wo-no">No data available</div> <canvas id="myWorkBar" width="400" height=""></canvas>
                             </div>
                         </div>
                     </div>
@@ -304,32 +312,33 @@ if (isset($_GET['filter'])) {
             var data = JSON.parse(response);
 
 
-
-            var pie = document.getElementById("myPieChart").getContext('2d');
-            var myPieChart = new Chart(pie, {
-                type: 'doughnut',
-                data: {
-                    labels: data[0],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: data[1],
-                        backgroundColor: colors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: false
-                        }],
-                        yAxes: [{
-                            display: false
+            if (data[0].length > 0) {
+                var pie = document.getElementById("myPieChart").getContext('2d');
+                var myPieChart = new Chart(pie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data[0],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: data[1],
+                            backgroundColor: colors,
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: false
+                            }],
+                            yAxes: [{
+                                display: false
+                            }]
+                        }
                     }
-                }
-            });
-
-
+                });
+            } else {
+                $("#co-no").removeClass('d-none')
+            }
 
             var total = data[2][0] + data[2][1];
             var maleP = (data[2][0] / total) * 100;
@@ -358,6 +367,8 @@ if (isset($_GET['filter'])) {
                         }
                     }
                 });
+            } else {
+                $("#ge-no").removeClass('d-none')
             }
             var total = data[5][0] + data[5][1] + data[5][2];
             var c1 = (data[5][0] / total) * 100;
@@ -387,31 +398,40 @@ if (isset($_GET['filter'])) {
                         }
                     }
                 });
+            } else {
+                $("#ci-no").removeClass('d-none')
             }
 
-            var depPie = document.getElementById("myDepartmentPie").getContext('2d');
-            var myDepartmentPie = new Chart(depPie, {
-                type: 'pie',
-                data: {
-                    labels: data[3],
-                    datasets: [{
-                        label: 'Gender',
-                        data: data[4],
-                        backgroundColor: colors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: false
-                        }],
-                        yAxes: [{
-                            display: false
+
+            if (data[3].length > 0) {
+                var depPie = document.getElementById("myDepartmentPie").getContext('2d');
+
+
+                var myDepartmentPie = new Chart(depPie, {
+                    type: 'pie',
+                    data: {
+                        labels: data[3],
+                        datasets: [{
+                            label: 'Gender',
+                            data: data[4],
+                            backgroundColor: colors,
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: false
+                            }],
+                            yAxes: [{
+                                display: false
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                $("#d-no").removeClass('d-none')
+            }
         });
         $.get('charts/employment_rate', {
             from: '<?= $from ?>',
@@ -420,7 +440,7 @@ if (isset($_GET['filter'])) {
             // console.log(response);
             var data = JSON.parse(response);
 
-            if (data[1].length > 0) {
+            if (data[0].length > 0) {
                 var bar = document.getElementById("myBarChart").getContext('2d');
                 var myBarChart = new Chart(bar, {
                     type: 'bar',
@@ -453,6 +473,8 @@ if (isset($_GET['filter'])) {
                         // legend: true
                     }
                 });
+            } else {
+                $("#em-no").removeClass('d-none')
             }
         });
 
@@ -495,7 +517,10 @@ if (isset($_GET['filter'])) {
                         },
                     }
                 });
+            } else {
+                $("#ba-no").removeClass('d-none')
             }
+
         });
 
         $.get('charts/location', {
@@ -537,6 +562,8 @@ if (isset($_GET['filter'])) {
                         }
                     }
                 });
+            } else {
+                $("#lo-no").removeClass('d-none')
             }
             $("#myWorkBar").attr('height', size * 30);
 
@@ -569,6 +596,8 @@ if (isset($_GET['filter'])) {
                         }
                     }
                 });
+            } else {
+                $("#wo-no").removeClass('d-none')
             }
         });
 
