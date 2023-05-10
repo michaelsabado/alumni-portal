@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
     $target_file = $target_dir . $img;
     move_uploaded_file($image["tmp_name"], $target_file);
 
-    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `nature_of_work` = '$nature_of_work', `current_position`='$current_position', `id_picture` = '$img' WHERE id = $id";
+    $sql = "UPDATE `users` SET `birth_date`='$birth_date',`civil_status`='$civil_status',`gender`='$gender',`address_line`='$address_line',`muncity`='$muncity',`province`='$province',`contact`='$contact',`course`='$course',`batch`='$batch',`student_id`='$student_id',`graduation_date`='$graduation_date',`employment_status`='$employment_status', $str1 $str2 `nature_of_work` = '$nature_of_work', `current_position`='$current_position', `id_picture` = '$img', `zip_code` = '$zip_code', `employer` = '$employer' WHERE id = $id";
     // echo $sql;
     if ($conn->query($sql)) {
         session_destroy();
@@ -132,8 +132,8 @@ if ($usersResult->num_rows > 0) {
                     <hr>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <div class="smalltxt mb-1 fw-bold">Contact #</div>
-                            <input type="text" class="form-control mb-3 border" id="contact" name="contact" value="<?= $contact ?>" required>
+                            <div class="smalltxt mb-1 fw-bold">Contact # <span class="fw-light">(11 digits)</span></div>
+                            <input type="text" class="form-control mb-3 border" id="contact" name="contact" value="<?= $contact ?>" placeholder="09xxxxxxxxx" pattern="09[0-9]{9}" required>
                         </div>
                         <div class="col-md-8">
                             <div class="smalltxt mb-1 fw-bold">Region</div>
@@ -160,10 +160,10 @@ if ($usersResult->num_rows > 0) {
                             <input type="text" class="form-control mb-3 border d-none" id="address_line" name="address_line" value="<?= $muncity ?>" required>
                             <select name="" id="barangay1" class="form-select mb-3 border" required></select>
                         </div>
-                        <!-- <div class="col-md-2">
+                        <div class="col-md-2">
                             <div class="smalltxt mb-1 fw-bold">Zip Code</div>
                             <input type="text" class="form-control mb-3 border" id="zip_code" pattern="[0-9]{4}" name="zip_code" value="<?= $zip_code ?>" placeholder="0000" required>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -193,19 +193,13 @@ if ($usersResult->num_rows > 0) {
                                         }
                                         ?>
                                     </select>
+                                    <div class="smalltxt mb-1 fw-bold">Graduation Date</div>
+                                    <input type="date" class="form-control mb-3 border" id="graduation_date" name="graduation_date" value="<?= $graduation_date ?>" onchange="setBatch($(this).val())" required>
 
-                                    <div class="smalltxt mb-1 fw-bold">Batch</div>
-                                    <select name="batch" id="" class="form-select border mb-3">
-                                        <?php
-                                        for ($current = date('Y'); $current >= 1980; $current--) {
-                                            echo '<option value="' . $current . '">' . $current . '</option>';
-                                        }
-                                        ?>
+                                    <div class="smalltxt mb-1 fw-bold">Batch <span class="fw-light">(auto generated)</span></div>
+                                    <input name="batch" id="batch-input" class="form-control border mb-3" value="" readonly placeholder="Set graduation date" />
                                     </select>
                                     <!-- <input type="text" name="batch" class="form-control mb-3 border" pattern="[0-9]{4}" value="<?= $batch ?>" placeholder="ex. 2019"> -->
-
-                                    <div class="smalltxt mb-1 fw-bold">Graduation Date</div>
-                                    <input type="date" class="form-control mb-3 border" id="graduation_date" name="graduation_date" value="<?= $graduation_date ?>" required>
 
                                 </div>
                             </div>
@@ -224,13 +218,14 @@ if ($usersResult->num_rows > 0) {
                                     </select>
 
                                     <div id="employed-form">
-                                        <div class="smalltxt fw-bold mb-1">Employment Date (1st) <span class="fw-light">Optional</span></div>
+                                        <div class="smalltxt fw-bold mb-1">Employment Start Date <span class="fw-light">Optional</span></div>
                                         <input type="date" name="employment_date_first" class="form-control mb-3 emp-add" value="<?= $employment_date_first ?>">
 
 
-                                        <div class="smalltxt fw-bold mb-1">Employment Date (Current) <span class="fw-light">Optional</span></div>
+                                        <div class="smalltxt fw-bold mb-1">Employment End Date <span class="fw-light">Optional</span></div>
                                         <input name="employment_date_current" type="date" class="form-control mb-3 emp-add" value="<?= $employment_date_current ?>">
-
+                                        <div class="smalltxt fw-bold mb-1">Employer <span class="fw-light">Optional</span></div>
+                                        <input name="employer" type="text" class="form-control mb-3 emp-add" value="<?= $employer ?>">
 
                                         <div class="smalltxt fw-bold mb-1">Nature of Work</div>
                                         <select name="nature_of_work" id="nature_of_work" class="form-select border mb-3 emp-add" required>
@@ -416,6 +411,16 @@ if ($usersResult->num_rows > 0) {
 
             $('#region').ph_locations('fetch_list');
         });
+
+
+        if ($("#graduation_date").val() != null) {
+            $("#batch-input").val($("#graduation_date").val().split('-')[0]);
+        }
+
+        function setBatch(batch) {
+            console.log(batch);
+            $("#batch-input").val(batch.split('-')[0]);
+        }
     </script>
 
 </body>

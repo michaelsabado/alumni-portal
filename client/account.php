@@ -66,10 +66,11 @@ if (isset($_POST['employment-submit'])) {
     $status = $conn->real_escape_string($_POST['employment_status']);
     $date_first = $conn->real_escape_string($_POST['employment_date_first']);
     $date = $conn->real_escape_string($_POST['employment_date_current']);
+    $employer = $conn->real_escape_string($_POST['employer']);
     $nature = $conn->real_escape_string($_POST['nature_of_work']);
     $position = $conn->real_escape_string($_POST['current_position']);
 
-    if (User::updateEmploymentInformation($status, $date_first, $date, $nature, $position)) {
+    if (User::updateEmploymentInformation($status, $date_first, $date, $nature, $position, $employer)) {
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Success!</strong> Employment information updated.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -258,14 +259,14 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Zip Code</div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="zip_code" type="text" class="form-control mb-3" value="<?= $user['zip_code'] ?>" required>
+                                            <input name="zip_code" type="text" class="form-control mb-3" value="<?= $user['zip_code'] ?>" pattern="[0-9]{4}" placeholder="0000" required>
                                         </div>
 
                                         <div class="col-md-5">
-                                            <div class="h6">Contact #</div>
+                                            <div class="h6">Contact # <span class="fw-light">(11 digits)</span></div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="contact" type="text" class="form-control mb-3" value="<?= $user['contact'] ?>" required>
+                                            <input name="contact" type="text" class="form-control mb-3" value="<?= $user['contact'] ?>" placeholder="09xxxxxxxxx" pattern="09[0-9]{9}" required>
                                         </div>
                                         <div class="col-md-12 text-end">
                                             <button class="btn btn-info text-white px-4" type="submit" name="contact-submit">Save</button>
@@ -342,16 +343,22 @@ if ($usersResult->num_rows > 0) {
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="h6">Employment Date (1st)</div>
+                                            <div class="h6">Employment Start Date</div>
                                         </div>
                                         <div class="col-md-6">
                                             <input type="date" name="employment_date_first" class="form-control mb-3" value="<?= $user['employment_date_first'] ?>">
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="h6">Employment Date (Current)</div>
+                                            <div class="h6">Employment End Date</div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_current'] ?>" >
+                                            <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_current'] ?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="h6">Employer <span class="smalltxt fw-light">Optional</span></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="employer" type="text" class="form-control mb-3" value="<?= $user['employer'] ?>">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="h6">Nature of Work</div>
@@ -402,9 +409,9 @@ if ($usersResult->num_rows > 0) {
                                                 );
 
                                                 foreach ($natures as $nature) {
-                                                    if($nature == $user['nature_of_work']) $str = 'selected';
-                                                    else $str="";
-                                                    echo '<option value="' . $nature . '" '.$str.'>' . $nature . '</option>';
+                                                    if ($nature == $user['nature_of_work']) $str = 'selected';
+                                                    else $str = "";
+                                                    echo '<option value="' . $nature . '" ' . $str . '>' . $nature . '</option>';
                                                 }
                                                 ?>
                                             </select>

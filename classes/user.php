@@ -115,10 +115,10 @@ class User
     }
 
 
-    public static function updateEmploymentInformation($status, $date_first, $date, $nature, $position)
+    public static function updateEmploymentInformation($status, $date_first, $date, $nature, $position, $employer)
     {
         global $conn;
-        $sql = "UPDATE `users` SET `employment_status`='$status',`employment_date_first`='$date_first',`employment_date_current`='$date',`nature_of_work`='$nature', `current_position`='$position' WHERE id = " . $_SESSION['id'];
+        $sql = "UPDATE `users` SET `employment_status`='$status',`employment_date_first`='$date_first',`employment_date_current`='$date',`nature_of_work`='$nature', `current_position`='$position', `employer` = '$employer'WHERE id = " . $_SESSION['id'];
         if ($conn->query($sql)) return true;
         else return false;
     }
