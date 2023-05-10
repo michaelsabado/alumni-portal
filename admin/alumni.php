@@ -177,8 +177,12 @@ if (isset($_GET['type'])) {
               <div class="card-body">
                 <div class="h6 fw-bold">Filter Result</div>
                 <form action="export-csv" method="post" id="filter-form">
-                  <div class="smalltxt mb-1">
-                    Department
+                  <input type="hidden" name="wildcard" id="wildcard">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="department" id="dd" onchange="setFields($(this))">
+                    <label class="form-check-label smalltxt" for="dd">
+                      Department
+                    </label>
                   </div>
                   <select name="department" id="depOpt" class="form-select mb-3" onchange="changeDept($(this).val())">
                     <option value="">All</option>
@@ -194,8 +198,11 @@ if (isset($_GET['type'])) {
                   </select>
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="smalltxt mb-1">
-                        Course
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="course" id="co" onchange="setFields($(this))">
+                        <label class="form-check-label smalltxt" for="co">
+                          Course
+                        </label>
                       </div>
                       <select name="course" id="crsOpt" class="form-select mb-3" onchange="fetchAlumni()">
                         <option value="">All</option>
@@ -212,8 +219,11 @@ if (isset($_GET['type'])) {
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <div class="smalltxt mb-1">
-                        Batch
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="batch" id="ba" onchange="setFields($(this))">
+                        <label class="form-check-label smalltxt" for="ba">
+                          Batch
+                        </label>
                       </div>
                       <select name="batch" id="batchOpt" class="form-select mb-3" onchange="fetchAlumni()">
                         <option value="">All</option>
@@ -230,8 +240,11 @@ if (isset($_GET['type'])) {
                       </select>
                     </div>
                   </div>
-                  <div class="smalltxt mb-1">
-                    Employment Status
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="employment status" id="em" onchange="setFields($(this))">
+                    <label class="form-check-label smalltxt" for="em">
+                      Employment Status
+                    </label>
                   </div>
                   <select name="employment" id="empOpt" class="form-select mb-3" onchange="fetchAlumni()">
                     <option value="">All</option>
@@ -242,8 +255,11 @@ if (isset($_GET['type'])) {
                   </select>
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="smalltxt mb-1">
-                        Gender
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="gender" id="ge" onchange="setFields($(this))">
+                        <label class="form-check-label smalltxt" for="ge">
+                          Gender
+                        </label>
                       </div>
                       <select name="gender" id="genderOpt" class="form-select mb-3" onchange="fetchAlumni()">
                         <option value="">All</option>
@@ -254,8 +270,11 @@ if (isset($_GET['type'])) {
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <div class="smalltxt mb-1">
-                        Civil Status
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="civil status" id="ci" onchange="setFields($(this))">
+                        <label class="form-check-label smalltxt" for="ci">
+                          Civil Status
+                        </label>
                       </div>
                       <select name="civil" id="civilOpt" class="form-select mb-3" onchange="fetchAlumni()">
                         <option value="">All</option>
@@ -267,22 +286,25 @@ if (isset($_GET['type'])) {
                       </select>
                     </div>
                   </div>
-                  <div class="smalltxt mb-1">
-                        Location
-                      </div>
-                      <select name="location" id="locationOpt" class="form-select mb-3" onchange="fetchAlumni()">
-                        <option value="">All</option>
-                        <?php
-                        $locations =$conn->query("SELECT DISTINCT(CONCAT(province, ', ', muncity, ', ', address_line)) as location, COUNT(id) as total   FROM `users` WHERE is_verified = 1 GROUP BY location");
-                        if ($locations->num_rows > 0) {
-                          while ($row = $locations->fetch_assoc()) {
-                        ?>
-                            <option value="<?= $row['location'] ?>"><?= $row['location'] ?></option>
-                        <?php
-                          }
-                        }
-                        ?>
-                      </select>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="location" id="lo" onchange="setFields($(this))">
+                    <label class="form-check-label smalltxt" for="lo">
+                      Location
+                    </label>
+                  </div>
+                  <select name="location" id="locationOpt" class="form-select mb-3" onchange="fetchAlumni()">
+                    <option value="">All</option>
+                    <?php
+                    $locations = $conn->query("SELECT DISTINCT(province) as location, COUNT(id) as total   FROM `users` WHERE is_verified = 1 GROUP BY location");
+                    if ($locations->num_rows > 0) {
+                      while ($row = $locations->fetch_assoc()) {
+                    ?>
+                        <option value="<?= $row['location'] ?>"><?= $row['location'] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
                   <button type="submit" class="btn w-100 btn-success">Export to CSV</button>
                 </form>
               </div>
@@ -353,9 +375,28 @@ if (isset($_GET['type'])) {
 
   <?php include_once '../templates/footer.php' ?>
   <script>
+    const fields = [];
     fetchAlumni();
 
+    function setFields(el) {
+
+      var index = fields.findIndex((field) => field == el.val());
+      if (el.is(':checked')) {
+        if (index == -1) {
+          fields.push(el.val());
+        }
+
+      } else {
+        if (index != -1) {
+          fields.splice(index, 1);
+        }
+      }
+      $("#wildcard").val(fields.join(","));
+      fetchAlumni();
+    }
+
     function fetchAlumni() {
+      console.log(fields.join(","));
       $("#tbl-res").load('component/alumni-table', {
         type: $("#typeOpt").val(),
         department: $("#depOpt").val(),
@@ -365,6 +406,7 @@ if (isset($_GET['type'])) {
         gender: $("#genderOpt").val(),
         civil: $("#civilOpt").val(),
         location: $("#locationOpt").val(),
+        fields: fields.join(","),
       });
     }
 

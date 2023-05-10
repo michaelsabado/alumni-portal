@@ -16,16 +16,43 @@ $civil = $_POST['civil'];
 $location = $_POST['location'];
 $where = '';
 
+
+$fields = $_POST['wildcard'];
+
+$fieldsArr = explode(",", $fields);
+
+if ($fieldsArr[0] == "")
+    array_shift($fieldsArr);
+
 $where = 'WHERE birth_date IS NOT NULL';
-if ($department != '') $where .= " AND c.department_id = '$department'";
-if ($course != '') $where .= " AND u.course = '$course'";
-if ($batch != '') $where .= " AND u.batch = '$batch'";
-if ($gender != '') $where .= " AND u.gender = '$gender'";
-if ($civil != '') $where .= " AND u.civil_status = '$civil'";
-if ($location != '') $where .= " AND CONCAT(u.province, ', ' , u.muncity, ', ', u.address_line) LIKE '%$location%'";
-if ($employment != '') {
-    if ($employment != 2) $where .= " AND u.employment_status !=2";
-    else  $where .= " AND u.employment_status = 2";
+$sqlFields = [];
+$qq = '';
+foreach ($fieldsArr as $field) {
+    if ($field == "department") {
+        array_push($sqlFields, 'd.description as department');
+        if ($department != '') $where .= " AND c.department_id = '$department'";
+    } elseif ($field == "course") {
+        array_push($sqlFields, 'c.description as course');
+        if ($course != '') $where .= " AND u.course = '$course'";
+    } elseif ($field == "batch") {
+        array_push($sqlFields, 'u.batch');
+        if ($batch != '') $where .= " AND u.batch = '$batch'";
+    } elseif ($field == "employment status") {
+        array_push($sqlFields, 'u.employment_status');
+        if ($employment != '') {
+            if ($employment != 2) $where .= " AND u.employment_status !=2";
+            else  $where .= " AND u.employment_status = 2";
+        }
+    } elseif ($field == "gender") {
+        array_push($sqlFields, 'u.gender');
+        if ($gender != '') $where .= " AND u.gender = '$gender'";
+    } elseif ($field == "civil status") {
+        array_push($sqlFields, 'u.civil_status');
+        if ($civil != '') $where .= " AND u.civil_status = '$civil'";
+    } elseif ($field == "location") {
+        array_push($sqlFields, "CONCAT(address_line, ', ' , muncity, ', ' , province) as location");
+        if ($location != '') $where .= " AND province LIKE '%$location%'";
+    }
 }
 
 if ($type == 'registered') {
@@ -33,8 +60,12 @@ if ($type == 'registered') {
 } elseif ($type == 'unverified') {
     $where .= ' AND is_verified = 0';
 }
+
+if (count($sqlFields) > 0) {
+    $qq = ', ' . implode(', ', $sqlFields);
+}
 // SQL query to fetch data
-$sql = "SELECT u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, u.birth_date, u.address_line as barangay, u.muncity as municipality, u.province, u.contact, u.email, c.description as course, u.batch FROM users u INNER JOIN courses c ON u.course = c.id $where";
+$sql = "SELECT u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, u.birth_date, u.contact, u.email $qq FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
 
 // Execute the query and store the result set
 $result = mysqli_query($conn, $sql);
@@ -55,7 +86,7 @@ $filename = "Alma-Tech_Alumni_List.csv";
 
 // Open the file for writing
 $fp = fopen($filename, 'w');
-fputcsv($fp,['AlUMNI INFORMATION - MASTER LIST']);
+fputcsv($fp, ['AlUMNI INFORMATION - MASTER LIST']);
 // Add the column names to the first row of the file
 $header = array();
 foreach ($columns as $column) {
@@ -64,11 +95,49 @@ foreach ($columns as $column) {
 fputcsv($fp, $header);
 // Add the data to the file
 while ($row = mysqli_fetch_assoc($result)) {
-    $row = array_map(function($str, $index) { 
-        if($index != 'email'){
-             return strtoupper($str); 
+    $row = array_map(function ($str, $index) {
+
+        if ($index == 'employment_status') {
+            switch ($str) {
+                case 1:
+                    return 'Employed';
+                    break;
+                case 2:
+                    return 'Unemployed';
+                    break;
+                case 3:
+                    return 'Self-Employed';
+                    break;
+            }
+        } else if ($index == 'gender') {
+            switch ($str) {
+                case '1':
+                    return 'Male';
+                    break;
+                case '2':
+                    return 'Female';
+                    break;
+            }
+        } else  if ($index == 'civil_status') {
+            switch ($str) {
+                case '1':
+                    return 'Single';
+                    break;
+                case '2':
+                    return 'Married';
+                    break;
+                case '3':
+                    return 'Annuled';
+                    break;
+            }
         }
-        return $str; 
+        if (
+            $index != 'email'
+        ) {
+            return strtoupper($str);
+        }
+
+        return $str;
     }, $row, array_keys($row));
     fputcsv($fp, $row);
 }
