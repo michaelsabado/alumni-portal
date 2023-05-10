@@ -259,7 +259,7 @@ if ($usersResult->num_rows > 0) {
                                             <div class="h6">Zip Code</div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="zip_code" type="text" class="form-control mb-3" value="<?= $user['zip_code'] ?>" pattern="[0-9]{4}" placeholder="0000" required>
+                                            <input name="zip_code" type="text" class="form-control mb-3" value="<?= $user['zip_code'] ?>" pattern="[0-9]{4}" required>
                                         </div>
 
                                         <div class="col-md-5">

@@ -162,7 +162,7 @@ if ($usersResult->num_rows > 0) {
                         </div>
                         <div class="col-md-2">
                             <div class="smalltxt mb-1 fw-bold">Zip Code</div>
-                            <input type="text" class="form-control mb-3 border" id="zip_code" pattern="[0-9]{4}" name="zip_code" value="<?= $zip_code ?>" placeholder="0000" required>
+                            <input type="text" class="form-control mb-3 border" id="zip_code" pattern="[0-9]{4}" name="zip_code" value="<?= $zip_code ?>" required>
                         </div>
                     </div>
                     <div class="row">
