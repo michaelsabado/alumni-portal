@@ -84,7 +84,7 @@ if (isset($_GET['filter'])) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni'">
+                        <div class="card dash-card border rounded-3 shadow-sm mb-3" onclick="window.location.href='alumni?type=batch'">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Batches</div>
                                 <div class="display-5 text-end fw-bolder"><?= $conn->query("SELECT DISTINCT(batch) FROM users WHERE is_verified = 1")->num_rows ?></div>
@@ -95,13 +95,13 @@ if (isset($_GET['filter'])) {
                         <div class="card dash-card border rounded-3 shadow-sm mb-3 male">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Gender (Male) <i class="fas fa-sync text-primary ms-2" onclick="toggleCardGender(2)"></i></div>
-                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=employed'"><?= $conn->query("SELECT * FROM users WHERE gender = 1 AND is_verified = 1")->num_rows ?></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=gender'"><?= $conn->query("SELECT * FROM users WHERE gender = 1 AND is_verified = 1")->num_rows ?></div>
                             </div>
                         </div>
                         <div class="card dash-card border rounded-3 shadow-sm mb-3 d-none female">
                             <div class="card-body">
                                 <div class="h6 fw-bold">Gender (Female) <i class="fas fa-sync text-primary ms-2" onclick="toggleCardGender(1)"></i></div>
-                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=unemployed'"><?= $conn->query("SELECT * FROM users WHERE gender = 2 AND is_verified = 1")->num_rows ?></div>
+                                <div class="display-5 text-end fw-bolder" onclick="window.location.href='alumni?type=gender'"><?= $conn->query("SELECT * FROM users WHERE gender = 2 AND is_verified = 1")->num_rows ?></div>
                             </div>
                         </div>
                     </div>

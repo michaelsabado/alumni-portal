@@ -178,6 +178,51 @@ if (isset($_GET['type'])) {
                 <div class="h6 fw-bold">Filter Result</div>
                 <form action="export-csv" method="post" id="filter-form">
                   <input type="hidden" name="wildcard" id="wildcard">
+                  <div class="d-flex flex-wrap">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="student_id" id="ss" onchange="setFields($(this))" checked>
+                      <label class="form-check-label smalltxt" for="ss">
+                        <span class="text-nowrap">Student ID</span>
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="name" id="nn" onchange="setFields($(this))" checked>
+                      <label class="form-check-label smalltxt" for="nn">
+                        Name
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="birth_date" id="bd" onchange="setFields($(this))">
+                      <label class="form-check-label smalltxt" for="bd">
+                        Birthdate
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="contact" id="cc" onchange="setFields($(this))">
+                      <label class="form-check-label smalltxt" for="cc">
+                        Contact
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="email" id="em" onchange="setFields($(this))">
+                      <label class="form-check-label smalltxt" for="em">
+                        Email
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="position" id="wp" onchange="setFields($(this))">
+                      <label class="form-check-label smalltxt" for="wp">
+                        Work Position
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="checkbox" value="zip_code" id="zc" onchange="setFields($(this))">
+                      <label class="form-check-label smalltxt" for="zc">
+                        Zip Code
+                      </label>
+                    </div>
+                  </div>
+                  <hr>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="department" id="dd" onchange="setFields($(this))">
                     <label class="form-check-label smalltxt" for="dd">
@@ -220,7 +265,7 @@ if (isset($_GET['type'])) {
                     </div>
                     <div class="col-md-6">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="batch" id="ba" onchange="setFields($(this))">
+                        <input class="form-check-input" type="checkbox" value="batch" id="ba" onchange="setFields($(this))" <?= ($type == 'batch') ? 'checked' : '' ?>>
                         <label class="form-check-label smalltxt" for="ba">
                           Batch
                         </label>
@@ -241,7 +286,7 @@ if (isset($_GET['type'])) {
                     </div>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="employment status" id="em" onchange="setFields($(this))">
+                    <input class="form-check-input" type="checkbox" value="employment status" id="em" onchange="setFields($(this))" <?= ($type == 'employed' || $type == 'unemployed') ? 'checked' : '' ?>>
                     <label class="form-check-label smalltxt" for="em">
                       Employment Status
                     </label>
@@ -256,7 +301,7 @@ if (isset($_GET['type'])) {
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="gender" id="ge" onchange="setFields($(this))">
+                        <input class="form-check-input" type="checkbox" value="gender" id="ge" onchange="setFields($(this))" <?= ($type == 'gender') ? 'checked' : '' ?>>
                         <label class="form-check-label smalltxt" for="ge">
                           Gender
                         </label>
@@ -374,8 +419,19 @@ if (isset($_GET['type'])) {
   </div>
 
   <?php include_once '../templates/footer.php' ?>
+  <?php
+
+  $str = '';
+
+  if ($type == 'employed' || $type == 'unemployed') $str = ", 'employment status'";
+  if ($type == 'batch') $str = ", 'batch'";
+  if ($type == 'gender') $str = ", 'gender'";
+  ?>
   <script>
-    const fields = [];
+    let fields = ['student_id', 'name'
+      <?= $str ?>
+    ];
+
     fetchAlumni();
 
     function setFields(el) {

@@ -26,7 +26,7 @@ if ($fieldsArr[0] == "")
 
 $where = 'WHERE birth_date IS NOT NULL';
 $sqlFields = [];
-$qq = '';
+
 foreach ($fieldsArr as $field) {
     if ($field == "department") {
         array_push($sqlFields, 'd.description as department');
@@ -52,6 +52,20 @@ foreach ($fieldsArr as $field) {
     } elseif ($field == "location") {
         array_push($sqlFields, "CONCAT(address_line, ', ' , muncity, ', ' , province) as location");
         if ($location != '') $where .= " AND province LIKE '%$location%'";
+    } elseif ($field == "student_id") {
+        array_push($sqlFields, "student_id");
+    } elseif ($field == "name") {
+        array_push($sqlFields, "CONCAT(u.first_name, ' ' , u.middle_name, ' ' , u.last_name , ' ' , u.extension_name) as name");
+    } elseif ($field == "birth_date") {
+        array_push($sqlFields, "birth_date");
+    } elseif ($field == "contact") {
+        array_push($sqlFields, "contact");
+    } elseif ($field == "email") {
+        array_push($sqlFields, "email");
+    } elseif ($field == "position") {
+        array_push($sqlFields, "current_position as position");
+    } elseif ($field == "zip_code") {
+        array_push($sqlFields, "zip_code");
     }
 }
 
@@ -61,11 +75,13 @@ if ($type == 'registered') {
     $where .= ' AND is_verified = 0';
 }
 
+
 if (count($sqlFields) > 0) {
-    $qq = ', ' . implode(', ', $sqlFields);
+    $qq =  implode(', ', $sqlFields);
 }
+
 // SQL query to fetch data
-$sql = "SELECT u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, u.birth_date, u.contact, u.email $qq FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
+$sql = "SELECT $qq FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
 
 // Execute the query and store the result set
 $result = mysqli_query($conn, $sql);

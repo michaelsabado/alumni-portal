@@ -47,8 +47,11 @@ if ($type == 'registered') {
     $where .= ' AND is_verified = 0';
 }
 
+$sql = 'SELECT * FROM users WHERE id = -1';
+if (count($fieldsArr) > 0) {
+    $sql = "SELECT u.id, u.student_id, CONCAT(u.first_name, ' ' , u.middle_name, ' ' , u.last_name , ' ' , u.extension_name) as name, u.extension_name,u.birth_date, u.contact, u.email, d.description as department,current_position as position, u.zip_code, c.description as course, u.batch, u.employment_status as `employment`, u.gender, u.civil_status as `civil`, CONCAT(address_line, ', ' , muncity, ', ' , province) as location, u.is_verified FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
+}
 
-$sql = "SELECT u.id, u.student_id, u.first_name, u.middle_name, u.last_name, u.extension_name, d.description as department, c.description as course, u.batch, u.employment_status as `employment`, u.gender, u.civil_status as `civil`, CONCAT(address_line, ', ' , muncity, ', ' , province) as location, u.is_verified FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
 // echo $sql;
 $usersResult = $conn->query($sql);
 ?>
@@ -57,9 +60,15 @@ $usersResult = $conn->query($sql);
     <table id="example" class="table table-sm table-striped" style="width:100%">
         <thead>
             <tr valign="top">
-                <th>ID</th>
-                <th>Student ID</th>
-                <th>Full Name</th>
+                <?php
+                if ($usersResult->num_rows > 0) {
+                ?> <th>ID</th>
+                <?php
+                }
+                ?>
+
+                <!-- <th>Student ID</th>
+                <th>Full Name</th> -->
                 <?php
                 foreach ($fieldsArr as $field) {
                     echo "<th>" . ucfirst($field) . "</th>";
@@ -91,8 +100,8 @@ $usersResult = $conn->query($sql);
                         <td>
                             <?= $count++; ?>
                         </td>
-                        <td><?= $row['student_id'] ?></td>
-                        <td><?= $row['first_name'] . ' ' . $row['last_name'] ?></td>
+                        <!-- <td><?= $row['student_id'] ?></td>
+                        <td><?= $row['first_name'] . ' ' . $row['last_name'] ?></td> -->
 
                         <?php
                         foreach ($fieldsArr as $field) {
@@ -133,7 +142,7 @@ $usersResult = $conn->query($sql);
                                 }
                                 echo '<td>' . $status . '</td>';
                             } else {
-                                echo ' <td>' . $row[$field] . '</td>';
+                                echo ' <td class="text-nowrap">' . $row[$field] . '</td>';
                             }
                         }
                         ?>
