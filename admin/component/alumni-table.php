@@ -74,7 +74,13 @@ $usersResult = $conn->query($sql);
                     echo "<th>" . ucfirst($field) . "</th>";
                 }
                 ?>
-                <th>Account Status</th>
+                <?php
+                if ($usersResult->num_rows > 0) {
+                ?> <th>Account Status</th>
+                <?php
+                }
+                ?>
+
                 <th></th>
             </tr>
         </thead>
