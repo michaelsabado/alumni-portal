@@ -75,13 +75,15 @@ if ($type == 'registered') {
     $where .= ' AND is_verified = 0';
 }
 
-
 if (count($sqlFields) > 0) {
     $qq =  implode(', ', $sqlFields);
+    // SQL query to fetch data
+    $sql = "SELECT $qq FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
+} else {
+    $sql = "SELECT id as `No Data` FROM users WHERE id = -1";
 }
 
-// SQL query to fetch data
-$sql = "SELECT $qq FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
+
 
 // Execute the query and store the result set
 $result = mysqli_query($conn, $sql);
