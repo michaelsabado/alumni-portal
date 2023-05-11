@@ -17,7 +17,7 @@ if (isset($_POST['verify-id'])) {
     if (User::verifyUser($_POST['verify-id'])) {
         $name = $_POST['name'];
         $email = $_POST['email'];
-        setData('Account Verified!', 'Hello ' . $name . ', this is to inform you that your alumni portal account is now verified. You may now login.', $email, $name);
+        setData("Account Verified", "Dear $name,<br>We hope this email finds you well. We are pleased to inform you that your account on the Alumni Portal has been verified. You can now log in to the portal and access all the features available to our alumni community. Please note that some features may require additional approval or registration.<br><br>We value your participation in our alumni network and hope that the Alumni Portal will provide you with useful resources and connections.<br><br>Thank you for being a part of our alumni community, and we look forward to connecting with you on the portal.<br><br>Best regards,<br>PCLU", $email, $name);
         $message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Success!</strong> User is now verified.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
