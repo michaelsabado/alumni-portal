@@ -238,10 +238,22 @@ if (isset($_POST['decline-id'])) {
                                         </script>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="h6">Employment Date</div>
+                                        <div class="h6">Employment Start Date</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_first'] ?>" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="h6">Employment End Date</div>
                                     </div>
                                     <div class="col-md-6">
                                         <input name="employment_date_current" type="date" class="form-control mb-3" value="<?= $user['employment_date_current'] ?>" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="h6">Employer</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="employer" type="text" class="form-control mb-3" value="<?= $user['employer'] ?>" placeholder="n/a" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="h6">Nature of Work</div>
