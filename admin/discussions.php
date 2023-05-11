@@ -2,6 +2,7 @@
 session_start();
 require_once '../classes/posts.php';
 require_once '../classes/auth.php';
+require_once '../notifier.php';
 
 if ($type = Auth::checkLogin()) {
   if ($type != 1) {
@@ -56,6 +57,7 @@ if (isset($_POST['approve-post'])) {
   <strong>Success!</strong> Discussion is now approved & active.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>';
+  notify(3, $postid);
 }
 if (isset($_POST['decline-post'])) {
   $postid = $_POST['decline-id'];
