@@ -239,7 +239,7 @@ $newsResult = Jobs::getAllJobsAdmin();
                                 </select>
                                 <div id="othersPanel" class="d-none">
                                     <div class="smalltxt ">Specify</div>
-                                    <input type="text" name="others" class="form-control mb-3" required>
+                                    <input type="text" name="others" id="others" class="form-control mb-3">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -490,8 +490,10 @@ $newsResult = Jobs::getAllJobsAdmin();
         function checkJob(val) {
             if (val == 3) {
                 $("#othersPanel").removeClass('d-none');
+                $("#others").attr('required', true);
             } else {
                 $("#othersPanel").addClass('d-none');
+                $("#others").attr('required', false);
             }
         }
     </script>
