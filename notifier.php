@@ -26,7 +26,7 @@ function notify($type, $id)
             $sql = "SELECT * FROM news WHERE id = $id";
             $data = $conn->query($sql)->fetch_assoc();
 
-            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that there is a new update on the Alumni Portal that we think you will find interesting. The latest news has been posted on the portal. We encourage you to log in to the portal to read the full article and stay updated on the latest news related to our alumni community.<br><br>Thank you for being a part of our alumni network, and we hope you find this information helpful.<br><br>Best regards,<br>PCLU ';
+            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that there is a new update on the Alumni Portal that we think you will find interesting. The latest news has been posted on the portal. We encourage you to log in to the portal to read the full article and stay updated on the latest news related to our alumni community.<br><br>Thank you for being a part of our alumni network, and we hope you find this information helpful.<br><br>Check <a href="' . $link . '">here</a>.<br><br>Best regards,<br>PCLU ';
             break;
         case 2:
             $mySubject = 'New Event';
@@ -35,7 +35,7 @@ function notify($type, $id)
             $sql = "SELECT * FROM events WHERE id = $id";
             $data = $conn->query($sql)->fetch_assoc();
 
-            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new alumni event has been posted on the Alumni Portal.<br>We value your participation in our alumni community and hope that you will be able to join us for this exciting event.<br><br>Thank you for your continued support, and we look forward to seeing you at the event.<br><br>Best regards,<br>PCLU ';
+            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new alumni event has been posted on the Alumni Portal.<br>We value your participation in our alumni community and hope that you will be able to join us for this exciting event.<br><br>Thank you for your continued support, and we look forward to seeing you at the event.<br><br>Check <a href="' . $link . '">here</a>.<br><br>Best regards,<br>PCLU ';
             break;
         case 3:
             $mySubject = "New Post";
@@ -44,7 +44,7 @@ function notify($type, $id)
             $sql = "SELECT * FROM posts WHERE id = $id";
             $data = $conn->query($sql)->fetch_assoc();
 
-            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new discussion forum has been added to the Alumni Portal. We encourage you to log in to the portal to participate in the discussion and share your insights with fellow alumni.<br><br>We value your membership in our alumni community and believe that the discussion forum will provide a valuable platform for exchanging ideas and networking. <br><br>Thank you for being a part of our alumni network, and we look forward to seeing you in the discussion forum.<br><br>Best regards,<br>PCLU';
+            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new discussion forum has been added to the Alumni Portal. We encourage you to log in to the portal to participate in the discussion and share your insights with fellow alumni.<br><br>We value your membership in our alumni community and believe that the discussion forum will provide a valuable platform for exchanging ideas and networking. <br><br>Thank you for being a part of our alumni network, and we look forward to seeing you in the discussion forum.<br><br>Check <a href="' . $link . '">here</a>.<br><br>Best regards,<br>PCLU';
             break;
         case 4:
             $mySubject = "New Job Post";
@@ -53,7 +53,7 @@ function notify($type, $id)
             $sql = "SELECT * FROM jobs WHERE id = $id";
             $data = $conn->query($sql)->fetch_assoc();
 
-            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new job posting has been added to the Alumni Portal. We encourage you to log in to the portal to see the full details and apply if you are interested.<br><br>We value your membership in our alumni community and hope that this job posting is useful for your career development.<br><br>Thank you for being a part of our alumni network, and we wish you the best of luck in your job search.<br><br>Best regards,<br>PCLU ';
+            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new job posting has been added to the Alumni Portal. We encourage you to log in to the portal to see the full details and apply if you are interested.<br><br>We value your membership in our alumni community and hope that this job posting is useful for your career development.<br><br>Thank you for being a part of our alumni network, and we wish you the best of luck in your job search.<br><br>Check <a href="' . $link . '">here</a>.<br><br>Best regards,<br>PCLU ';
             break;
     }
 

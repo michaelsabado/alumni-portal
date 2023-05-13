@@ -49,7 +49,7 @@ if ($type == 'registered') {
 
 $sql = 'SELECT * FROM users WHERE id = -1';
 if (count($fieldsArr) > 0) {
-    $sql = "SELECT u.id, u.student_id, CONCAT(u.first_name, ' ' , u.middle_name, ' ' , u.last_name , ' ' , u.extension_name) as name, u.extension_name,u.birth_date, u.contact, u.email, d.description as department,current_position as position, u.zip_code, c.description as course, u.batch, u.employment_status as `employment`, u.gender, u.civil_status as `civil`, CONCAT(address_line, ', ' , muncity, ', ' , province) as location, u.is_verified FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
+    $sql = "SELECT u.id, u.student_id, CONCAT_WS(' ', u.first_name, NULLIF(u.middle_name, ''), u.last_name, NULLIF(NULLIF(u.extension_name, ''), '')) AS name, u.extension_name,u.birth_date, u.contact, u.email, d.description as department,current_position as position, u.zip_code, c.description as course, u.batch, u.employment_status as `employment`, u.gender, u.civil_status as `civil`, CONCAT(address_line, ', ' , muncity, ', ' , province) as location, u.is_verified FROM users u INNER JOIN courses c ON u.course = c.id INNER JOIN departments d ON c.department_id = d.id $where";
 }
 
 // echo $sql;

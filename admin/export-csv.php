@@ -55,7 +55,7 @@ foreach ($fieldsArr as $field) {
     } elseif ($field == "student_id") {
         array_push($sqlFields, "student_id");
     } elseif ($field == "name") {
-        array_push($sqlFields, "CONCAT(u.first_name, ' ' , u.middle_name, ' ' , u.last_name , ' ' , u.extension_name) as name");
+        array_push($sqlFields, "CONCAT_WS(' ', u.first_name, NULLIF(u.middle_name, ''), u.last_name, NULLIF(NULLIF(u.extension_name, ''), '')) AS name");
     } elseif ($field == "birth_date") {
         array_push($sqlFields, "birth_date");
     } elseif ($field == "contact") {
