@@ -53,7 +53,9 @@ function notify($type, $id)
             $sql = "SELECT * FROM jobs WHERE id = $id";
             $data = $conn->query($sql)->fetch_assoc();
 
-            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new job posting has been added to the Alumni Portal. We encourage you to log in to the portal to see the full details and apply if you are interested.<br><br>We value your membership in our alumni community and hope that this job posting is useful for your career development.<br><br>Thank you for being a part of our alumni network, and we wish you the best of luck in your job search.<br><br>Check <a href="' . $link . '">here</a>.<br><br>Best regards,<br>PCLU ';
+            $jobBody = "Title: <b>".$data['title']."</b><br>Company: <b>".$data['company']."</b><br><br>".$data['description'];
+
+            $myBody = 'Dear Alumnus,<br>We hope this email finds you well. We are excited to inform you that a new job posting has been added to the Alumni Portal. We encourage you to log in to the portal to see the full details and apply if you are interested.<br><br>We value your membership in our alumni community and hope that this job posting is useful for your career development.<br><br>Thank you for being a part of our alumni network, and we wish you the best of luck in your job search.<br><br>Check below or by clicking this <a href="' . $link . '">link</a><br><br>'.$jobBody.'<br><br>Best regards,<br>PCLU ';
             break;
     }
 
